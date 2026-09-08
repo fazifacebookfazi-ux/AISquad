@@ -1,31 +1,32 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { ProjectCover } from "@/components/project-cover";
 import type { Project } from "@/lib/projects";
 import { cn } from "@/lib/utils";
 
 export function ProjectCard({
   project,
   className,
+  priority,
 }: {
   project: Project;
   className?: string;
+  priority?: boolean;
 }) {
   return (
     <Link
-      href={project.href ?? `/projects#${project.slug}`}
+      href={`/projects/${project.slug}`}
       className={cn(
         "group relative flex h-full flex-col overflow-hidden rounded-2xl surface transition-all duration-500 ease-out-expo hover:-translate-y-1 hover:border-brand-400/30",
         className,
       )}
     >
       <div className="relative aspect-16/10 overflow-hidden">
-        <div
-          className="absolute inset-0 transition-transform duration-700 ease-out-expo group-hover:scale-105"
-          style={{
-            backgroundImage: `linear-gradient(135deg, ${project.gradient[0]}, ${project.gradient[1]})`,
-          }}
+        <ProjectCover
+          project={project}
+          priority={priority}
+          className="transition-transform duration-700 ease-out-expo group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-grid opacity-25 mix-blend-overlay" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink-950/85 via-ink-950/20 to-transparent" />
 
         <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5">

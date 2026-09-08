@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/page-header";
-import { Reveal } from "@/components/ui/reveal";
-import { ProjectCard } from "@/components/project-card";
+import { ProjectsGallery } from "@/components/projects/projects-gallery";
 import { CTA } from "@/components/home/cta";
-import { projects } from "@/lib/projects";
 
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "Selected websites, SaaS platforms and AI products built by AISquadX.",
+    "Case studies from AISquadX — SaaS platforms, marketing sites, AI products and MVP sprints, with the problem, the approach and the outcome for each.",
+  alternates: { canonical: "/projects" },
 };
 
 export default function ProjectsPage() {
@@ -23,17 +22,11 @@ export default function ProjectsPage() {
             <span className="font-serif italic text-brand-300">shipped</span>
           </>
         }
-        description="A growing collection of products, platforms and sites. Full case studies are on the way."
+        description="Each one starts with a real problem and ends with something live. Open any project to read how it came together."
       />
 
       <Container className="pb-24 lg:pb-32">
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, i) => (
-            <Reveal key={project.slug} delay={i * 0.06}>
-              <ProjectCard project={project} />
-            </Reveal>
-          ))}
-        </div>
+        <ProjectsGallery />
       </Container>
 
       <CTA />
