@@ -27,16 +27,25 @@ export function ProjectCard({
           priority={priority}
           className="transition-transform duration-700 ease-out-expo group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink-950/85 via-ink-950/20 to-transparent" />
-
-        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5">
-          <span className="rounded-full border border-white/20 bg-ink-950/50 px-3 py-1 font-mono text-[10px] tracking-[0.14em] text-mist-100 uppercase backdrop-blur">
-            {project.category}
-          </span>
-          <span className="font-mono text-[11px] text-mist-300">
+        {/* The generated cover already carries the category, so only overlay
+            these labels on top of real screenshots. */}
+        {project.cover ? (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-t from-ink-950/85 via-ink-950/20 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5">
+              <span className="rounded-full border border-white/20 bg-ink-950/50 px-3 py-1 font-mono text-[10px] tracking-[0.14em] text-mist-100 uppercase backdrop-blur">
+                {project.category}
+              </span>
+              <span className="font-mono text-[11px] text-mist-300">
+                {project.year}
+              </span>
+            </div>
+          </>
+        ) : (
+          <span className="absolute top-4 right-4 rounded-full border border-white/20 bg-ink-950/40 px-2.5 py-1 font-mono text-[10px] text-mist-100 backdrop-blur">
             {project.year}
           </span>
-        </div>
+        )}
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-7">

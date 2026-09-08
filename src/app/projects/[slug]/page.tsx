@@ -135,7 +135,6 @@ export default async function ProjectPage({
               priority
               sizes="(min-width: 1152px) 1088px, 100vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-ink-950/40 to-transparent" />
           </div>
         </Reveal>
       </Container>
