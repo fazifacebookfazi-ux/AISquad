@@ -92,6 +92,48 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "ezclipper",
+    title: "EzClipper",
+    summary:
+      "An AI clipping studio that turns long videos into vertical shorts — transcribing, finding the highlights, reframing to 9:16 and captioning them automatically.",
+    category: "AI product",
+    year: "2026",
+    tags: ["Python", "Whisper", "FFmpeg"],
+    gradient: ["#3b82f6", "#22c1cf"],
+    cover: "/projects/ezclipper.png",
+    featured: true,
+    client: "In-house product",
+    role: "Solo build — video pipeline, AI features & interface",
+    duration: "Ongoing",
+    intro:
+      "Anyone sitting on a podcast archive or a back catalogue of long YouTube videos has the same backlog: hours of footage that should be a few dozen vertical clips, and no realistic amount of time to cut them by hand.",
+    challenge:
+      "Finding the good bits is the part that resists automation. Cutting on fixed intervals gives you clips that open mid-sentence, and cutting on audio peaks just finds the loudest moments rather than the most interesting ones. Landscape footage then has to become 9:16 without decapitating whoever is speaking. And the transcription driving all of it has to fit inside an upload limit that any long video blows past immediately.",
+    approach: [
+      "Transcribe the whole video once with Groq's Whisper turbo model and slice that transcript by timestamp for each clip — transcribing clips individually was both slower and less accurate, because the model lost the surrounding context.",
+      "Compress the audio to mono 16 kHz before upload so long videos stay under the 24 MB API ceiling, with a local faster-whisper model as the fallback when they don't.",
+      "Rank candidate moments by speech density across the transcript rather than volume, fall back to audio energy when a video has no clear speech, and enforce a minimum gap between clips so they don't overlap.",
+      "Reframe to vertical by sampling frames through MediaPipe face detection and driving the FFmpeg crop from the median face position, which keeps the speaker centred instead of cropping to the middle and hoping.",
+      "Encode clips in parallel and stream results back as NDJSON, so the first clip is watchable while the rest are still rendering.",
+      "Build the creator tooling on top of that pipeline: twelve caption styles, AI keyword highlighting, virality scoring, hook generation, and a brand kit for logo, intro and outro.",
+    ],
+    outcome:
+      "The pipeline runs end to end — paste a YouTube link, get back finished vertical clips with captions burned in, roughly a minute of processing for a short video. It currently runs as a local studio rather than a hosted product, but the interface already talks to the backend over HTTP, so the video pipeline is a service away from being multi-tenant.",
+    metrics: [
+      { value: "30", label: "Clips from one upload" },
+      { value: "12", label: "Caption styles built in" },
+      { value: "7", label: "Languages for captions" },
+    ],
+    stack: [
+      "Python",
+      "Flask",
+      "FFmpeg",
+      "yt-dlp",
+      "Groq Whisper",
+      "MediaPipe",
+    ],
+  },
+  {
     slug: "nimbus-analytics",
     title: "Nimbus Analytics",
     summary:
