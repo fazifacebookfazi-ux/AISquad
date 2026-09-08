@@ -134,6 +134,47 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "local-voice-enhancer",
+    title: "Local Voice Enhancer",
+    summary:
+      "Studio-grade speech cleanup that runs entirely on your own machine — no API keys, no uploads, no subscription.",
+    category: "AI product",
+    year: "2026",
+    tags: ["Python", "PyTorch", "FastAPI"],
+    gradient: ["#7c5cff", "#5b8def"],
+    cover: "/projects/local-voice-enhancer.png",
+    client: "In-house product",
+    role: "Solo build — audio pipeline, model integration & interface",
+    duration: "One build session",
+    intro:
+      "The cloud tools that clean up recorded speech are genuinely good, and they also want your unreleased audio, an account and a monthly fee. This does the same job on your own machine, with nothing leaving the building.",
+    challenge:
+      "The models that do this well are research code, and research code assumes Linux and a GPU. Resemble Enhance pulls in DeepSpeed, which doesn't build on Windows at all. Recent versions of TorchAudio route every file read through TorchCodec, which expects FFmpeg libraries that aren't there. DeepFilterNet imports a class those same versions no longer export. None of that is the interesting part of the problem, but all of it stands between the idea and something you can actually run.",
+    approach: [
+      "Chained two models instead of picking one — DeepFilterNet3 strips the room tone and hiss first, then Resemble Enhance reconstructs the voice, which it does noticeably better on already-clean input.",
+      "Sidestepped the TorchAudio decoding stack by patching load, save and info onto soundfile and librosa, which removed the FFmpeg dependency and with it the most common reason a local install fails on someone else's machine.",
+      "Stubbed out DeepSpeed and rewrote Resemble's inference imports so it never reaches for its training modules — the only reason it runs on Windows at all.",
+      "Exposed the speed-versus-quality tradeoff rather than hiding it: three presets map to 32, 64 or 128 flow-matching steps with different solvers.",
+      "Added a broadcast mode that normalises to −16 LUFS, so the file is ready to publish instead of needing another pass in an editor.",
+      "Wrapped it in a FastAPI job queue with a polling progress UI and A/B playback, so you can hear the original against the enhanced version before committing to the download.",
+    ],
+    outcome:
+      "It runs as a local web app — drop a file in the browser, choose a mode, get a 16-bit WAV back, with the denoised intermediate saved alongside it so you can hear what each stage contributed. It falls back to CPU and picks up CUDA automatically where it exists. The whole thing came together in a single build session, and most of that went on making research code survive Windows rather than on the audio itself.",
+    metrics: [
+      { value: "100%", label: "Offline — no cloud, no API keys" },
+      { value: "3", label: "Enhancement modes" },
+      { value: "−16 LUFS", label: "Broadcast loudness target" },
+    ],
+    stack: [
+      "Python",
+      "FastAPI",
+      "PyTorch",
+      "Resemble Enhance",
+      "DeepFilterNet3",
+      "pyloudnorm",
+    ],
+  },
+  {
     slug: "nimbus-analytics",
     title: "Nimbus Analytics",
     summary:
