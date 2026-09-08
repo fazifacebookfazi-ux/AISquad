@@ -69,7 +69,11 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="scroll-pt-24">
+    <html
+      lang="en"
+      className="scroll-pt-24"
+      data-scroll-behavior="smooth"
+    >
       <body
         className={`${inter.variable} ${sora.variable} ${instrument.variable} ${jetbrains.variable} antialiased`}
       >

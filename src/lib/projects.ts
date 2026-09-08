@@ -34,6 +34,7 @@ export type Project = {
 };
 
 export const projectCategories = [
+  "Web platform",
   "SaaS platform",
   "Marketing site",
   "AI product",
@@ -49,6 +50,48 @@ export type ProjectCategory = (typeof projectCategories)[number];
  */
 export const projects: Project[] = [
   {
+    slug: "startupai-tools",
+    title: "StartupAI Tools",
+    summary:
+      "A directory of 100+ free browser-based utilities — developer tools, SEO helpers and AI assistants, with no signup and no ads.",
+    category: "Web platform",
+    year: "2025",
+    tags: ["Next.js", "AI-built", "Vercel"],
+    gradient: ["#5b63f5", "#22c1cf"],
+    featured: true,
+    client: "In-house product",
+    role: "Solo build — product, design, development & SEO",
+    duration: "Ongoing",
+    liveUrl: "https://aitoolspro.tech",
+    intro:
+      "Every free tool site on the internet asks the same thing of you: sit through a popup, make an account, then wait while your file uploads to someone else's server just to format some JSON. StartupAI Tools exists because none of that is necessary.",
+    challenge:
+      "The problem with a hundred-tool directory isn't building any single tool — it's that a hundred of anything usually means a hundred inconsistencies. Different layouts, different quality, pages that take seconds to load, and a structure search engines can't make sense of. On top of that, tools handling people's text and images can't credibly promise privacy while quietly uploading everything to a backend.",
+    approach: [
+      "Built the whole platform on Next.js with pages prerendered as static HTML, so every tool loads instantly from the edge instead of waiting on a server.",
+      "Ran the processing client-side wherever it was possible — the JSON formatter, Base64 encoder and converters never send data anywhere, which turns the privacy claim into a fact rather than a promise.",
+      "Organised 100+ tools into six clear categories — text and content, SEO, developer utilities, calculators, generators and number conversion — so the directory stays navigable as it grows.",
+      "Used AI-assisted development to build tools in parallel rather than sequentially, which is the only reason a catalogue this size is maintainable by one person.",
+      "Went further than utilities with flagship builds: ZenNote AI turns unstructured brain-dumps into action plans, TradingFEST streams live rates across 18 exchanges, and the resume studio exports vector PDFs with no watermark.",
+      "Treated SEO as architecture — semantic markup, per-tool metadata and an llms.txt generator that configures how AI search engines crawl the site.",
+    ],
+    outcome:
+      "The site now runs over a hundred tools from a single directory, serving developers, marketers and students without a single signup wall or ad unit. It's deployed on Vercel with pages served from cache, and new tools ship continuously based on what people actually ask for.",
+    metrics: [
+      { value: "100+", label: "Tools live in one directory" },
+      { value: "6", label: "Categories, from dev to finance" },
+      { value: "18", label: "Exchange feeds in TradingFEST" },
+    ],
+    stack: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "AI-assisted development",
+      "Vercel",
+    ],
+  },
+  {
     slug: "nimbus-analytics",
     title: "Nimbus Analytics",
     summary:
@@ -56,8 +99,7 @@ export const projects: Project[] = [
     category: "SaaS platform",
     year: "2025",
     tags: ["Next.js", "PostgreSQL", "Stripe"],
-    gradient: ["#5b63f5", "#22c1cf"],
-    featured: true,
+    gradient: ["#4740d4", "#4fd6e0"],
     client: "Nimbus",
     role: "Design & full-stack development",
     duration: "9 weeks",
