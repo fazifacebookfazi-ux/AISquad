@@ -82,13 +82,13 @@ export default function ContactPage() {
                   {steps.map((step, i) => (
                     <li key={step.title} className="flex gap-4">
                       <span className="relative flex flex-col items-center">
-                        <span className="grid size-9 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-brand-300">
+                        <span className="grid size-9 shrink-0 place-items-center rounded-full border border-mist-100/10 bg-mist-100/[0.04] text-brand-300">
                           <step.icon className="size-4" strokeWidth={1.6} />
                         </span>
                         {i < steps.length - 1 ? (
                           <span
                             aria-hidden
-                            className="mt-2 w-px flex-1 bg-gradient-to-b from-white/12 to-transparent"
+                            className="mt-2 w-px flex-1 bg-gradient-to-b from-mist-100/12 to-transparent"
                           />
                         ) : null}
                       </span>
@@ -107,7 +107,7 @@ export default function ContactPage() {
             </Reveal>
 
             <Reveal delay={0.22}>
-              <div className="flex flex-col gap-3 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-6">
+              <div className="flex flex-col gap-3 rounded-2xl border border-mist-100/[0.07] bg-mist-100/[0.02] p-6">
                 <span className="flex items-center gap-2 text-sm text-mist-300">
                   <span className="relative flex size-2">
                     <span className="absolute inline-flex size-full animate-ping rounded-full bg-accent-400 opacity-70" />

@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export function ServiceSections() {
   return (
-    <div className="divide-y divide-white/[0.07]">
+    <div className="divide-y divide-mist-100/[0.07]">
       {serviceDetails.map((service, index) => {
         const flipped = index % 2 === 1;
 
@@ -31,7 +31,7 @@ export function ServiceSections() {
                 <div className={cn("flex flex-col", flipped && "lg:order-2")}>
                   <Reveal>
                     <div className="flex items-center gap-4">
-                      <span className="grid size-12 place-items-center rounded-xl border border-white/10 bg-white/[0.05] text-brand-300">
+                      <span className="grid size-12 place-items-center rounded-xl border border-mist-100/10 bg-mist-100/[0.05] text-brand-300">
                         <service.icon className="size-5" strokeWidth={1.6} />
                       </span>
                       <span className="font-mono text-xs tracking-[0.18em] text-mist-500 uppercase">
@@ -74,7 +74,7 @@ export function ServiceSections() {
                       {service.stack.map((tech) => (
                         <span
                           key={tech}
-                          className="rounded-md bg-white/[0.05] px-2.5 py-1 font-mono text-[10px] tracking-wide text-mist-500 uppercase"
+                          className="rounded-md bg-mist-100/[0.05] px-2.5 py-1 font-mono text-[10px] tracking-wide text-mist-500 uppercase"
                         >
                           {tech}
                         </span>
@@ -86,7 +86,7 @@ export function ServiceSections() {
                 {/* Spec card */}
                 <Reveal delay={0.1} className={cn(flipped && "lg:order-1")}>
                   <div className="overflow-hidden rounded-2xl surface">
-                    <div className="grid grid-cols-2 divide-x divide-white/[0.07] border-b border-white/[0.07]">
+                    <div className="grid grid-cols-2 divide-x divide-mist-100/[0.07] border-b border-mist-100/[0.07]">
                       <div className="flex flex-col gap-1 p-6">
                         <span className="font-mono text-[10px] tracking-[0.16em] text-mist-500 uppercase">
                           Timeline

@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { ButtonLink } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Logo } from "./logo";
 import { navLinks } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -34,7 +35,7 @@ export function Navbar() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-out-expo",
         scrolled
-          ? "border-b border-white/[0.07] bg-ink-950/70 backdrop-blur-xl"
+          ? "border-b border-mist-100/[0.07] bg-ink-950/70 backdrop-blur-xl"
           : "border-b border-transparent",
       )}
     >
@@ -65,6 +66,8 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle />
+
           <ButtonLink
             href="/contact"
             size="sm"
@@ -79,7 +82,7 @@ export function Navbar() {
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="grid size-10 place-items-center rounded-full border border-white/10 text-mist-300 transition-colors hover:bg-white/5 md:hidden"
+            className="grid size-10 place-items-center rounded-full border border-mist-100/10 text-mist-300 transition-colors hover:bg-mist-100/5 md:hidden"
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
@@ -88,7 +91,7 @@ export function Navbar() {
 
       <div
         className={cn(
-          "overflow-hidden border-t border-white/[0.07] bg-ink-950/95 backdrop-blur-xl transition-[max-height,opacity] duration-500 ease-out-expo md:hidden",
+          "overflow-hidden border-t border-mist-100/[0.07] bg-ink-950/95 backdrop-blur-xl transition-[max-height,opacity] duration-500 ease-out-expo md:hidden",
           open ? "max-h-96 opacity-100" : "max-h-0 opacity-0",
         )}
       >
@@ -98,7 +101,7 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="rounded-xl px-3 py-3 text-[15px] text-mist-300 transition-colors hover:bg-white/5 hover:text-mist-100"
+              className="rounded-xl px-3 py-3 text-[15px] text-mist-300 transition-colors hover:bg-mist-100/5 hover:text-mist-100"
             >
               {link.label}
             </Link>

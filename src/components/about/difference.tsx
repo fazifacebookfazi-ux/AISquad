@@ -48,8 +48,8 @@ export function Difference() {
         />
 
         <Reveal delay={0.1}>
-          <div className="mt-14 overflow-hidden rounded-2xl border border-white/[0.07]">
-            <div className="grid grid-cols-1 divide-y divide-white/[0.07] sm:grid-cols-2 sm:divide-x sm:divide-y-0">
+          <div className="mt-14 overflow-hidden rounded-2xl border border-mist-100/[0.07]">
+            <div className="grid grid-cols-1 divide-y divide-mist-100/[0.07] sm:grid-cols-2 sm:divide-x sm:divide-y-0">
               <div className="bg-ink-900/60 p-7">
                 <h3 className="font-mono text-[10px] tracking-[0.18em] text-mist-500 uppercase">
                   The usual way
@@ -65,7 +65,7 @@ export function Difference() {
             {rows.map((row) => (
               <div
                 key={row.ours}
-                className="grid grid-cols-1 divide-y divide-white/[0.07] border-t border-white/[0.07] sm:grid-cols-2 sm:divide-x sm:divide-y-0"
+                className="grid grid-cols-1 divide-y divide-mist-100/[0.07] border-t border-mist-100/[0.07] sm:grid-cols-2 sm:divide-x sm:divide-y-0"
               >
                 <div className="flex items-start gap-3 bg-ink-900/30 p-7">
                   <X

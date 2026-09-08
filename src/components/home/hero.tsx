@@ -35,14 +35,14 @@ export function Hero() {
           <motion.div {...rise(0)}>
             <a
               href="#services"
-              className="group inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.04] py-1.5 pr-2 pl-3 text-[13px] text-mist-300 backdrop-blur transition-colors hover:border-brand-400/40 hover:text-mist-100"
+              className="group inline-flex items-center gap-2.5 rounded-full border border-mist-100/10 bg-mist-100/[0.04] py-1.5 pr-2 pl-3 text-[13px] text-mist-300 backdrop-blur transition-colors hover:border-brand-400/40 hover:text-mist-100"
             >
               <span className="relative flex size-2">
                 <span className="absolute inline-flex size-full animate-ping rounded-full bg-accent-400 opacity-70" />
                 <span className="relative inline-flex size-2 rounded-full bg-accent-400" />
               </span>
               Available for new projects
-              <span className="rounded-full bg-white/[0.07] px-2 py-0.5 font-mono text-[11px] tracking-wide text-mist-400 transition-colors group-hover:text-mist-100">
+              <span className="rounded-full bg-mist-100/[0.07] px-2 py-0.5 font-mono text-[11px] tracking-wide text-mist-400 transition-colors group-hover:text-mist-100">
                 Q3
               </span>
             </a>
@@ -92,7 +92,7 @@ export function Hero() {
 
           <motion.dl
             {...rise(0.34)}
-            className="mt-16 grid w-full max-w-2xl grid-cols-3 divide-x divide-white/[0.07] rounded-2xl surface py-6"
+            className="mt-16 grid w-full max-w-2xl grid-cols-3 divide-x divide-mist-100/[0.07] rounded-2xl surface py-6"
           >
             {stats.map((s) => (
               <div key={s.label} className="flex flex-col items-center gap-1.5">

@@ -69,11 +69,13 @@ export function ProjectCover({
         style={{ backgroundColor: from }}
       />
       <div className="absolute inset-0 bg-grid opacity-20 mix-blend-overlay" />
-      <div className="absolute inset-0 bg-gradient-to-t from-ink-950/60 via-transparent to-ink-950/25" />
+      {/* The showcase sits on saturated colour, so its darks are pinned rather
+          than themed — it looks identical in light and dark mode. */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#05050a]/60 via-transparent to-[#05050a]/25" />
 
       {/* Product window */}
       <div className="absolute inset-x-[6cqw] top-[9cqw] bottom-0">
-        <div className="flex h-full flex-col overflow-hidden rounded-t-[2cqw] border border-white/20 bg-ink-950/75 shadow-[0_4cqw_8cqw_-2cqw_rgba(0,0,0,0.6)] backdrop-blur-xl">
+        <div className="flex h-full flex-col overflow-hidden rounded-t-[2cqw] border border-white/20 bg-[#05050a]/75 shadow-[0_4cqw_8cqw_-2cqw_rgba(0,0,0,0.6)] backdrop-blur-xl">
           {/* Chrome */}
           <div className="flex shrink-0 items-center gap-[1.4cqw] border-b border-white/10 px-[2.4cqw] py-[1.8cqw]">
             <span className="flex gap-[0.8cqw]">

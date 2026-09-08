@@ -10,7 +10,7 @@ export function Engagement() {
   return (
     <section
       id="pricing"
-      className="relative scroll-mt-24 border-y border-white/[0.07] bg-ink-900/40 py-24 lg:py-32"
+      className="relative scroll-mt-24 border-y border-mist-100/[0.07] bg-ink-900/40 py-24 lg:py-32"
     >
       <Container>
         <SectionHeading
@@ -36,7 +36,7 @@ export function Engagement() {
                   "relative flex h-full flex-col overflow-hidden rounded-2xl p-8 transition-all duration-500 ease-out-expo hover:-translate-y-1",
                   tier.featured
                     ? "border border-brand-400/30 bg-ink-850 shadow-[0_30px_80px_-40px_rgba(91,99,245,0.7)] lg:-mt-4 lg:pt-12"
-                    : "surface hover:border-white/15",
+                    : "surface hover:border-mist-100/15",
                 )}
               >
                 {tier.featured ? (
@@ -65,7 +65,7 @@ export function Engagement() {
                     {tier.summary}
                   </p>
 
-                  <ul className="mt-8 flex flex-col gap-3.5 border-t border-white/[0.07] pt-8">
+                  <ul className="mt-8 flex flex-col gap-3.5 border-t border-mist-100/[0.07] pt-8">
                     {tier.includes.map((item) => (
                       <li key={item} className="flex items-start gap-3">
                         <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-brand-500/15 text-brand-300">
@@ -99,7 +99,7 @@ export function Engagement() {
             Not sure which fits?{" "}
             <a
               href="/contact"
-              className="text-mist-300 underline decoration-white/20 underline-offset-4 transition-colors hover:text-mist-100 hover:decoration-brand-400"
+              className="text-mist-300 underline decoration-mist-100/20 underline-offset-4 transition-colors hover:text-mist-100 hover:decoration-brand-400"
             >
               Describe the project
             </a>{" "}

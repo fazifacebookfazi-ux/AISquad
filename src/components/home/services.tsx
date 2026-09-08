@@ -96,7 +96,7 @@ export function Services() {
                 />
 
                 <div className="relative flex items-start justify-between">
-                  <span className="grid size-11 place-items-center rounded-xl border border-white/10 bg-white/[0.05] text-brand-300 transition-colors duration-500 group-hover:border-brand-400/40 group-hover:text-accent-400">
+                  <span className="grid size-11 place-items-center rounded-xl border border-mist-100/10 bg-mist-100/[0.05] text-brand-300 transition-colors duration-500 group-hover:border-brand-400/40 group-hover:text-accent-400">
                     <service.icon className="size-5" strokeWidth={1.6} />
                   </span>
                   <ArrowUpRight className="size-4 text-mist-500 transition-all duration-300 ease-out-expo group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-mist-100" />
@@ -113,7 +113,7 @@ export function Services() {
                   {service.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-md bg-white/[0.05] px-2 py-1 font-mono text-[10px] tracking-wide text-mist-500 uppercase"
+                      className="rounded-md bg-mist-100/[0.05] px-2 py-1 font-mono text-[10px] tracking-wide text-mist-500 uppercase"
                     >
                       {tag}
                     </span>

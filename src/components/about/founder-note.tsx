@@ -5,7 +5,7 @@ import { site } from "@/lib/site";
 
 export function FounderNote() {
   return (
-    <section className="border-y border-white/[0.07] bg-ink-900/40 py-24 lg:py-32">
+    <section className="border-y border-mist-100/[0.07] bg-ink-900/40 py-24 lg:py-32">
       <Container>
         <Reveal>
           <div className="relative overflow-hidden rounded-3xl surface p-10 sm:p-14">
@@ -27,7 +27,7 @@ export function FounderNote() {
                 it&apos;s what we do here every day.&rdquo;
               </p>
 
-              <div className="flex flex-wrap items-center gap-4 border-t border-white/[0.07] pt-8">
+              <div className="flex flex-wrap items-center gap-4 border-t border-mist-100/[0.07] pt-8">
                 <span className="grid size-12 place-items-center rounded-full bg-gradient-to-br from-brand-400 to-accent-500 font-display text-sm font-semibold text-ink-950">
                   {site.founder.initials}
                 </span>

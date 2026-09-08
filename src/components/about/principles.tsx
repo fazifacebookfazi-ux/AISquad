@@ -37,7 +37,7 @@ const principles = [
 
 export function Principles() {
   return (
-    <section className="border-y border-white/[0.07] bg-ink-900/40 py-24 lg:py-32">
+    <section className="border-y border-mist-100/[0.07] bg-ink-900/40 py-24 lg:py-32">
       <Container>
         <SectionHeading
           eyebrow="How we think"
@@ -55,7 +55,7 @@ export function Principles() {
         <div className="mt-14 grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
           {principles.map((item, i) => (
             <Reveal key={item.title} delay={i * 0.06}>
-              <div className="flex flex-col gap-3 border-t border-white/10 pt-6">
+              <div className="flex flex-col gap-3 border-t border-mist-100/10 pt-6">
                 <span className="font-mono text-[10px] tracking-[0.18em] text-mist-500">
                   {String(i + 1).padStart(2, "0")}
                 </span>

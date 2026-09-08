@@ -19,7 +19,7 @@ const timelines = [
 ];
 
 const fieldBase =
-  "w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-[15px] text-mist-100 transition-colors duration-200 outline-none placeholder:text-mist-500 hover:border-white/20 focus:border-brand-400/60 focus:bg-white/[0.05]";
+  "w-full rounded-xl border border-mist-100/10 bg-mist-100/[0.03] px-4 py-3 text-[15px] text-mist-100 transition-colors duration-200 outline-none placeholder:text-mist-500 hover:border-mist-100/20 focus:border-brand-400/60 focus:bg-mist-100/[0.05]";
 
 function Field({
   label,
@@ -65,7 +65,7 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="group inline-flex h-13 w-full items-center justify-center gap-2 rounded-full bg-mist-100 px-7 text-base font-medium tracking-tight text-ink-950 shadow-[0_10px_40px_-12px_rgba(127,140,255,0.55)] transition-all duration-300 ease-out-expo hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_18px_50px_-12px_rgba(127,140,255,0.8)] focus-visible:ring-2 focus-visible:ring-brand-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-60 sm:w-auto"
+      className="group inline-flex h-13 w-full items-center justify-center gap-2 rounded-full bg-mist-100 px-7 text-base font-medium tracking-tight text-ink-950 shadow-[0_10px_40px_-12px_rgba(127,140,255,0.55)] transition-all duration-300 ease-out-expo hover:-translate-y-0.5 hover:bg-mist-50 hover:shadow-[0_18px_50px_-12px_rgba(127,140,255,0.8)] focus-visible:ring-2 focus-visible:ring-brand-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-60 sm:w-auto"
     >
       {pending ? (
         <>

@@ -1,22 +1,30 @@
 @import "tailwindcss";
 
-@theme {
-  --color-ink-950: #05050a;
-  --color-ink-900: #08080f;
-  --color-ink-850: #0b0b14;
-  --color-ink-800: #101019;
-  --color-ink-700: #17172440;
-  --color-mist-100: #f4f4f7;
-  --color-mist-300: #b9bac6;
-  --color-mist-400: #8d8fa3;
-  --color-mist-500: #6b6d82;
+@custom-variant dark (&:where(.dark, .dark *));
 
-  --color-brand-300: #a5b4ff;
-  --color-brand-400: #7f8cff;
-  --color-brand-500: #5b63f5;
-  --color-brand-600: #4740d4;
-  --color-accent-400: #4fd6e0;
-  --color-accent-500: #22c1cf;
+/*
+ * Two semantic scales, both theme-aware:
+ *   ink-*   background surfaces, darkest (950) to lightest elevation
+ *   mist-*  foreground text, strongest (50/100) to faintest (500)
+ * Both invert between themes, so a component written once works in both.
+ */
+@theme {
+  --color-ink-950: var(--ink-950);
+  --color-ink-900: var(--ink-900);
+  --color-ink-850: var(--ink-850);
+  --color-ink-800: var(--ink-800);
+  --color-mist-50: var(--mist-50);
+  --color-mist-100: var(--mist-100);
+  --color-mist-300: var(--mist-300);
+  --color-mist-400: var(--mist-400);
+  --color-mist-500: var(--mist-500);
+
+  --color-brand-300: var(--brand-300);
+  --color-brand-400: var(--brand-400);
+  --color-brand-500: var(--brand-500);
+  --color-brand-600: var(--brand-600);
+  --color-accent-400: var(--accent-400);
+  --color-accent-500: var(--accent-500);
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-sora), var(--font-inter), sans-serif;
@@ -26,14 +34,81 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-:root {
+/* ---- Dark theme (default) ---- */
+:root,
+.dark {
   color-scheme: dark;
+
+  --ink-950: #05050a;
+  --ink-900: #08080f;
+  --ink-850: #0b0b14;
+  --ink-800: #101019;
+
+  --mist-50: #ffffff;
+  --mist-100: #f4f4f7;
+  --mist-300: #b9bac6;
+  --mist-400: #8d8fa3;
+  --mist-500: #6b6d82;
+
+  --brand-300: #a5b4ff;
+  --brand-400: #7f8cff;
+  --brand-500: #5b63f5;
+  --brand-600: #4740d4;
+  --accent-400: #4fd6e0;
+  --accent-500: #22c1cf;
+
+  /* Hairline and tinted-fill strengths, tuned per theme. */
+  --line-alpha: 8%;
+  --grid-alpha: 5%;
+  --surface-top: 6%;
+  --surface-bottom: 1.5%;
+  --scrollbar-thumb: #22222f;
+  --scrollbar-thumb-hover: #33334a;
+}
+
+/* ---- Light theme ---- */
+.light {
+  color-scheme: light;
+
+  --ink-950: #ffffff;
+  --ink-900: #f5f6fb;
+  --ink-850: #eceef7;
+  --ink-800: #e3e6f2;
+
+  --mist-50: #000000;
+  --mist-100: #0c0d15;
+  --mist-300: #3b3f52;
+  --mist-400: #5d6175;
+  --mist-500: #7c8095;
+
+  /* Darkened so brand text stays legible on white. */
+  --brand-300: #4b45cf;
+  --brand-400: #5b53e8;
+  --brand-500: #4740d4;
+  --brand-600: #3a34ad;
+  --accent-400: #0e9aa7;
+  --accent-500: #0b8290;
+
+  /* Black-on-white hairlines read heavier, so these differ from dark. */
+  --line-alpha: 11%;
+  --grid-alpha: 6%;
+  --surface-top: 4%;
+  --surface-bottom: 1%;
+  --scrollbar-thumb: #c7cad8;
+  --scrollbar-thumb-hover: #aeb2c4;
+}
+
+:root {
   --background: var(--color-ink-950);
   --foreground: var(--color-mist-100);
 }
 
 * {
-  border-color: color-mix(in oklab, var(--color-mist-100) 8%, transparent);
+  border-color: color-mix(
+    in oklab,
+    var(--color-mist-100) var(--line-alpha),
+    transparent
+  );
 }
 
 html {
@@ -61,12 +136,12 @@ body {
   background: var(--color-ink-950);
 }
 ::-webkit-scrollbar-thumb {
-  background: #22222f;
+  background: var(--scrollbar-thumb);
   border-radius: 999px;
   border: 3px solid var(--color-ink-950);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #33334a;
+  background: var(--scrollbar-thumb-hover);
 }
 
 @utility text-balance-pretty {
@@ -77,12 +152,14 @@ body {
 @utility bg-grid {
   background-image: linear-gradient(
       to right,
-      color-mix(in oklab, var(--color-mist-100) 5%, transparent) 1px,
+      color-mix(in oklab, var(--color-mist-100) var(--grid-alpha), transparent)
+        1px,
       transparent 1px
     ),
     linear-gradient(
       to bottom,
-      color-mix(in oklab, var(--color-mist-100) 5%, transparent) 1px,
+      color-mix(in oklab, var(--color-mist-100) var(--grid-alpha), transparent)
+        1px,
       transparent 1px
     );
   background-size: 64px 64px;
@@ -91,10 +168,15 @@ body {
 @utility surface {
   background: linear-gradient(
     160deg,
-    color-mix(in oklab, var(--color-mist-100) 6%, transparent),
-    color-mix(in oklab, var(--color-mist-100) 1.5%, transparent)
+    color-mix(in oklab, var(--color-mist-100) var(--surface-top), transparent),
+    color-mix(
+      in oklab,
+      var(--color-mist-100) var(--surface-bottom),
+      transparent
+    )
   );
-  border: 1px solid color-mix(in oklab, var(--color-mist-100) 8%, transparent);
+  border: 1px solid
+    color-mix(in oklab, var(--color-mist-100) var(--line-alpha), transparent);
   backdrop-filter: blur(12px);
 }
 

@@ -27,7 +27,7 @@ const columns = [
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-white/[0.07] bg-ink-900">
+    <footer className="relative overflow-hidden border-t border-mist-100/[0.07] bg-ink-900">
       <div
         aria-hidden
         className="pointer-events-none absolute -top-40 left-1/2 size-[36rem] -translate-x-1/2 rounded-full bg-brand-500/12 blur-[140px]"
@@ -46,7 +46,7 @@ export function Footer() {
                   href={s.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-full border border-white/10 px-3.5 py-1.5 text-xs text-mist-400 transition-colors hover:border-brand-400/40 hover:text-mist-100"
+                  className="rounded-full border border-mist-100/10 px-3.5 py-1.5 text-xs text-mist-400 transition-colors hover:border-brand-400/40 hover:text-mist-100"
                 >
                   {s.label}
                 </a>
@@ -91,7 +91,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-white/[0.07] pt-8 text-xs text-mist-500 sm:flex-row sm:items-center">
+        <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-mist-100/[0.07] pt-8 text-xs text-mist-500 sm:flex-row sm:items-center">
           <p>
             © {new Date().getFullYear()} {site.name}. All rights reserved.
           </p>

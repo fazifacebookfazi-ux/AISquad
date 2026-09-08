@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Sora, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { site } from "@/lib/site";
@@ -73,13 +74,16 @@ export default function RootLayout({
       lang="en"
       className="scroll-pt-24"
       data-scroll-behavior="smooth"
+      suppressHydrationWarning
     >
       <body
         className={`${inter.variable} ${sora.variable} ${instrument.variable} ${jetbrains.variable} antialiased`}
       >
-        <Navbar />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
+        <ThemeProvider>
+          <Navbar />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

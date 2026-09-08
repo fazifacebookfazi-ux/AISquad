@@ -81,7 +81,7 @@ export default async function ProjectPage({
           </Link>
 
           <div className="mt-10 flex items-center gap-3">
-            <span className="rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 font-mono text-[11px] tracking-[0.14em] text-mist-300 uppercase">
+            <span className="rounded-full border border-mist-100/10 bg-mist-100/[0.04] px-3.5 py-1.5 font-mono text-[11px] tracking-[0.14em] text-mist-300 uppercase">
               {project.category}
             </span>
             <span className="font-mono text-[11px] text-mist-500">
@@ -104,7 +104,7 @@ export default async function ProjectPage({
                   href={project.liveUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="group inline-flex items-center gap-2 rounded-full bg-mist-100 px-5 py-2.5 text-sm font-medium text-ink-950 transition-all duration-300 ease-out-expo hover:-translate-y-0.5 hover:bg-white"
+                  className="group inline-flex items-center gap-2 rounded-full bg-mist-100 px-5 py-2.5 text-sm font-medium text-ink-950 transition-all duration-300 ease-out-expo hover:-translate-y-0.5 hover:bg-mist-50"
                 >
                   Visit live site
                   <ExternalLink className="size-4" />
@@ -129,7 +129,7 @@ export default async function ProjectPage({
       {/* ---- Cover ---- */}
       <Container>
         <Reveal>
-          <div className="relative aspect-16/9 overflow-hidden rounded-3xl border border-white/[0.08]">
+          <div className="relative aspect-16/9 overflow-hidden rounded-3xl border border-mist-100/[0.08]">
             <ProjectCover
               project={project}
               priority
@@ -142,7 +142,7 @@ export default async function ProjectPage({
       {/* ---- Meta + metrics ---- */}
       <Container className="pt-14">
         <Reveal>
-          <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.06] lg:grid-cols-4">
+          <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-mist-100/[0.07] bg-mist-100/[0.06] lg:grid-cols-4">
             {meta.map((item) => (
               <div
                 key={item.label}
@@ -202,7 +202,7 @@ export default async function ProjectPage({
               </Reveal>
 
               <Reveal>
-                <dl className="grid gap-px overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.06] sm:grid-cols-3">
+                <dl className="grid gap-px overflow-hidden rounded-2xl border border-mist-100/[0.07] bg-mist-100/[0.06] sm:grid-cols-3">
                   {project.metrics.map((metric) => (
                     <div
                       key={metric.label}
@@ -245,7 +245,7 @@ export default async function ProjectPage({
 
       {/* ---- Next project ---- */}
       {next ? (
-        <section className="border-t border-white/[0.07] py-20">
+        <section className="border-t border-mist-100/[0.07] py-20">
           <Container>
             <Reveal>
               <Link
@@ -263,7 +263,7 @@ export default async function ProjectPage({
                     {next.summary}
                   </span>
                 </span>
-                <span className="grid size-14 shrink-0 place-items-center rounded-full border border-white/10 text-mist-300 transition-all duration-500 ease-out-expo group-hover:border-brand-400/40 group-hover:bg-brand-500/10 group-hover:text-mist-100">
+                <span className="grid size-14 shrink-0 place-items-center rounded-full border border-mist-100/10 text-mist-300 transition-all duration-500 ease-out-expo group-hover:border-brand-400/40 group-hover:bg-brand-500/10 group-hover:text-mist-100">
                   <ArrowRight className="size-5 transition-transform duration-300 ease-out-expo group-hover:translate-x-0.5" />
                 </span>
               </Link>

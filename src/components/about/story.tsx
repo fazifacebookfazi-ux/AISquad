@@ -59,7 +59,7 @@ export function Story() {
         </div>
 
         <Reveal delay={0.1}>
-          <dl className="mt-20 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.06] lg:grid-cols-4">
+          <dl className="mt-20 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-mist-100/[0.07] bg-mist-100/[0.06] lg:grid-cols-4">
             {numbers.map((item) => (
               <div
                 key={item.label}

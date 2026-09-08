@@ -52,7 +52,7 @@ export function Process() {
           description="No endless discovery phases or status meetings. Four clear stages, visible progress from the first week."
         />
 
-        <ol className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.06] md:grid-cols-2 lg:grid-cols-4">
+        <ol className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-mist-100/[0.07] bg-mist-100/[0.06] md:grid-cols-2 lg:grid-cols-4">
           {steps.map((item, i) => (
             <Reveal
               key={item.step}
@@ -61,10 +61,10 @@ export function Process() {
               className="group relative flex flex-col gap-4 bg-ink-950 p-8 transition-colors duration-500 hover:bg-ink-850"
             >
               <div className="flex items-center justify-between">
-                <span className="font-display text-3xl font-semibold tracking-tight text-white/12 transition-colors duration-500 group-hover:text-brand-400/50">
+                <span className="font-display text-3xl font-semibold tracking-tight text-mist-100/12 transition-colors duration-500 group-hover:text-brand-400/50">
                   {item.step}
                 </span>
-                <span className="rounded-full border border-white/10 px-2.5 py-1 font-mono text-[10px] tracking-[0.12em] text-mist-500 uppercase">
+                <span className="rounded-full border border-mist-100/10 px-2.5 py-1 font-mono text-[10px] tracking-[0.12em] text-mist-500 uppercase">
                   {item.duration}
                 </span>
               </div>

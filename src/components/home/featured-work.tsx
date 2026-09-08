@@ -10,7 +10,7 @@ export function FeaturedWork() {
   return (
     <section
       id="work"
-      className="relative scroll-mt-24 border-y border-white/[0.07] bg-ink-900/40 py-24 lg:py-32"
+      className="relative scroll-mt-24 border-y border-mist-100/[0.07] bg-ink-900/40 py-24 lg:py-32"
     >
       <Container>
         <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">

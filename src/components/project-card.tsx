@@ -33,7 +33,7 @@ export function ProjectCard({
           <>
             <div className="absolute inset-0 bg-gradient-to-t from-ink-950/85 via-ink-950/20 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5">
-              <span className="rounded-full border border-white/20 bg-ink-950/50 px-3 py-1 font-mono text-[10px] tracking-[0.14em] text-mist-100 uppercase backdrop-blur">
+              <span className="rounded-full border border-mist-100/20 bg-ink-950/50 px-3 py-1 font-mono text-[10px] tracking-[0.14em] text-mist-100 uppercase backdrop-blur">
                 {project.category}
               </span>
               <span className="font-mono text-[11px] text-mist-300">
@@ -42,7 +42,7 @@ export function ProjectCard({
             </div>
           </>
         ) : (
-          <span className="absolute top-4 right-4 rounded-full border border-white/20 bg-ink-950/40 px-2.5 py-1 font-mono text-[10px] text-mist-100 backdrop-blur">
+          <span className="absolute top-4 right-4 rounded-full border border-mist-100/20 bg-ink-950/40 px-2.5 py-1 font-mono text-[10px] text-mist-100 backdrop-blur">
             {project.year}
           </span>
         )}
@@ -62,7 +62,7 @@ export function ProjectCard({
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-md bg-white/[0.05] px-2 py-1 font-mono text-[10px] tracking-wide text-mist-500 uppercase"
+              className="rounded-md bg-mist-100/[0.05] px-2 py-1 font-mono text-[10px] tracking-wide text-mist-500 uppercase"
             >
               {tag}
             </span>

@@ -10,7 +10,7 @@ export function CTA() {
     <section className="py-24 lg:py-32">
       <Container>
         <Reveal>
-          <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-ink-900 px-8 py-20 text-center sm:px-16">
+          <div className="relative overflow-hidden rounded-3xl border border-mist-100/[0.08] bg-ink-900 px-8 py-20 text-center sm:px-16">
             <div aria-hidden className="pointer-events-none absolute inset-0">
               <div className="absolute inset-0 bg-grid [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,black,transparent)]" />
               <div className="animate-aurora absolute -bottom-40 left-1/2 size-[34rem] -translate-x-1/2 rounded-full bg-brand-500/25 blur-[130px]" />

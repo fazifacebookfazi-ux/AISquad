@@ -59,7 +59,7 @@ export function AlwaysIncluded() {
           description="These aren't line items on a quote. They come with everything we build."
         />
 
-        <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.06] sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-mist-100/[0.07] bg-mist-100/[0.06] sm:grid-cols-2 lg:grid-cols-3">
           {included.map((item, i) => (
             <Reveal
               key={item.title}
