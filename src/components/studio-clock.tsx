@@ -26,7 +26,7 @@ export function StudioClock() {
       suppressHydrationWarning
       className="hidden w-[7.25rem] font-mono text-[11px] tracking-[0.16em] text-mist-500 tabular-nums uppercase sm:inline"
     >
-      PKT {label || "00:00"}
+      PKT {label || "——:——"}
     </time>
   );
 }
