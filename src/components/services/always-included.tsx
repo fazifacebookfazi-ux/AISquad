@@ -51,7 +51,7 @@ export function AlwaysIncluded() {
           title={
             <>
               The baseline is{" "}
-              <span className="font-serif italic text-brand-300">
+              <span className="italic text-brand-400">
                 never optional
               </span>
             </>

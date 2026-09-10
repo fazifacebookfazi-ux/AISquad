@@ -23,9 +23,7 @@ export default function ServicesPage() {
         title={
           <>
             Design and engineering,{" "}
-            <span className="font-serif italic text-brand-300">
-              under one roof
-            </span>
+            <span className="italic text-brand-400">under one roof</span>
           </>
         }
         description="Pick a single sprint or a full product partnership. The same small team handles strategy, design and code, so nothing gets lost between them."

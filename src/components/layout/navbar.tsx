@@ -69,7 +69,7 @@ export function Navbar() {
         <div className="flex items-center gap-4">
           <StudioClock />
           <ThemeToggle />
-          <ButtonLink href="/contact" size="sm" className="hidden sm:inline-flex">
+          <ButtonLink href="/contact" size="sm">
             Start
           </ButtonLink>
           <button

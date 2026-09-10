@@ -7,7 +7,7 @@ import { CTA } from "@/components/home/cta";
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "Case studies from AISquadX — SaaS platforms, marketing sites, AI products and MVP sprints, with the problem, the approach and the outcome for each.",
+    "In-house products from AISquadX — a public tool directory, a local clipping studio, and an offline voice pipeline.",
   alternates: { canonical: "/projects" },
 };
 
@@ -19,10 +19,10 @@ export default function ProjectsPage() {
         title={
           <>
             Work we&apos;ve{" "}
-            <span className="font-serif italic text-brand-300">shipped</span>
+            <span className="italic text-brand-400">shipped</span>
           </>
         }
-        description="Each one starts with a real problem and ends with something live. Open any project to read how it came together."
+        description="Each one starts with a real problem. Two run locally; StartupAI Tools is live."
       />
 
       <Container className="pb-24 lg:pb-32">

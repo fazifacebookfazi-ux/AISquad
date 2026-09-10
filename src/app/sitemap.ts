@@ -3,7 +3,7 @@ import { site } from "@/lib/site";
 import { projects } from "@/lib/projects";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
+  const lastModified = new Date("2026-09-10");
 
   const pages = [
     { path: "", priority: 1 },
@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/projects", priority: 0.9 },
     { path: "/about", priority: 0.7 },
     { path: "/contact", priority: 0.8 },
+    { path: "/privacy", priority: 0.3 },
   ];
 
   const caseStudies = projects.map((project) => ({

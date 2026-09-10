@@ -44,7 +44,7 @@ export function Principles() {
           title={
             <>
               Six things we{" "}
-              <span className="font-serif italic text-brand-300">
+              <span className="italic text-brand-400">
                 actually believe
               </span>
             </>

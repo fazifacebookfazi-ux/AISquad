@@ -24,7 +24,7 @@ export function FeaturedWork() {
                 <span className="italic text-brand-400">actually run.</span>
               </>
             }
-            description="Case studies written from the code, not from a pitch deck."
+            description="Written from the code. Two of these only run on a local machine — we say so."
           />
           <Reveal delay={0.15}>
             <ButtonLink href="/projects" variant="secondary">

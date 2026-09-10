@@ -106,7 +106,7 @@ export function ContactForm() {
   const { errors = {}, values = {} } = state;
 
   return (
-    <form action={formAction} className="flex flex-col gap-6">
+    <form action={formAction} className="relative flex flex-col gap-6">
       {/* Honeypot */}
       <div aria-hidden className="absolute -left-[9999px]">
         <label htmlFor={`${id}-website`}>Website</label>
@@ -225,7 +225,11 @@ export function ContactForm() {
       <div className="flex flex-col items-start gap-4 pt-2 sm:flex-row sm:items-center">
         <SubmitButton />
         <p className="text-xs leading-relaxed text-mist-500">
-          We reply within one business day. No newsletters, no sales sequences.
+          We reply within one business day. No newsletters. See{" "}
+          <a href="/privacy" className="text-mist-300 underline">
+            how we use this
+          </a>
+          .
         </p>
       </div>
     </form>

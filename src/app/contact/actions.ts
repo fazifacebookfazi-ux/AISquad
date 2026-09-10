@@ -1,5 +1,6 @@
 "use server";
 
+import { headers } from "next/headers";
 import { site } from "@/lib/site";
 
 export type ContactState = {
@@ -25,6 +26,22 @@ function clean(value: FormDataEntryValue | null, max: number) {
   return typeof value === "string" ? value.trim().slice(0, max) : "";
 }
 
+const RATE_WINDOW_MS = 15 * 60 * 1000;
+const RATE_MAX = 5;
+const buckets = new Map<string, { count: number; reset: number }>();
+
+function allowRequest(ip: string) {
+  const now = Date.now();
+  const current = buckets.get(ip);
+  if (!current || now > current.reset) {
+    buckets.set(ip, { count: 1, reset: now + RATE_WINDOW_MS });
+    return true;
+  }
+  if (current.count >= RATE_MAX) return false;
+  current.count += 1;
+  return true;
+}
+
 export async function submitEnquiry(
   _prev: ContactState,
   formData: FormData,
@@ -32,6 +49,18 @@ export async function submitEnquiry(
   // Bots fill hidden fields; humans never see this one.
   if (clean(formData.get("website"), 200)) {
     return { status: "success", message: "Thanks — we'll be in touch." };
+  }
+
+  const headerList = await headers();
+  const ip =
+    headerList.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    headerList.get("x-real-ip") ||
+    "unknown";
+  if (!allowRequest(ip)) {
+    return {
+      status: "error",
+      message: `Too many messages from this network. Email ${site.email} directly.`,
+    };
   }
 
   const values = {

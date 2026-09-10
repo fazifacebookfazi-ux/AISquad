@@ -7,6 +7,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { MeshField } from "@/components/mesh-field";
 import { ProjectCover } from "@/components/project-cover";
 import { projects } from "@/lib/projects";
+import { cn } from "@/lib/utils";
 
 const stats = [
   { value: "100+", label: "Tools in StartupAI" },
@@ -14,7 +15,7 @@ const stats = [
   { value: "9:16", label: "Clips from long video" },
 ];
 
-export function Hero() {
+export function Hero({ year }: { year: number }) {
   const stack = projects.slice(0, 3);
 
   return (
@@ -22,13 +23,13 @@ export function Hero() {
       <MeshField className="pointer-events-none absolute inset-0 opacity-55" />
 
       <Container className="relative">
-        <div className="grid items-start gap-14 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
+        <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
           <div>
             <p className="font-mono text-[11px] tracking-[0.22em] text-mist-500 uppercase">
-              Studio · Pakistan · {new Date().getFullYear()}
+              Studio · Pakistan · {year}
             </p>
 
-            <h1 className="mt-7 font-display text-[12vw] leading-[0.88] tracking-[-0.04em] text-mist-100 sm:text-[4.6rem] lg:text-[5.4rem]">
+            <h1 className="mt-7 font-display text-[clamp(2.6rem,8vw,5.4rem)] leading-[0.88] tracking-[-0.04em] text-mist-100">
               Work that
               <br />
               holds up
@@ -53,26 +54,28 @@ export function Hero() {
             </div>
           </div>
 
-          <ul className="relative hidden min-h-[28rem] list-none lg:block">
+          <ul className="relative flex list-none flex-col gap-3 lg:block lg:min-h-[28rem]">
             {stack.map((project, i) => (
               <li
                 key={project.slug}
-                className="absolute w-[74%]"
-                style={{
-                  top: `${i * 4.6}rem`,
-                  left: `${i * 2.4}rem`,
-                  zIndex: i + 1,
-                  transform: `rotate(${[-0.6, 1.4, -1.1][i]}deg)`,
-                }}
+                className={cn(
+                  "relative w-full lg:absolute lg:w-[74%]",
+                  i === 0 && "lg:top-0 lg:left-0 lg:-rotate-[0.6deg]",
+                  i === 1 &&
+                    "lg:top-[4.6rem] lg:left-[2.4rem] lg:rotate-[1.4deg]",
+                  i === 2 &&
+                    "lg:top-[9.2rem] lg:left-[4.8rem] lg:-rotate-[1.1deg]",
+                )}
+                style={{ zIndex: i + 1 }}
               >
                 <Link
                   href={`/projects/${project.slug}`}
-                  className="group block overflow-hidden border border-mist-100/15 bg-ink-950 shadow-[0_24px_50px_-28px_rgba(0,0,0,0.55)] transition-transform duration-500 ease-out-expo hover:-translate-y-1 hover:rotate-0"
+                  className="group block overflow-hidden border border-mist-100/15 bg-ink-850 shadow-[0_24px_50px_-28px_rgba(0,0,0,0.55)] transition-transform duration-500 ease-out-expo hover:-translate-y-1 hover:rotate-0 lg:bg-ink-950"
                 >
-                  <div className="relative h-44 overflow-hidden">
+                  <div className="relative h-40 overflow-hidden sm:h-44">
                     <ProjectCover project={project} sizes="420px" />
                   </div>
-                  <div className="flex items-baseline justify-between gap-3 border-t border-mist-100/10 px-4 py-3">
+                  <div className="flex items-baseline justify-between gap-3 border-t border-mist-100/10 bg-ink-950 px-4 py-3">
                     <span className="font-display text-lg tracking-tight text-mist-100 italic">
                       {project.title}
                     </span>
@@ -86,7 +89,7 @@ export function Hero() {
           </ul>
         </div>
 
-        <dl className="mt-20 grid grid-cols-1 border-t border-mist-100/10 sm:grid-cols-3">
+        <dl className="mt-16 grid grid-cols-1 border-t border-mist-100/10 sm:grid-cols-3 lg:mt-20">
           {stats.map((s) => (
             <div
               key={s.label}

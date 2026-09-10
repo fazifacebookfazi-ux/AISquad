@@ -11,14 +11,13 @@ export function PageHeader({
   description?: string;
 }) {
   return (
-    <section className="relative overflow-hidden pt-32 pb-14 sm:pt-40 lg:pb-16">
+    <section className="relative overflow-hidden pt-28 pb-10 sm:pt-32 sm:pb-12">
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-grid opacity-60" />
-        <div className="absolute top-0 left-[12%] h-full w-px bg-mist-100/8" />
+        <div className="absolute inset-0 bg-grid opacity-40" />
       </div>
-      <Container className="relative flex flex-col gap-6">
+      <Container className="relative flex flex-col gap-5">
         <Eyebrow className="self-start">{eyebrow}</Eyebrow>
-        <h1 className="max-w-4xl font-display text-[2.6rem] leading-[0.95] tracking-[-0.04em] text-mist-100 sm:text-6xl lg:text-[4.4rem]">
+        <h1 className="max-w-4xl font-display text-[clamp(2.2rem,5vw,4rem)] leading-[0.95] tracking-[-0.04em] text-mist-100">
           {title}
         </h1>
         {description ? (

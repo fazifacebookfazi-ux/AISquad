@@ -1,14 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import {
-  Inter,
-  Fraunces,
-  Instrument_Serif,
-  JetBrains_Mono,
-} from "next/font/google";
+import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { JsonLd } from "@/components/json-ld";
 import { site } from "@/lib/site";
 
 const inter = Inter({
@@ -22,14 +19,6 @@ const fraunces = Fraunces({
   variable: "--font-fraunces",
   display: "swap",
   axes: ["SOFT", "WONK", "opsz"],
-});
-
-const instrument = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["italic", "normal"],
-  variable: "--font-instrument",
-  display: "swap",
 });
 
 const jetbrains = JetBrains_Mono({
@@ -46,12 +35,11 @@ export const metadata: Metadata = {
   },
   description: site.description,
   keywords: [
-    "web development agency",
-    "vibe coding",
+    "web development studio",
+    "Next.js",
     "SaaS development",
-    "Next.js agency",
-    "AI web development",
-    "MVP development",
+    "Pakistan",
+    "AI-assisted engineering",
   ],
   openGraph: {
     type: "website",
@@ -59,6 +47,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
+    locale: "en_GB",
   },
   twitter: {
     card: "summary_large_image",
@@ -69,7 +58,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#080706",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f6f1e8" },
+    { media: "(prefers-color-scheme: dark)", color: "#080706" },
+  ],
 };
 
 export default function RootLayout({
@@ -83,9 +75,10 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body
-        className={`${inter.variable} ${fraunces.variable} ${instrument.variable} ${jetbrains.variable} antialiased`}
+        className={`${inter.variable} ${fraunces.variable} ${jetbrains.variable} antialiased`}
       >
         <ThemeProvider>
+          <JsonLd />
           <a
             href="#main"
             className="bg-brand-400 text-ink-950 focus:fixed focus:top-3 focus:left-3 focus:z-[200] focus:px-4 focus:py-2 sr-only focus:not-sr-only"
@@ -97,6 +90,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>

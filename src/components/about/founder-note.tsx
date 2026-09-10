@@ -8,12 +8,7 @@ export function FounderNote() {
     <section className="border-y border-mist-100/[0.07] bg-ink-900/40 py-24 lg:py-32">
       <Container>
         <Reveal>
-          <div className="relative overflow-hidden rounded-3xl surface p-10 sm:p-14">
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -top-32 -right-20 size-96 rounded-full bg-brand-500/12 blur-[120px]"
-            />
-
+          <div className="relative overflow-hidden surface p-10 sm:p-14">
             <div className="relative flex max-w-3xl flex-col gap-8">
               <span className="font-mono text-[10px] tracking-[0.18em] text-mist-500 uppercase">
                 A note from the founder
@@ -28,7 +23,7 @@ export function FounderNote() {
               </p>
 
               <div className="flex flex-wrap items-center gap-4 border-t border-mist-100/[0.07] pt-8">
-                <span className="grid size-12 place-items-center rounded-full bg-gradient-to-br from-brand-400 to-accent-500 font-display text-sm font-semibold text-ink-950">
+                <span className="grid size-12 place-items-center bg-brand-400 font-mono text-[11px] tracking-[0.12em] font-semibold text-ink-950">
                   {site.founder.initials}
                 </span>
                 <span className="flex flex-col">

@@ -20,7 +20,7 @@ export function Engagement() {
           title={
             <>
               Three shapes of{" "}
-              <span className="font-serif italic text-brand-300">
+              <span className="italic text-brand-400">
                 collaboration
               </span>
             </>

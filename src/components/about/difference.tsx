@@ -39,7 +39,7 @@ export function Difference() {
           title={
             <>
               The agency model,{" "}
-              <span className="font-serif italic text-brand-300">
+              <span className="italic text-brand-400">
                 rearranged
               </span>
             </>

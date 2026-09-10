@@ -43,7 +43,7 @@ export default function ContactPage() {
         title={
           <>
             Tell us what you&apos;re{" "}
-            <span className="font-serif italic text-brand-300">building</span>
+            <span className="italic text-brand-400">building</span>
           </>
         }
         description="Share a few details below and you'll hear back within one business day — from a person, not an autoresponder."

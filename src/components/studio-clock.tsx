@@ -9,9 +9,9 @@ const formatter = new Intl.DateTimeFormat("en-GB", {
   hour12: false,
 });
 
-/** Wall clock for the studio — PKT, no flash of a server timezone. */
+/** Wall clock for the studio — PKT, reserved width so the nav does not jump. */
 export function StudioClock() {
-  const [label, setLabel] = useState<string | null>(null);
+  const [label, setLabel] = useState("");
 
   useEffect(() => {
     const tick = () => setLabel(formatter.format(new Date()));
@@ -20,20 +20,13 @@ export function StudioClock() {
     return () => window.clearInterval(id);
   }, []);
 
-  if (!label) {
-    return (
-      <span className="hidden w-[7.5rem] font-mono text-[11px] tracking-[0.16em] text-mist-500 uppercase sm:inline">
-        PKT ——:——
-      </span>
-    );
-  }
-
   return (
     <time
-      dateTime={label}
-      className="hidden font-mono text-[11px] tracking-[0.16em] text-mist-500 tabular-nums uppercase sm:inline"
+      dateTime={label || undefined}
+      suppressHydrationWarning
+      className="hidden w-[7.25rem] font-mono text-[11px] tracking-[0.16em] text-mist-500 tabular-nums uppercase sm:inline"
     >
-      PKT {label}
+      PKT {label || "00:00"}
     </time>
   );
 }

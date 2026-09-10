@@ -48,7 +48,7 @@ export function ServiceSections() {
                   </Reveal>
 
                   <Reveal delay={0.08}>
-                    <p className="mt-3 font-serif text-xl text-brand-300 italic">
+                    <p className="mt-3 font-display text-xl text-brand-400 italic">
                       {service.tagline}
                     </p>
                   </Reveal>

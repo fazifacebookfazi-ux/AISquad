@@ -40,12 +40,10 @@ export function FAQ() {
             title={
               <>
                 Questions,{" "}
-                <span className="font-serif italic text-brand-300">
-                  answered
-                </span>
+                <span className="italic text-brand-400">answered</span>
               </>
             }
-            description="Still unsure about something? Send a note and you’ll hear back the same day."
+            description="Still unsure? Send a note — we reply within one business day."
             className="lg:sticky lg:top-28 lg:self-start"
           />
 

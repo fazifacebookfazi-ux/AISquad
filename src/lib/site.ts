@@ -1,22 +1,23 @@
 export const site = {
   name: "AISquadX",
-  domain: "aisquadx.tech",
-  url: "https://aisquadx.tech",
+  domain: "www.aisquadx.tech",
+  url: "https://www.aisquadx.tech",
   tagline: "Design-led engineering studio",
   description:
     "AISquadX designs and ships websites, SaaS products and internal tools. Type, colour and motion are part of the engineering — not a coat of paint at the end.",
   email: "hello@aisquadx.tech",
-  // TODO: replace with your real name before launch — used on the about page.
+  location: "Pakistan",
   founder: {
-    name: "Your Name",
+    name: "Faizan Arif",
     role: "Founder & Lead Engineer",
-    initials: "AX",
+    initials: "FA",
   },
   calendly: "/contact",
   socials: [
-    { label: "GitHub", href: "https://github.com" },
-    { label: "X", href: "https://x.com" },
-    { label: "LinkedIn", href: "https://linkedin.com" },
+    {
+      label: "GitHub",
+      href: "https://github.com/fazifacebookfazi-ux",
+    },
   ],
 } as const;
 
