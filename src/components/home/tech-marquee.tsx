@@ -1,37 +1,28 @@
-import { Container } from "@/components/ui/container";
-
 const stack = [
   "Next.js",
   "React",
   "TypeScript",
-  "Tailwind CSS",
-  "Node.js",
-  "Supabase",
+  "Tailwind",
+  "Python",
+  "PyTorch",
+  "FFmpeg",
+  "FastAPI",
   "PostgreSQL",
-  "Stripe",
-  "OpenAI",
   "Vercel",
-  "Framer Motion",
-  "Prisma",
 ];
 
 export function TechMarquee() {
   return (
-    <section className="border-y border-mist-100/[0.07] bg-ink-900/60 py-10">
-      <Container>
-        <p className="text-center font-mono text-[11px] tracking-[0.2em] text-mist-500 uppercase">
-          Built with a modern, production-grade stack
-        </p>
-      </Container>
-
-      <div className="relative mt-7 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
-        <div className="animate-marquee flex w-max gap-4 pr-4">
+    <section className="overflow-hidden border-y border-mist-100/10 py-6">
+      <div className="relative [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+        <div className="animate-marquee flex w-max gap-10 pr-10">
           {[...stack, ...stack].map((item, i) => (
             <span
               key={`${item}-${i}`}
-              className="rounded-full border border-mist-100/[0.08] bg-mist-100/[0.03] px-5 py-2.5 text-sm whitespace-nowrap text-mist-300"
+              className="font-display text-4xl tracking-tight text-mist-100/25 italic sm:text-5xl"
             >
               {item}
+              <span className="ml-10 text-brand-400/50">/</span>
             </span>
           ))}
         </div>

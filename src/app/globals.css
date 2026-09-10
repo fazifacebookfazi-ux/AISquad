@@ -27,7 +27,7 @@
   --color-accent-500: var(--accent-500);
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-sora), var(--font-inter), sans-serif;
+  --font-display: var(--font-fraunces), var(--font-instrument), Georgia, serif;
   --font-serif: var(--font-instrument), Georgia, serif;
   --font-mono: var(--font-mono-jb), ui-monospace, monospace;
 
@@ -39,23 +39,23 @@
 .dark {
   color-scheme: dark;
 
-  --ink-950: #05050a;
-  --ink-900: #08080f;
-  --ink-850: #0b0b14;
-  --ink-800: #101019;
+  --ink-950: #080706;
+  --ink-900: #100e0c;
+  --ink-850: #171411;
+  --ink-800: #211c18;
 
-  --mist-50: #ffffff;
-  --mist-100: #f4f4f7;
-  --mist-300: #b9bac6;
-  --mist-400: #8d8fa3;
-  --mist-500: #6b6d82;
+  --mist-50: #fffaf3;
+  --mist-100: #f6f0e6;
+  --mist-300: #c9c0b3;
+  --mist-400: #9b9286;
+  --mist-500: #6f675c;
 
-  --brand-300: #a5b4ff;
-  --brand-400: #7f8cff;
-  --brand-500: #5b63f5;
-  --brand-600: #4740d4;
-  --accent-400: #4fd6e0;
-  --accent-500: #22c1cf;
+  --brand-300: #eaff7a;
+  --brand-400: #d4ff3a;
+  --brand-500: #b6e00f;
+  --brand-600: #8fb000;
+  --accent-400: #ff9b6a;
+  --accent-500: #e87a45;
 
   /* Hairline and tinted-fill strengths, tuned per theme. */
   --line-alpha: 8%;
@@ -70,24 +70,23 @@
 .light {
   color-scheme: light;
 
-  --ink-950: #ffffff;
-  --ink-900: #f5f6fb;
-  --ink-850: #eceef7;
-  --ink-800: #e3e6f2;
+  --ink-950: #f6f1e8;
+  --ink-900: #eee7db;
+  --ink-850: #e4dccf;
+  --ink-800: #d8cfc0;
 
-  --mist-50: #000000;
-  --mist-100: #0c0d15;
-  --mist-300: #3b3f52;
-  --mist-400: #5d6175;
-  --mist-500: #7c8095;
+  --mist-50: #080706;
+  --mist-100: #14110e;
+  --mist-300: #3f3a34;
+  --mist-400: #5c564e;
+  --mist-500: #7a7368;
 
-  /* Darkened so brand text stays legible on white. */
-  --brand-300: #4b45cf;
-  --brand-400: #5b53e8;
-  --brand-500: #4740d4;
-  --brand-600: #3a34ad;
-  --accent-400: #0e9aa7;
-  --accent-500: #0b8290;
+  --brand-300: #4a5c00;
+  --brand-400: #5c7300;
+  --brand-500: #6d8800;
+  --brand-600: #3d4d00;
+  --accent-400: #b4532a;
+  --accent-500: #933c1a;
 
   /* Black-on-white hairlines read heavier, so these differ from dark. */
   --line-alpha: 11%;
@@ -120,13 +119,36 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
+body::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+}
+
+.font-display {
+  font-feature-settings: "kern" 1, "liga" 1, "dlig" 1, "ss01" 1;
+  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 72, "SOFT" 20, "WONK" 0;
+}
+
+h1.font-display,
+h2.font-display {
+  font-variation-settings: "opsz" 144, "SOFT" 35, "WONK" 1;
+}
+
 ::selection {
-  background: color-mix(in oklab, var(--color-brand-400) 35%, transparent);
-  color: #fff;
+  background: var(--color-brand-400);
+  color: #080706;
 }
 
 ::-webkit-scrollbar {
@@ -137,8 +159,7 @@ body {
 }
 ::-webkit-scrollbar-thumb {
   background: var(--scrollbar-thumb);
-  border-radius: 999px;
-  border: 3px solid var(--color-ink-950);
+  border: 2px solid var(--color-ink-950);
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-thumb-hover);
@@ -148,36 +169,56 @@ body {
   text-wrap: balance;
 }
 
-/* Soft grid backdrop used behind hero and CTA blocks. */
+/* Draftsman's construction grid — numbered columns, not a SaaS mesh. */
 @utility bg-grid {
-  background-image: linear-gradient(
+  background-image:
+    repeating-linear-gradient(
       to right,
-      color-mix(in oklab, var(--color-mist-100) var(--grid-alpha), transparent)
+      color-mix(in oklab, var(--color-mist-100) var(--grid-alpha), transparent) 0
         1px,
-      transparent 1px
+      transparent 1px 88px
     ),
-    linear-gradient(
+    repeating-linear-gradient(
       to bottom,
-      color-mix(in oklab, var(--color-mist-100) var(--grid-alpha), transparent)
-        1px,
-      transparent 1px
+      color-mix(in oklab, var(--color-mist-100) calc(var(--grid-alpha) * 0.55), transparent)
+        0 1px,
+      transparent 1px 88px
     );
-  background-size: 64px 64px;
 }
 
 @utility surface {
-  background: linear-gradient(
-    160deg,
-    color-mix(in oklab, var(--color-mist-100) var(--surface-top), transparent),
-    color-mix(
-      in oklab,
-      var(--color-mist-100) var(--surface-bottom),
-      transparent
-    )
+  background: color-mix(
+    in oklab,
+    var(--color-mist-100) var(--surface-top),
+    transparent
   );
   border: 1px solid
     color-mix(in oklab, var(--color-mist-100) var(--line-alpha), transparent);
-  backdrop-filter: blur(12px);
+}
+
+@utility crop-marks {
+  position: relative;
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-color: color-mix(in oklab, var(--color-mist-100) 28%, transparent);
+    pointer-events: none;
+  }
+  &::before {
+    top: -1px;
+    left: -1px;
+    border-top: 1px solid;
+    border-left: 1px solid;
+  }
+  &::after {
+    right: -1px;
+    bottom: -1px;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+  }
 }
 
 @utility scrollbar-none {
@@ -189,10 +230,9 @@ body {
 
 @utility text-gradient {
   background: linear-gradient(
-    100deg,
-    var(--color-mist-100) 10%,
-    var(--color-brand-300) 55%,
-    var(--color-accent-400) 95%
+    105deg,
+    var(--color-brand-300) 0%,
+    var(--color-accent-400) 100%
   );
   -webkit-background-clip: text;
   background-clip: text;

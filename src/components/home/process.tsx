@@ -36,42 +36,39 @@ const steps = [
 export function Process() {
   return (
     <section id="process" className="relative scroll-mt-24 py-24 lg:py-32">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute top-1/3 left-1/2 size-[40rem] -translate-x-1/2 rounded-full bg-brand-500/8 blur-[160px]"
-      />
-      <Container className="relative">
+      <Container>
         <SectionHeading
-          eyebrow="How we work"
+          eyebrow="Method"
           title={
             <>
-              A process built for{" "}
-              <span className="font-serif italic text-brand-300">momentum</span>
+              Four stages. No{" "}
+              <span className="italic text-brand-400">theatre.</span>
             </>
           }
-          description="No endless discovery phases or status meetings. Four clear stages, visible progress from the first week."
+          description="Visible progress from the first week — not a six-week discovery deck."
         />
 
-        <ol className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-mist-100/[0.07] bg-mist-100/[0.06] md:grid-cols-2 lg:grid-cols-4">
+        <ol className="relative mt-16 border-l border-brand-400/40 pl-8 sm:pl-12">
           {steps.map((item, i) => (
             <Reveal
               key={item.step}
               as="li"
               delay={i * 0.08}
-              className="group relative flex flex-col gap-4 bg-ink-950 p-8 transition-colors duration-500 hover:bg-ink-850"
+              className="relative pb-12 last:pb-0"
             >
-              <div className="flex items-center justify-between">
-                <span className="font-display text-3xl font-semibold tracking-tight text-mist-100/12 transition-colors duration-500 group-hover:text-brand-400/50">
+              <span className="absolute top-1.5 -left-[2.15rem] size-2.5 bg-brand-400 sm:-left-[3.15rem]" />
+              <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                <span className="font-mono text-[11px] tracking-[0.22em] text-brand-400">
                   {item.step}
                 </span>
-                <span className="rounded-full border border-mist-100/10 px-2.5 py-1 font-mono text-[10px] tracking-[0.12em] text-mist-500 uppercase">
+                <h3 className="font-display text-3xl tracking-tight text-mist-100 italic">
+                  {item.title}
+                </h3>
+                <span className="font-mono text-[10px] tracking-[0.16em] text-mist-500 uppercase">
                   {item.duration}
                 </span>
               </div>
-              <h3 className="font-display text-lg font-semibold tracking-tight text-mist-100">
-                {item.title}
-              </h3>
-              <p className="text-sm leading-relaxed text-mist-400">
+              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-mist-400 sm:text-[15px]">
                 {item.description}
               </p>
             </Reveal>

@@ -19,7 +19,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       aria-label="Toggle between light and dark theme"
       title="Toggle theme"
       className={cn(
-        "group relative grid size-10 place-items-center rounded-full border border-mist-100/10 text-mist-400 transition-colors duration-300 hover:border-brand-400/40 hover:bg-mist-100/5 hover:text-mist-100 focus-visible:ring-2 focus-visible:ring-brand-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 focus-visible:outline-none",
+        "group relative grid size-10 place-items-center border border-mist-100/15 text-mist-400 transition-colors duration-300 hover:border-brand-400 hover:text-brand-400 focus-visible:ring-2 focus-visible:ring-brand-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 focus-visible:outline-none",
         className,
       )}
     >

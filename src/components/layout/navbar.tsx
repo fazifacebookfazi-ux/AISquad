@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { ButtonLink } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Logo } from "./logo";
+import { StudioClock } from "@/components/studio-clock";
 import { navLinks } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -33,16 +34,16 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-out-expo",
+        "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
         scrolled
-          ? "border-b border-mist-100/[0.07] bg-ink-950/70 backdrop-blur-xl"
+          ? "border-b border-mist-100/10 bg-ink-950/90 backdrop-blur-md"
           : "border-b border-transparent",
       )}
     >
-      <Container className="flex h-18 items-center justify-between">
+      <Container className="flex h-16 items-center justify-between">
         <Logo />
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-7 md:flex">
           {navLinks.map((link) => {
             const active =
               link.href.startsWith("/") &&
@@ -53,7 +54,7 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "rounded-full px-4 py-2 text-sm tracking-tight transition-colors duration-200",
+                  "text-[13px] tracking-tight transition-colors",
                   active
                     ? "text-mist-100"
                     : "text-mist-400 hover:text-mist-100",
@@ -65,24 +66,18 @@ export function Navbar() {
           })}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
+          <StudioClock />
           <ThemeToggle />
-
-          <ButtonLink
-            href="/contact"
-            size="sm"
-            className="hidden sm:inline-flex"
-          >
-            Start a project
-            <ArrowUpRight className="size-4 transition-transform duration-300 ease-out-expo group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          <ButtonLink href="/contact" size="sm" className="hidden sm:inline-flex">
+            Start
           </ButtonLink>
-
           <button
             type="button"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="grid size-10 place-items-center rounded-full border border-mist-100/10 text-mist-300 transition-colors hover:bg-mist-100/5 md:hidden"
+            className="grid size-10 place-items-center border border-mist-100/15 text-mist-300 md:hidden"
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
@@ -91,17 +86,17 @@ export function Navbar() {
 
       <div
         className={cn(
-          "overflow-hidden border-t border-mist-100/[0.07] bg-ink-950/95 backdrop-blur-xl transition-[max-height,opacity] duration-500 ease-out-expo md:hidden",
-          open ? "max-h-96 opacity-100" : "max-h-0 opacity-0",
+          "overflow-hidden border-t border-mist-100/10 bg-ink-950 transition-[max-height,opacity] duration-500 ease-out-expo md:hidden",
+          open ? "max-h-[28rem] opacity-100" : "max-h-0 opacity-0",
         )}
       >
-        <Container className="flex flex-col gap-1 py-5">
+        <Container className="flex flex-col gap-1 py-6">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="rounded-xl px-3 py-3 text-[15px] text-mist-300 transition-colors hover:bg-mist-100/5 hover:text-mist-100"
+              className="px-1 py-3 text-[15px] text-mist-300 hover:text-mist-100"
             >
               {link.label}
             </Link>
@@ -109,10 +104,9 @@ export function Navbar() {
           <ButtonLink
             href="/contact"
             onClick={() => setOpen(false)}
-            className="mt-3 w-full"
+            className="mt-4 w-full"
           >
             Start a project
-            <ArrowUpRight className="size-4" />
           </ButtonLink>
         </Container>
       </div>

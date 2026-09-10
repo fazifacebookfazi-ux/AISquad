@@ -1,112 +1,107 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { ButtonLink } from "@/components/ui/button";
+import { MeshField } from "@/components/mesh-field";
+import { ProjectCover } from "@/components/project-cover";
+import { projects } from "@/lib/projects";
 
 const stats = [
-  { value: "40+", label: "Products shipped" },
-  { value: "3 wks", label: "Average MVP launch" },
-  { value: "100%", label: "Client retention" },
+  { value: "100+", label: "Tools in StartupAI" },
+  { value: "Offline", label: "Voice pipeline" },
+  { value: "9:16", label: "Clips from long video" },
 ];
 
 export function Hero() {
-  const reduced = useReducedMotion();
-
-  const rise = (delay: number) => ({
-    initial: reduced ? false : { opacity: 0, y: 22 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.85, delay, ease: [0.16, 1, 0.3, 1] as const },
-  });
+  const stack = projects.slice(0, 3);
 
   return (
-    <section className="relative overflow-hidden pt-36 pb-20 sm:pt-44 lg:pt-52 lg:pb-28">
-      {/* Ambient backdrop */}
-      <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-grid [mask-image:radial-gradient(ellipse_70%_55%_at_50%_0%,black,transparent)]" />
-        <div className="animate-aurora absolute -top-52 left-1/2 size-[46rem] -translate-x-1/2 rounded-full bg-brand-500/22 blur-[150px]" />
-        <div className="animate-aurora absolute -top-24 right-[8%] size-[26rem] rounded-full bg-accent-500/14 blur-[130px] [animation-delay:-6s]" />
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink-950 to-transparent" />
-      </div>
+    <section className="relative overflow-hidden pt-28 pb-16 lg:pt-32 lg:pb-10">
+      <MeshField className="pointer-events-none absolute inset-0 opacity-55" />
 
       <Container className="relative">
-        <div className="flex flex-col items-center text-center">
-          <motion.div {...rise(0)}>
-            <a
-              href="#services"
-              className="group inline-flex items-center gap-2.5 rounded-full border border-mist-100/10 bg-mist-100/[0.04] py-1.5 pr-2 pl-3 text-[13px] text-mist-300 backdrop-blur transition-colors hover:border-brand-400/40 hover:text-mist-100"
-            >
-              <span className="relative flex size-2">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-accent-400 opacity-70" />
-                <span className="relative inline-flex size-2 rounded-full bg-accent-400" />
-              </span>
-              Available for new projects
-              <span className="rounded-full bg-mist-100/[0.07] px-2 py-0.5 font-mono text-[11px] tracking-wide text-mist-400 transition-colors group-hover:text-mist-100">
-                Q3
-              </span>
-            </a>
-          </motion.div>
+        <div className="grid items-start gap-14 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
+          <div>
+            <p className="font-mono text-[11px] tracking-[0.22em] text-mist-500 uppercase">
+              Studio · Pakistan · {new Date().getFullYear()}
+            </p>
 
-          <motion.h1
-            {...rise(0.08)}
-            className="mt-8 max-w-4xl font-display text-[2.6rem] leading-[1.04] font-semibold tracking-[-0.04em] text-balance-pretty sm:text-6xl lg:text-[4.5rem]"
-          >
-            <span className="text-mist-100">We build the web</span>
-            <br />
-            <span className="text-gradient">your idea deserves</span>
-            <span className="font-serif text-brand-300 italic">.</span>
-          </motion.h1>
+            <h1 className="mt-7 font-display text-[12vw] leading-[0.88] tracking-[-0.04em] text-mist-100 sm:text-[4.6rem] lg:text-[5.4rem]">
+              Work that
+              <br />
+              holds up
+              <br />
+              <span className="italic text-brand-400">in the hand.</span>
+            </h1>
 
-          <motion.p
-            {...rise(0.16)}
-            className="mt-7 max-w-2xl text-base leading-relaxed text-balance-pretty text-mist-400 sm:text-lg"
-          >
-            AISquadX is an AI-native development studio. We turn rough ideas
-            into polished websites, SaaS platforms and internal tools —
-            engineered fast, designed beautifully, shipped without drama.
-          </motion.p>
+            <p className="mt-8 max-w-[38ch] text-[1.05rem] leading-[1.65] text-mist-400">
+              AISquadX is a small engineering studio. We typeset interfaces,
+              write the code that runs them, and ship websites, SaaS and tools
+              you can put in front of a customer.
+            </p>
 
-          <motion.div
-            {...rise(0.24)}
-            className="mt-10 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row"
-          >
-            <ButtonLink
-              href="/contact"
-              size="lg"
-              className="w-full sm:w-auto"
-            >
-              Start a project
-              <ArrowRight className="size-4 transition-transform duration-300 ease-out-expo group-hover:translate-x-1" />
-            </ButtonLink>
-            <ButtonLink
-              href="/projects"
-              size="lg"
-              variant="secondary"
-              className="w-full sm:w-auto"
-            >
-              <Sparkles className="size-4 text-brand-300" />
-              View our work
-            </ButtonLink>
-          </motion.div>
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+              <ButtonLink href="/contact" size="lg">
+                Start a project
+                <ArrowRight className="size-4" />
+              </ButtonLink>
+              <ButtonLink href="/projects" size="lg" variant="secondary">
+                Selected work
+              </ButtonLink>
+            </div>
+          </div>
 
-          <motion.dl
-            {...rise(0.34)}
-            className="mt-16 grid w-full max-w-2xl grid-cols-3 divide-x divide-mist-100/[0.07] rounded-2xl surface py-6"
-          >
-            {stats.map((s) => (
-              <div key={s.label} className="flex flex-col items-center gap-1.5">
-                <dt className="sr-only">{s.label}</dt>
-                <dd className="font-display text-2xl font-semibold tracking-tight text-mist-100 sm:text-3xl">
-                  {s.value}
-                </dd>
-                <p className="px-2 text-center text-[11px] tracking-wide text-mist-500 uppercase sm:text-xs">
-                  {s.label}
-                </p>
-              </div>
+          <ul className="relative hidden min-h-[28rem] list-none lg:block">
+            {stack.map((project, i) => (
+              <li
+                key={project.slug}
+                className="absolute w-[74%]"
+                style={{
+                  top: `${i * 4.6}rem`,
+                  left: `${i * 2.4}rem`,
+                  zIndex: i + 1,
+                  transform: `rotate(${[-0.6, 1.4, -1.1][i]}deg)`,
+                }}
+              >
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className="group block overflow-hidden border border-mist-100/15 bg-ink-950 shadow-[0_24px_50px_-28px_rgba(0,0,0,0.55)] transition-transform duration-500 ease-out-expo hover:-translate-y-1 hover:rotate-0"
+                >
+                  <div className="relative h-44 overflow-hidden">
+                    <ProjectCover project={project} sizes="420px" />
+                  </div>
+                  <div className="flex items-baseline justify-between gap-3 border-t border-mist-100/10 px-4 py-3">
+                    <span className="font-display text-lg tracking-tight text-mist-100 italic">
+                      {project.title}
+                    </span>
+                    <span className="font-mono text-[10px] tracking-[0.14em] text-mist-500 uppercase">
+                      {project.year}
+                    </span>
+                  </div>
+                </Link>
+              </li>
             ))}
-          </motion.dl>
+          </ul>
         </div>
+
+        <dl className="mt-20 grid grid-cols-1 border-t border-mist-100/10 sm:grid-cols-3">
+          {stats.map((s) => (
+            <div
+              key={s.label}
+              className="flex flex-col gap-1.5 border-mist-100/10 py-6 sm:px-8 sm:not-first:border-l first:sm:pl-0"
+            >
+              <dt className="sr-only">{s.label}</dt>
+              <dd className="font-display text-[2rem] tracking-tight text-mist-100 italic">
+                {s.value}
+              </dd>
+              <p className="max-w-[16ch] text-sm leading-snug text-mist-500">
+                {s.label}
+              </p>
+            </div>
+          ))}
+        </dl>
       </Container>
     </section>
   );

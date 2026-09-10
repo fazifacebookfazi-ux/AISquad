@@ -13,7 +13,7 @@ export function ServiceNav() {
             <a
               key={service.id}
               href={`#${service.id}`}
-              className="group inline-flex shrink-0 items-center gap-2 rounded-full border border-mist-100/[0.08] bg-mist-100/[0.03] px-4 py-2 text-sm whitespace-nowrap text-mist-400 transition-colors duration-300 hover:border-brand-400/40 hover:text-mist-100"
+              className="group inline-flex shrink-0 items-center gap-2 border border-mist-100/12 px-4 py-2 font-mono text-[11px] tracking-[0.14em] whitespace-nowrap text-mist-400 uppercase transition-colors duration-300 hover:border-brand-400 hover:text-brand-400"
             >
               <service.icon
                 className="size-4 text-mist-500 transition-colors duration-300 group-hover:text-brand-300"

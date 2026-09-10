@@ -104,7 +104,7 @@ export default async function ProjectPage({
                   href={project.liveUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="group inline-flex items-center gap-2 rounded-full bg-mist-100 px-5 py-2.5 text-sm font-medium text-ink-950 transition-all duration-300 ease-out-expo hover:-translate-y-0.5 hover:bg-mist-50"
+                  className="group inline-flex items-center gap-2 bg-brand-400 px-5 py-2.5 font-mono text-[11px] tracking-[0.18em] text-ink-950 uppercase transition-colors hover:bg-brand-300"
                 >
                   Visit live site
                   <ExternalLink className="size-4" />
@@ -129,7 +129,7 @@ export default async function ProjectPage({
       {/* ---- Cover ---- */}
       <Container>
         <Reveal>
-          <div className="relative aspect-16/9 overflow-hidden rounded-3xl border border-mist-100/[0.08]">
+          <div className="relative aspect-16/9 overflow-hidden border border-mist-100/12">
             <ProjectCover
               project={project}
               priority

@@ -1,5 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Sora, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import {
+  Inter,
+  Fraunces,
+  Instrument_Serif,
+  JetBrains_Mono,
+} from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/layout/navbar";
@@ -12,10 +17,11 @@ const inter = Inter({
   display: "swap",
 });
 
-const sora = Sora({
+const fraunces = Fraunces({
   subsets: ["latin"],
-  variable: "--font-sora",
+  variable: "--font-fraunces",
   display: "swap",
+  axes: ["SOFT", "WONK", "opsz"],
 });
 
 const instrument = Instrument_Serif({
@@ -63,7 +69,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#05050a",
+  themeColor: "#080706",
 };
 
 export default function RootLayout({
@@ -77,11 +83,19 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body
-        className={`${inter.variable} ${sora.variable} ${instrument.variable} ${jetbrains.variable} antialiased`}
+        className={`${inter.variable} ${fraunces.variable} ${instrument.variable} ${jetbrains.variable} antialiased`}
       >
         <ThemeProvider>
+          <a
+            href="#main"
+            className="bg-brand-400 text-ink-950 focus:fixed focus:top-3 focus:left-3 focus:z-[200] focus:px-4 focus:py-2 sr-only focus:not-sr-only"
+          >
+            Skip to content
+          </a>
           <Navbar />
-          <main className="min-h-screen">{children}</main>
+          <main id="main" className="min-h-screen">
+            {children}
+          </main>
           <Footer />
         </ThemeProvider>
       </body>

@@ -27,7 +27,7 @@ const columns = [
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-mist-100/[0.07] bg-ink-900">
+    <footer className="relative overflow-hidden border-t border-mist-100/10 bg-ink-900">
       <div
         aria-hidden
         className="pointer-events-none absolute -top-40 left-1/2 size-[36rem] -translate-x-1/2 rounded-full bg-brand-500/12 blur-[140px]"
@@ -46,7 +46,7 @@ export function Footer() {
                   href={s.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-full border border-mist-100/10 px-3.5 py-1.5 text-xs text-mist-400 transition-colors hover:border-brand-400/40 hover:text-mist-100"
+                  className="border border-mist-100/12 px-3.5 py-1.5 font-mono text-[11px] tracking-[0.14em] text-mist-400 uppercase transition-colors hover:border-brand-400 hover:text-brand-400"
                 >
                   {s.label}
                 </a>
@@ -80,7 +80,7 @@ export function Footer() {
             </h3>
             <a
               href={`mailto:${site.email}`}
-              className="group inline-flex items-center gap-1.5 font-display text-lg tracking-tight text-mist-100"
+              className="group inline-flex items-center gap-1.5 font-display text-xl tracking-tight text-mist-100 italic"
             >
               {site.email}
               <ArrowUpRight className="size-4 text-brand-300 transition-transform duration-300 ease-out-expo group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -91,11 +91,14 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-mist-100/[0.07] pt-8 text-xs text-mist-500 sm:flex-row sm:items-center">
+        <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-mist-100/10 pt-8 text-[11px] leading-relaxed text-mist-500 sm:flex-row sm:items-end">
           <p>
-            © {new Date().getFullYear()} {site.name}. All rights reserved.
+            © {new Date().getFullYear()} {site.name}. {site.domain}
           </p>
-          <p className="font-mono tracking-[0.12em] uppercase">{site.domain}</p>
+          <p className="max-w-sm sm:text-right">
+            Colophon: Fraunces for display, Inter for text, JetBrains Mono for
+            figures. Palette in oklab. Mesh is a seeded nearest-neighbour field.
+          </p>
         </div>
       </Container>
     </footer>

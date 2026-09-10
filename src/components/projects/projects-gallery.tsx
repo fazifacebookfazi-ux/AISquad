@@ -50,10 +50,10 @@ export function ProjectsGallery() {
               aria-selected={active}
               onClick={() => setFilter(option)}
               className={cn(
-                "inline-flex shrink-0 items-center gap-2 rounded-full border px-4 py-2 text-sm whitespace-nowrap transition-all duration-300 ease-out-expo",
+                "inline-flex shrink-0 items-center gap-2 border px-4 py-2 font-mono text-[11px] tracking-[0.16em] whitespace-nowrap uppercase transition-colors duration-300",
                 active
-                  ? "border-brand-400/40 bg-brand-500/12 text-mist-100"
-                  : "border-mist-100/[0.08] bg-mist-100/[0.03] text-mist-400 hover:border-mist-100/20 hover:text-mist-100",
+                  ? "border-brand-400 bg-brand-400 text-ink-950"
+                  : "border-mist-100/12 text-mist-400 hover:border-mist-100/30 hover:text-mist-100",
               )}
             >
               {option}

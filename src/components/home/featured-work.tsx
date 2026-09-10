@@ -7,10 +7,12 @@ import { ProjectCard } from "@/components/project-card";
 import { projects } from "@/lib/projects";
 
 export function FeaturedWork() {
+  const [lead, ...rest] = projects.slice(0, 3);
+
   return (
     <section
       id="work"
-      className="relative scroll-mt-24 border-y border-mist-100/[0.07] bg-ink-900/40 py-24 lg:py-32"
+      className="relative scroll-mt-24 border-y border-mist-100/10 bg-ink-900/50 py-24 lg:py-32"
     >
       <Container>
         <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
@@ -18,30 +20,34 @@ export function FeaturedWork() {
             eyebrow="Selected work"
             title={
               <>
-                Projects we&apos;re{" "}
-                <span className="font-serif italic text-brand-300">
-                  proud
-                </span>{" "}
-                to put our name on
+                Three products we{" "}
+                <span className="italic text-brand-400">actually run.</span>
               </>
             }
-            description="A snapshot of recent builds — full case studies live on the projects page."
+            description="Case studies written from the code, not from a pitch deck."
           />
           <Reveal delay={0.15}>
             <ButtonLink href="/projects" variant="secondary">
               All projects
-              <ArrowRight className="size-4 transition-transform duration-300 ease-out-expo group-hover:translate-x-1" />
+              <ArrowRight className="size-4" />
             </ButtonLink>
           </Reveal>
         </div>
 
-        <div className="mt-14 grid gap-5 sm:grid-cols-2">
-          {projects.slice(0, 4).map((project, i) => (
-            <Reveal key={project.slug} delay={i * 0.08}>
-              <ProjectCard project={project} />
+        {lead ? (
+          <div className="mt-14 grid gap-5 lg:grid-cols-12">
+            <Reveal className="lg:col-span-7">
+              <ProjectCard project={lead} featured />
             </Reveal>
-          ))}
-        </div>
+            <div className="flex flex-col gap-5 lg:col-span-5">
+              {rest.map((project, i) => (
+                <Reveal key={project.slug} delay={0.08 + i * 0.06}>
+                  <ProjectCard project={project} compact />
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        ) : null}
       </Container>
     </section>
   );

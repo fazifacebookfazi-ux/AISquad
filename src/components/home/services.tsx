@@ -1,65 +1,50 @@
 import Link from "next/link";
-import {
-  ArrowUpRight,
-  Blocks,
-  Bot,
-  Gauge,
-  LayoutTemplate,
-  Sparkles,
-  Wand2,
-} from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/ui/reveal";
 
 const services = [
   {
-    icon: LayoutTemplate,
+    n: "01",
     title: "Web development",
     description:
-      "Marketing sites, landing pages and company platforms built on Next.js — fast, accessible and effortless to update.",
-    tags: ["Next.js", "CMS", "SEO"],
+      "Marketing sites and company platforms that refuse the default look. Next.js, considered type, motion that earns its keep.",
     href: "/services#web",
-    featured: true,
   },
   {
-    icon: Blocks,
+    n: "02",
     title: "SaaS product build",
     description:
-      "From auth and billing to dashboards and admin tooling — a complete, revenue-ready product.",
-    tags: ["Auth", "Stripe", "Dashboards"],
+      "Auth, billing, dashboards, admin — a complete product, designed as one piece rather than a pile of screens.",
     href: "/services#saas",
   },
   {
-    icon: Wand2,
+    n: "03",
     title: "Vibe coding sprints",
     description:
-      "Describe the vision, watch it materialise. Rapid AI-assisted sprints that turn ideas into working software in days.",
-    tags: ["Prototyping", "MVP"],
+      "Describe the vision. Watch a working thing appear in days, then steer it in the open until it is yours.",
     href: "/services#vibe",
   },
   {
-    icon: Bot,
+    n: "04",
     title: "AI integration",
     description:
-      "Chat assistants, RAG pipelines and automations woven into products people already use.",
-    tags: ["LLMs", "RAG", "Agents"],
+      "Assistants, RAG and automations that live inside the product people already use — not a chatbot bolted on.",
     href: "/services#ai",
   },
   {
-    icon: Sparkles,
-    title: "UI/UX design",
+    n: "05",
+    title: "UI / UX design",
     description:
-      "Design systems and interfaces that feel considered — typography, motion and hierarchy done properly.",
-    tags: ["Design systems", "Motion"],
+      "The part most agencies outsource. Type, colour, hierarchy and interaction invented for this product, not borrowed.",
     href: "/services#design",
   },
   {
-    icon: Gauge,
+    n: "06",
     title: "Performance & care",
     description:
-      "Audits, Core Web Vitals work and ongoing maintenance so your product stays quick long after launch.",
-    tags: ["Audits", "Support"],
+      "Audits, Core Web Vitals and ongoing work so the thing stays as sharp as the day it launched.",
     href: "/services#care",
   },
 ];
@@ -69,60 +54,37 @@ export function Services() {
     <section id="services" className="relative scroll-mt-24 py-24 lg:py-32">
       <Container>
         <SectionHeading
-          eyebrow="What we do"
+          eyebrow="Services"
           title={
             <>
-              Everything between{" "}
-              <span className="font-serif italic text-brand-300">an idea</span>{" "}
-              and a product in production
+              Design and code,{" "}
+              <span className="italic text-brand-400">same desk.</span>
             </>
           }
-          description="One team across strategy, design and engineering — so nothing gets lost in handoffs."
+          description="Strategy, interface and engineering in one studio — so the look is not an afterthought on a backlog."
         />
 
-        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-16 border-t border-mist-100/12">
           {services.map((service, i) => (
-            <Reveal key={service.title} delay={i * 0.06}>
+            <Reveal key={service.n} as="li" delay={i * 0.04}>
               <Link
                 href={service.href}
-                className={[
-                  "group relative flex h-full flex-col gap-4 overflow-hidden rounded-2xl surface p-7 transition-all duration-500 ease-out-expo hover:-translate-y-1 hover:border-brand-400/30",
-                  service.featured ? "sm:col-span-2 lg:col-span-1" : "",
-                ].join(" ")}
+                className="group grid gap-4 border-b border-mist-100/12 py-7 transition-colors hover:bg-mist-100/[0.03] sm:grid-cols-[4.5rem_minmax(0,0.9fr)_minmax(0,1.2fr)_auto] sm:items-baseline sm:gap-8 sm:py-9"
               >
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute -top-24 -right-16 size-56 rounded-full bg-brand-500/0 blur-3xl transition-colors duration-700 group-hover:bg-brand-500/20"
-                />
-
-                <div className="relative flex items-start justify-between">
-                  <span className="grid size-11 place-items-center rounded-xl border border-mist-100/10 bg-mist-100/[0.05] text-brand-300 transition-colors duration-500 group-hover:border-brand-400/40 group-hover:text-accent-400">
-                    <service.icon className="size-5" strokeWidth={1.6} />
-                  </span>
-                  <ArrowUpRight className="size-4 text-mist-500 transition-all duration-300 ease-out-expo group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-mist-100" />
-                </div>
-
-                <h3 className="relative font-display text-lg font-semibold tracking-tight text-mist-100">
+                <span className="font-mono text-[11px] tracking-[0.2em] text-brand-400">
+                  {service.n}
+                </span>
+                <h3 className="font-display text-3xl tracking-tight text-mist-100 italic sm:text-4xl">
                   {service.title}
                 </h3>
-                <p className="relative flex-1 text-sm leading-relaxed text-mist-400">
+                <p className="text-sm leading-relaxed text-mist-400 sm:text-[15px]">
                   {service.description}
                 </p>
-
-                <div className="relative flex flex-wrap gap-1.5 pt-1">
-                  {service.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-md bg-mist-100/[0.05] px-2 py-1 font-mono text-[10px] tracking-wide text-mist-500 uppercase"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+                <ArrowUpRight className="hidden size-5 text-mist-500 transition-transform duration-300 ease-out-expo group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-brand-400 sm:block" />
               </Link>
             </Reveal>
           ))}
-        </div>
+        </ul>
       </Container>
     </section>
   );

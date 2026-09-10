@@ -2,9 +2,9 @@ export const site = {
   name: "AISquadX",
   domain: "aisquadx.tech",
   url: "https://aisquadx.tech",
-  tagline: "AI-native web development studio",
+  tagline: "Design-led engineering studio",
   description:
-    "AISquadX is an AI-native studio building fast, beautiful websites, SaaS products and internal tools — from raw idea to shipped product.",
+    "AISquadX designs and ships websites, SaaS products and internal tools. Type, colour and motion are part of the engineering — not a coat of paint at the end.",
   email: "hello@aisquadx.tech",
   // TODO: replace with your real name before launch — used on the about page.
   founder: {

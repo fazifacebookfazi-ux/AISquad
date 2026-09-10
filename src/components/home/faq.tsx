@@ -52,7 +52,7 @@ export function FAQ() {
           <div className="flex flex-col gap-3">
             {faqs.map((item, i) => (
               <Reveal key={item.q} delay={i * 0.05}>
-                <details className="group rounded-2xl surface px-6 transition-colors duration-500 open:border-brand-400/25 hover:border-mist-100/15">
+                <details className="group border border-mist-100/12 px-6 transition-colors duration-300 open:border-brand-400/40 hover:border-mist-100/25">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 font-display text-[15px] font-medium tracking-tight text-mist-100 [&::-webkit-details-marker]:hidden">
                     {item.q}
                     <Plus
