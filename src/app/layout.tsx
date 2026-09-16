@@ -34,6 +34,9 @@ export const metadata: Metadata = {
     template: `%s — ${site.name}`,
   },
   description: site.seoDescription,
+  verification: {
+    google: "Utz1p0hrRwGZ8p8cxRdXNZEwKMUwLJ-ybkS0mMqp-DQ",
+  },
   keywords: [
     "web development studio",
     "web development agency",
