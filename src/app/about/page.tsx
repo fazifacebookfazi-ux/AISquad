@@ -8,9 +8,9 @@ import { TechMarquee } from "@/components/home/tech-marquee";
 import { CTA } from "@/components/home/cta";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About AISquadX",
   description:
-    "AISquadX is a small engineering studio in Pakistan. Design and code from the same desk, AI-assisted delivery without invented case studies.",
+    "AISquadX is a design-led engineering studio in Pakistan serving clients in the USA and Pakistan. Design and code from the same desk — no invented case studies.",
   alternates: { canonical: "/about" },
 };
 

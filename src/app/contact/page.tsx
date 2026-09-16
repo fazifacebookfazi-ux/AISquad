@@ -8,9 +8,9 @@ import { FAQ } from "@/components/home/faq";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact",
+  title: "Start Your Project",
   description:
-    "Tell us about your project and get a plan, a timeline and a fixed quote within one business day.",
+    "Tell us about your project and get a plan, a timeline and a fixed quote within one business day. Web development, SaaS and AI integration studio.",
   alternates: { canonical: "/contact" },
 };
 

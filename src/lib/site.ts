@@ -5,6 +5,9 @@ export const site = {
   tagline: "Design-led engineering studio",
   description:
     "AISquadX designs and ships websites, SaaS products and internal tools. Type, colour and motion are part of the engineering — not a coat of paint at the end.",
+  seoTitle: "Web Development, SaaS & AI Integration Studio",
+  seoDescription:
+    "AISquadX is a design-led web development studio building websites, SaaS products and AI integrations for clients in the USA and Pakistan. Fixed prices, clear timelines.",
   email: "hello@aisquadx.tech",
   location: "Pakistan",
   founder: {
