@@ -9,9 +9,9 @@ import { FAQ } from "@/components/home/faq";
 import { CTA } from "@/components/home/cta";
 
 export const metadata: Metadata = {
-  title: "Services",
+  title: "Web Development, SaaS & AI Services",
   description:
-    "Web development, SaaS product builds, vibe coding sprints, AI integration, UI/UX design and ongoing care — fixed prices, clear timelines.",
+    "Custom web development, SaaS product builds, AI integration, vibe coding sprints and UI/UX design for clients in the USA and Pakistan — fixed prices, clear timelines.",
   alternates: { canonical: "/services" },
 };
 

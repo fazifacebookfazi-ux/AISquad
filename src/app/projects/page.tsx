@@ -5,9 +5,9 @@ import { ProjectsGallery } from "@/components/projects/projects-gallery";
 import { CTA } from "@/components/home/cta";
 
 export const metadata: Metadata = {
-  title: "Projects",
+  title: "Selected Work & Case Studies",
   description:
-    "In-house products from AISquadX — a public tool directory, a local clipping studio, and an offline voice pipeline.",
+    "Selected work from AISquadX — web apps, SaaS products and AI-powered tools designed and engineered in Pakistan, shipped for clients worldwide.",
   alternates: { canonical: "/projects" },
 };
 

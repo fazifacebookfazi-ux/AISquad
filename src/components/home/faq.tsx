@@ -3,7 +3,7 @@ import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/ui/reveal";
 
-const faqs = [
+export const faqs = [
   {
     q: "What exactly is “vibe coding”?",
     a: "It’s our AI-assisted build process. You describe the product in plain language, we translate that into working software in tight loops — often with something clickable on day one. The engineering rigour stays; only the slow parts disappear.",
