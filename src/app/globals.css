@@ -111,7 +111,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -273,5 +272,33 @@ h2.font-display {
   .animate-marquee,
   .animate-aurora {
     animation: none;
+  }
+}
+
+/*
+ * Reduced-motion fallbacks for JS-driven layouts. useGsap sets
+ * data-reduced-motion on the section root when it skips GSAP setup,
+ * so pinned / looping layouts degrade to calm static ones.
+ */
+[data-reduced-motion] [data-marquee-track] {
+  flex-wrap: wrap;
+  width: 100%;
+}
+[data-reduced-motion] [data-marquee-track] > [aria-hidden="true"] {
+  display: none;
+}
+@media (min-width: 768px) {
+  [data-reduced-motion] [data-work-viewport] {
+    display: block;
+    height: auto;
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+  [data-reduced-motion] [data-work-track] {
+    flex-direction: column;
+    width: 100%;
+  }
+  [data-reduced-motion] [data-work-panel] {
+    width: 100%;
   }
 }

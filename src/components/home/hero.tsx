@@ -1,110 +1,142 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
-import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { ButtonLink } from "@/components/ui/button";
-import { MeshField } from "@/components/mesh-field";
-import { ProjectCover } from "@/components/project-cover";
-import { projects } from "@/lib/projects";
-import { cn } from "@/lib/utils";
+import { useGsap } from "@/components/motion/use-gsap";
+import { gsap } from "@/components/motion/gsap";
 
-const stats = [
-  { value: "100+", label: "Tools in StartupAI" },
-  { value: "Offline", label: "Voice pipeline" },
-  { value: "9:16", label: "Clips from long video" },
+const meta = [
+  { label: "Studio", value: "Pakistan — working worldwide" },
+  { label: "Focus", value: "Web · SaaS · AI integration" },
+  { label: "Status", value: "Taking on new projects", accent: true },
 ];
 
-export function Hero({ year }: { year: number }) {
-  const stack = projects.slice(0, 3);
+export function Hero() {
+  const ref = useGsap<HTMLElement>((root) => {
+    const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+    tl.from("[data-hero-eyebrow]", { y: 18, opacity: 0, duration: 0.9 }, 0.15)
+      .from(
+        "[data-hero-line] > span",
+        { yPercent: 118, duration: 1.15, stagger: 0.13 },
+        0.25,
+      )
+      .from("[data-hero-sub]", { y: 26, opacity: 0, duration: 1 }, 0.7)
+      .from(
+        "[data-hero-cta]",
+        { y: 26, opacity: 0, duration: 1, stagger: 0.1 },
+        0.82,
+      )
+      .from(
+        "[data-hero-meta] > div",
+        { y: 14, opacity: 0, duration: 0.8, stagger: 0.08 },
+        1,
+      );
+
+    // Gentle parallax: backdrop drifts, content lifts and fades on scroll.
+    gsap.to("[data-hero-bg]", {
+      yPercent: 22,
+      ease: "none",
+      scrollTrigger: {
+        trigger: root,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+    });
+    gsap.to("[data-hero-content]", {
+      yPercent: -10,
+      opacity: 0.2,
+      ease: "none",
+      scrollTrigger: {
+        trigger: root,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+    });
+  });
 
   return (
-    <section className="relative overflow-hidden pt-28 pb-16 lg:pt-32 lg:pb-10">
-      <MeshField className="pointer-events-none absolute inset-0 opacity-55" />
+    <section ref={ref} className="relative overflow-hidden">
+      {/* Backdrop — restrained: construction grid, two soft glows. */}
+      <div data-hero-bg aria-hidden className="absolute inset-0">
+        <div className="absolute inset-0 bg-grid opacity-60 [mask-image:radial-gradient(ellipse_75%_65%_at_50%_35%,black,transparent)]" />
+        <div className="absolute -top-40 right-[-12%] size-[44rem] rounded-full bg-brand-500/10 blur-[160px]" />
+        <div className="absolute bottom-[-25%] left-[-12%] size-[38rem] rounded-full bg-accent-500/[0.07] blur-[160px]" />
+      </div>
 
       <Container className="relative">
-        <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
-          <div>
-            <p className="font-mono text-[11px] tracking-[0.22em] text-mist-500 uppercase">
-              Studio · Pakistan · {year}
-            </p>
+        <div
+          data-hero-content
+          className="flex min-h-svh flex-col justify-center pt-32 pb-14"
+        >
+          <p
+            data-hero-eyebrow
+            className="flex items-center gap-4 font-mono text-[11px] tracking-[0.3em] text-mist-400 uppercase"
+          >
+            <span className="h-px w-10 bg-brand-400" />
+            Design-led engineering studio
+          </p>
 
-            <h1 className="mt-7 font-display text-[clamp(2.6rem,8vw,5.4rem)] leading-[0.88] tracking-[-0.04em] text-mist-100">
-              Work that
-              <br />
-              holds up
-              <br />
-              <span className="italic text-brand-400">in the hand.</span>
-            </h1>
+          <h1 className="mt-9 font-display text-[clamp(3.2rem,9.5vw,8rem)] leading-[0.94] font-medium tracking-[-0.045em] text-balance text-mist-100">
+            <span
+              data-hero-line
+              className="-mb-[0.1em] block overflow-hidden pb-[0.1em]"
+            >
+              <span className="block">Serious software,</span>
+            </span>
+            <span
+              data-hero-line
+              className="-mb-[0.12em] block overflow-hidden pb-[0.12em]"
+            >
+              <span className="block">
+                <em className="text-brand-400">beautifully</em> built.
+              </span>
+            </span>
+          </h1>
 
-            <p className="mt-8 max-w-[38ch] text-[1.05rem] leading-[1.65] text-mist-400">
-              AISquadX is a small engineering studio. We typeset interfaces,
-              write the code that runs them, and ship websites, SaaS and tools
-              you can put in front of a customer.
-            </p>
+          <p
+            data-hero-sub
+            className="mt-9 max-w-[44ch] text-[1.05rem] leading-[1.7] text-mist-400"
+          >
+            AISquadX designs and ships websites, SaaS products and AI
+            integrations for clients in the USA and Pakistan. Fixed prices,
+            clear timelines — no theatre.
+          </p>
 
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="/contact" size="lg">
-                Start a project
-                <ArrowRight className="size-4" />
-              </ButtonLink>
-              <ButtonLink href="/projects" size="lg" variant="secondary">
-                Selected work
-              </ButtonLink>
-            </div>
+          <div className="mt-11 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <ButtonLink data-hero-cta href="/contact" size="lg">
+              Start a project
+              <ArrowRight className="size-4 transition-transform duration-300 ease-out-expo group-hover:translate-x-1" />
+            </ButtonLink>
+            <ButtonLink data-hero-cta href="#work" size="lg" variant="secondary">
+              Selected work
+            </ButtonLink>
           </div>
 
-          <ul className="relative flex list-none flex-col gap-3 lg:block lg:min-h-[28rem]">
-            {stack.map((project, i) => (
-              <li
-                key={project.slug}
-                className={cn(
-                  "relative w-full lg:absolute lg:w-[74%]",
-                  i === 0 && "lg:top-0 lg:left-0 lg:-rotate-[0.6deg]",
-                  i === 1 &&
-                    "lg:top-[4.6rem] lg:left-[2.4rem] lg:rotate-[1.4deg]",
-                  i === 2 &&
-                    "lg:top-[9.2rem] lg:left-[4.8rem] lg:-rotate-[1.1deg]",
-                )}
-                style={{ zIndex: i + 1 }}
-              >
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className="group block overflow-hidden border border-mist-100/15 bg-ink-850 shadow-[0_24px_50px_-28px_rgba(0,0,0,0.55)] transition-transform duration-500 ease-out-expo hover:-translate-y-1 hover:rotate-0 lg:bg-ink-950"
+          <dl
+            data-hero-meta
+            className="mt-16 grid grid-cols-1 gap-6 border-t border-mist-100/10 pt-7 sm:grid-cols-3 sm:gap-8"
+          >
+            {meta.map((item) => (
+              <div key={item.label} className="flex flex-col gap-1.5">
+                <dt className="font-mono text-[10px] tracking-[0.24em] text-mist-500 uppercase">
+                  {item.label}
+                </dt>
+                <dd
+                  className={
+                    item.accent
+                      ? "text-sm font-medium text-brand-400"
+                      : "text-sm text-mist-300"
+                  }
                 >
-                  <div className="relative h-40 overflow-hidden sm:h-44">
-                    <ProjectCover project={project} sizes="420px" />
-                  </div>
-                  <div className="flex items-baseline justify-between gap-3 border-t border-mist-100/10 bg-ink-950 px-4 py-3">
-                    <span className="font-display text-lg tracking-tight text-mist-100 italic">
-                      {project.title}
-                    </span>
-                    <span className="font-mono text-[10px] tracking-[0.14em] text-mist-500 uppercase">
-                      {project.year}
-                    </span>
-                  </div>
-                </Link>
-              </li>
+                  {item.value}
+                </dd>
+              </div>
             ))}
-          </ul>
+          </dl>
         </div>
-
-        <dl className="mt-16 grid grid-cols-1 border-t border-mist-100/10 sm:grid-cols-3 lg:mt-20">
-          {stats.map((s) => (
-            <div
-              key={s.label}
-              className="flex flex-col gap-1.5 border-mist-100/10 py-6 sm:px-8 sm:not-first:border-l first:sm:pl-0"
-            >
-              <dt className="sr-only">{s.label}</dt>
-              <dd className="font-display text-[2rem] tracking-tight text-mist-100 italic">
-                {s.value}
-              </dd>
-              <p className="max-w-[16ch] text-sm leading-snug text-mist-500">
-                {s.label}
-              </p>
-            </div>
-          ))}
-        </dl>
       </Container>
     </section>
   );

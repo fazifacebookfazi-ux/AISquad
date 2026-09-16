@@ -1,4 +1,5 @@
 import { Plus } from "lucide-react";
+import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/ui/reveal";
@@ -32,33 +33,53 @@ export const faqs = [
 
 export function FAQ() {
   return (
-    <section id="faq" className="scroll-mt-24 py-24 lg:py-32">
+    <section
+      id="faq"
+      className="relative scroll-mt-24 border-t border-mist-100/10 py-24 lg:py-36"
+    >
       <Container>
-        <div className="grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
-          <SectionHeading
-            eyebrow="FAQ"
-            title={
-              <>
-                Questions,{" "}
-                <span className="italic text-brand-400">answered</span>
-              </>
-            }
-            description="Still unsure? Send a note — we reply within one business day."
-            className="lg:sticky lg:top-28 lg:self-start"
-          />
+        <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
+          <div className="lg:sticky lg:top-28 lg:self-start">
+            <SectionHeading
+              eyebrow="FAQ"
+              title={
+                <>
+                  Questions,{" "}
+                  <span className="text-brand-400 italic">answered.</span>
+                </>
+              }
+              description={
+                <>
+                  Still unsure?{" "}
+                  <Link
+                    href="/contact"
+                    className="text-mist-100 underline decoration-brand-400/60 decoration-1 underline-offset-4 transition-colors hover:text-brand-300"
+                  >
+                    Send a note
+                  </Link>{" "}
+                  — we reply within one business day.
+                </>
+              }
+            />
+          </div>
 
-          <div className="flex flex-col gap-3">
+          <div>
             {faqs.map((item, i) => (
-              <Reveal key={item.q} delay={i * 0.05}>
-                <details className="group border border-mist-100/12 px-6 transition-colors duration-300 open:border-brand-400/40 hover:border-mist-100/25">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 font-display text-[15px] font-medium tracking-tight text-mist-100 [&::-webkit-details-marker]:hidden">
-                    {item.q}
+              <Reveal key={item.q} delay={i * 0.04}>
+                <details className="group border-t border-mist-100/12 last:border-b">
+                  <summary className="flex cursor-pointer list-none items-center gap-5 py-6 transition-colors duration-300 hover:bg-mist-100/[0.02] sm:gap-8 sm:py-7 [&::-webkit-details-marker]:hidden">
+                    <span className="font-mono text-[11px] tracking-[0.2em] text-mist-500">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="flex-1 font-display text-xl font-medium tracking-[-0.02em] text-mist-100 sm:text-2xl">
+                      {item.q}
+                    </span>
                     <Plus
-                      className="size-4 shrink-0 text-mist-500 transition-transform duration-300 ease-out-expo group-open:rotate-45 group-open:text-brand-300"
                       aria-hidden
+                      className="size-5 shrink-0 text-brand-400 transition-transform duration-500 ease-out-expo group-open:rotate-45"
                     />
                   </summary>
-                  <p className="pb-6 text-sm leading-relaxed text-mist-400">
+                  <p className="max-w-2xl pb-7 pl-9 text-[15px] leading-relaxed text-mist-400 sm:pl-12">
                     {item.a}
                   </p>
                 </details>

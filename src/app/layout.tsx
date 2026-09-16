@@ -3,6 +3,7 @@ import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { JsonLd } from "@/components/json-ld";
@@ -84,6 +85,7 @@ export default function RootLayout({
         className={`${inter.variable} ${fraunces.variable} ${jetbrains.variable} antialiased`}
       >
         <ThemeProvider>
+          <SmoothScroll />
           <JsonLd />
           <a
             href="#main"

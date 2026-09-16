@@ -29,11 +29,7 @@ const columns = [
 export function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-mist-100/10 bg-ink-900">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-40 left-1/2 size-[36rem] -translate-x-1/2 rounded-full bg-brand-500/12 blur-[140px]"
-      />
-      <Container className="relative py-16 lg:py-20">
+      <Container className="relative pt-16 lg:pt-24">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
           <div className="flex flex-col gap-5">
             <Logo />
@@ -56,7 +52,7 @@ export function Footer() {
           </div>
 
           {columns.map((col) => (
-            <div key={col.title} className="flex flex-col gap-4">
+            <nav key={col.title} aria-label={col.title} className="flex flex-col gap-4">
               <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-mist-500">
                 {col.title}
               </h3>
@@ -65,14 +61,15 @@ export function Footer() {
                   <li key={l.label}>
                     <Link
                       href={l.href}
-                      className="text-sm text-mist-400 transition-colors hover:text-mist-100"
+                      className="group inline-flex items-center gap-1.5 text-sm text-mist-400 transition-colors hover:text-mist-100"
                     >
+                      <span className="h-px w-0 bg-brand-400 transition-all duration-300 ease-out-expo group-hover:w-4" />
                       {l.label}
                     </Link>
                   </li>
                 ))}
               </ul>
-            </div>
+            </nav>
           ))}
 
           <div className="flex flex-col gap-4">
@@ -98,7 +95,14 @@ export function Footer() {
           </p>
           <p className="max-w-sm sm:text-right">
             Colophon: Fraunces for display, Inter for text, JetBrains Mono for
-            figures. Palette in oklab. Mesh is a seeded nearest-neighbour field.
+            figures. Palette in oklab.
+          </p>
+        </div>
+
+        {/* Oversized wordmark — the studio sign-off. */}
+        <div aria-hidden className="pointer-events-none mt-10 select-none">
+          <p className="bg-gradient-to-b from-mist-100/[0.09] to-mist-100/[0.015] bg-clip-text text-center font-display text-[clamp(4.5rem,18.5vw,17rem)] leading-[0.82] font-medium tracking-[-0.05em] text-transparent whitespace-nowrap italic">
+            AISquadX
           </p>
         </div>
       </Container>
