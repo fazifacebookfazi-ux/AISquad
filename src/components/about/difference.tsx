@@ -1,7 +1,7 @@
 import { Check, X } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { Reveal } from "@/components/ui/reveal";
+import { Reveal } from "@/components/motion/reveal";
 
 const rows = [
   {
@@ -48,15 +48,15 @@ export function Difference() {
         />
 
         <Reveal delay={0.1}>
-          <div className="mt-14 overflow-hidden rounded-2xl border border-mist-100/[0.07]">
-            <div className="grid grid-cols-1 divide-y divide-mist-100/[0.07] sm:grid-cols-2 sm:divide-x sm:divide-y-0">
-              <div className="bg-ink-900/60 p-7">
-                <h3 className="font-mono text-[10px] tracking-[0.18em] text-mist-500 uppercase">
+          <div className="mt-14 overflow-hidden border-2 border-mist-100/15">
+            <div className="grid grid-cols-1 sm:grid-cols-2">
+              <div className="border-b-2 border-mist-100/15 bg-ink-900/60 p-6 sm:border-r-2 sm:border-b-0">
+                <h3 className="font-mono text-[10px] font-black tracking-[0.2em] text-mist-500 uppercase">
                   The usual way
                 </h3>
               </div>
-              <div className="relative bg-brand-500/8 p-7">
-                <h3 className="font-mono text-[10px] tracking-[0.18em] text-brand-300 uppercase">
+              <div className="bg-brand-400 p-6">
+                <h3 className="font-mono text-[10px] font-black tracking-[0.2em] text-ink-950 uppercase">
                   With AISquadX
                 </h3>
               </div>
@@ -65,26 +65,26 @@ export function Difference() {
             {rows.map((row) => (
               <div
                 key={row.ours}
-                className="grid grid-cols-1 divide-y divide-mist-100/[0.07] border-t border-mist-100/[0.07] sm:grid-cols-2 sm:divide-x sm:divide-y-0"
+                className="grid grid-cols-1 border-t-2 border-mist-100/15 sm:grid-cols-2"
               >
-                <div className="flex items-start gap-3 bg-ink-900/30 p-7">
+                <div className="flex items-start gap-3 bg-ink-900/30 p-6 sm:border-r-2 sm:border-mist-100/15">
                   <X
                     className="mt-0.5 size-4 shrink-0 text-mist-500"
-                    strokeWidth={2}
+                    strokeWidth={3}
                     aria-hidden
                   />
                   <p className="text-sm leading-relaxed text-mist-500">
                     {row.old}
                   </p>
                 </div>
-                <div className="flex items-start gap-3 bg-brand-500/4 p-7">
+                <div className="flex items-start gap-3 bg-brand-400/8 p-6">
                   <span
-                    className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-brand-500/20 text-brand-300"
+                    className="mt-0.5 grid size-5 shrink-0 place-items-center bg-brand-400 text-ink-950"
                     aria-hidden
                   >
-                    <Check className="size-3" strokeWidth={2.5} />
+                    <Check className="size-3" strokeWidth={3} />
                   </span>
-                  <p className="text-sm leading-relaxed text-mist-300">
+                  <p className="text-sm leading-relaxed font-medium text-mist-100">
                     {row.ours}
                   </p>
                 </div>

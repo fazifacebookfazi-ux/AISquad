@@ -19,7 +19,7 @@ const timelines = [
 ];
 
 const fieldBase =
-  "w-full border border-mist-100/12 bg-ink-950 px-4 py-3 text-[15px] text-mist-100 transition-colors duration-200 outline-none placeholder:text-mist-500 hover:border-mist-100/25 focus:border-brand-400 focus:bg-ink-900";
+  "w-full border-2 border-mist-100/20 bg-ink-950 px-4 py-3 text-[15px] font-medium text-mist-100 transition-colors duration-200 outline-none placeholder:text-mist-600 placeholder:font-normal hover:border-mist-100/40 focus:border-brand-400";
 
 function Field({
   label,
@@ -38,18 +38,18 @@ function Field({
     <div className="flex flex-col gap-2">
       <label
         htmlFor={htmlFor}
-        className="flex items-center gap-2 text-sm font-medium text-mist-300"
+        className="flex items-center gap-2 font-mono text-[11px] font-black tracking-[0.16em] text-mist-300 uppercase"
       >
         {label}
         {optional ? (
-          <span className="font-mono text-[10px] tracking-[0.12em] text-mist-500 uppercase">
+          <span className="border border-mist-100/20 px-1.5 py-0.5 font-mono text-[9px] tracking-[0.12em] text-mist-500 uppercase">
             Optional
           </span>
         ) : null}
       </label>
       {children}
       {error ? (
-        <p className="flex items-center gap-1.5 text-xs text-red-400">
+        <p className="flex items-center gap-1.5 text-xs font-bold text-red-400">
           <AlertCircle className="size-3.5" />
           {error}
         </p>
@@ -65,7 +65,7 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="group inline-flex h-13 w-full items-center justify-center gap-2 bg-brand-400 px-7 font-mono text-[11px] tracking-[0.18em] text-ink-950 uppercase transition-colors duration-300 ease-out-expo hover:bg-brand-300 focus-visible:ring-2 focus-visible:ring-brand-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-60 sm:w-auto"
+      className="group inline-flex h-13 w-full items-center justify-center gap-2 border-2 border-ink-950 bg-brand-400 px-7 font-mono text-[11px] font-black tracking-[0.18em] text-ink-950 uppercase transition-all duration-300 hover:bg-brand-300 focus-visible:ring-2 focus-visible:ring-brand-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-60 sm:w-auto"
     >
       {pending ? (
         <>
@@ -75,7 +75,7 @@ function SubmitButton() {
       ) : (
         <>
           Send enquiry
-          <ArrowRight className="size-4 transition-transform duration-300 ease-out-expo group-hover:translate-x-1" />
+          <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
         </>
       )}
     </button>
@@ -91,11 +91,11 @@ export function ContactForm() {
 
   if (state.status === "success") {
     return (
-      <div className="flex flex-col items-start gap-5 border border-mist-100/12 p-10">
+      <div className="flex flex-col items-start gap-5 border-2 border-brand-400 bg-ink-900 p-10">
         <span className="grid size-12 place-items-center bg-brand-400 text-ink-950">
-          <Check className="size-6" strokeWidth={2} />
+          <Check className="size-6" strokeWidth={3} />
         </span>
-        <h2 className="font-display text-2xl font-semibold tracking-tight text-mist-100">
+        <h2 className="font-display text-2xl font-black tracking-tight text-mist-100">
           Message received
         </h2>
         <p className="max-w-md leading-relaxed text-mist-400">{state.message}</p>
@@ -126,7 +126,7 @@ export function ContactForm() {
             autoComplete="name"
             defaultValue={values.name}
             placeholder="Ada Lovelace"
-            className={cn(fieldBase, errors.name && "border-red-500/50")}
+            className={cn(fieldBase, errors.name && "border-red-500/60")}
           />
         </Field>
 
@@ -138,7 +138,7 @@ export function ContactForm() {
             autoComplete="email"
             defaultValue={values.email}
             placeholder="you@company.com"
-            className={cn(fieldBase, errors.email && "border-red-500/50")}
+            className={cn(fieldBase, errors.email && "border-red-500/60")}
           />
         </Field>
 
@@ -207,7 +207,7 @@ export function ContactForm() {
           className={cn(
             fieldBase,
             "resize-y",
-            errors.message && "border-red-500/50",
+            errors.message && "border-red-500/60",
           )}
         />
       </Field>
@@ -215,7 +215,7 @@ export function ContactForm() {
       {state.status === "error" && state.message ? (
         <p
           role="alert"
-          className="flex items-center gap-2 rounded-xl border border-red-500/25 bg-red-500/8 px-4 py-3 text-sm text-red-300"
+          className="flex items-center gap-2 border-2 border-red-500/40 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-300"
         >
           <AlertCircle className="size-4 shrink-0" />
           {state.message}
@@ -226,7 +226,7 @@ export function ContactForm() {
         <SubmitButton />
         <p className="text-xs leading-relaxed text-mist-500">
           We reply within one business day. No newsletters. See{" "}
-          <a href="/privacy" className="text-mist-300 underline">
+          <a href="/privacy" className="font-bold text-mist-300 underline decoration-brand-400 decoration-2 underline-offset-2">
             how we use this
           </a>
           .

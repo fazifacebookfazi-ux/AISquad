@@ -1,8 +1,9 @@
 import { Plus } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { Reveal } from "@/components/ui/reveal";
+import { Reveal } from "@/components/motion/reveal";
 
+/* Copy is frozen — FAQPage schema depends on these exact strings. */
 export const faqs = [
   {
     q: "What exactly is “vibe coding”?",
@@ -30,35 +31,40 @@ export const faqs = [
   },
 ];
 
+/** Bold FAQ — thick-bordered accordion rows with lime plus tiles. */
 export function FAQ() {
   return (
-    <section id="faq" className="scroll-mt-24 py-24 lg:py-32">
+    <section id="faq" className="scroll-mt-24 border-t-2 border-mist-100/10 py-24 lg:py-32">
       <Container>
-        <div className="grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
-          <SectionHeading
-            eyebrow="FAQ"
-            title={
-              <>
-                Questions,{" "}
-                <span className="italic text-brand-400">answered</span>
-              </>
-            }
-            description="Still unsure? Send a note — we reply within one business day."
-            className="lg:sticky lg:top-28 lg:self-start"
-          />
+        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+          <div className="lg:sticky lg:top-28 lg:self-start">
+            <SectionHeading
+              eyebrow="FAQ"
+              title={
+                <>
+                  Questions, <span className="italic text-brand-400">answered.</span>
+                </>
+              }
+              description="Still unsure? Send a note — we reply within one business day."
+            />
+          </div>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
             {faqs.map((item, i) => (
-              <Reveal key={item.q} delay={i * 0.05}>
-                <details className="group border border-mist-100/12 px-6 transition-colors duration-300 open:border-brand-400/40 hover:border-mist-100/25">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 font-display text-[15px] font-medium tracking-tight text-mist-100 [&::-webkit-details-marker]:hidden">
-                    {item.q}
-                    <Plus
-                      className="size-4 shrink-0 text-mist-500 transition-transform duration-300 ease-out-expo group-open:rotate-45 group-open:text-brand-300"
-                      aria-hidden
-                    />
+              <Reveal key={item.q} delay={i * 0.04}>
+                <details className="group border-2 border-mist-100/12 bg-ink-900 transition-colors duration-300 open:border-brand-400 hover:border-mist-100/30">
+                  <summary className="flex cursor-pointer list-none items-center gap-5 p-5 sm:p-6 [&::-webkit-details-marker]:hidden">
+                    <span className="font-mono text-xs font-black text-brand-400">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="flex-1 font-display text-lg font-bold tracking-tight text-mist-100 sm:text-xl">
+                      {item.q}
+                    </span>
+                    <span className="grid size-10 shrink-0 place-items-center bg-brand-400 text-ink-950 transition-transform duration-300 group-open:rotate-45">
+                      <Plus className="size-5" strokeWidth={3} aria-hidden />
+                    </span>
                   </summary>
-                  <p className="pb-6 text-sm leading-relaxed text-mist-400">
+                  <p className="border-t-2 border-mist-100/10 px-5 py-5 text-[15px] leading-relaxed text-mist-300 sm:px-6 sm:pl-[4.25rem]">
                     {item.a}
                   </p>
                 </details>

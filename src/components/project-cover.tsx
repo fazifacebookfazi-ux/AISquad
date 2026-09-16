@@ -75,15 +75,15 @@ export function ProjectCover({
 
       {/* Product window */}
       <div className="absolute inset-x-[6cqw] top-[9cqw] bottom-0">
-        <div className="flex h-full flex-col overflow-hidden rounded-t-[2cqw] border border-white/20 bg-[#05050a]/75 shadow-[0_4cqw_8cqw_-2cqw_rgba(0,0,0,0.6)] backdrop-blur-xl">
+        <div className="flex h-full flex-col overflow-hidden rounded-t-[2cqw] border-2 border-b-0 border-white/25 bg-[#05050a]/75 shadow-[0_4cqw_8cqw_-2cqw_rgba(0,0,0,0.6)] backdrop-blur-xl">
           {/* Chrome */}
-          <div className="flex shrink-0 items-center gap-[1.4cqw] border-b border-white/10 px-[2.4cqw] py-[1.8cqw]">
+          <div className="flex shrink-0 items-center gap-[1.4cqw] border-b-2 border-brand-400/70 bg-brand-400 px-[2.4cqw] py-[1.4cqw]">
             <span className="flex gap-[0.8cqw]">
-              <span className="size-[1.2cqw] rounded-full bg-white/25" />
-              <span className="size-[1.2cqw] rounded-full bg-white/20" />
-              <span className="size-[1.2cqw] rounded-full bg-white/15" />
+              <span className="size-[1.2cqw] rounded-full bg-ink-950/70" />
+              <span className="size-[1.2cqw] rounded-full bg-ink-950/50" />
+              <span className="size-[1.2cqw] rounded-full bg-ink-950/35" />
             </span>
-            <span className="ml-[1cqw] flex-1 truncate rounded-full bg-white/[0.07] px-[2cqw] py-[0.8cqw] font-mono text-[1.5cqw] text-white/55">
+            <span className="ml-[1cqw] flex-1 truncate rounded-full bg-ink-950/10 px-[2cqw] py-[0.8cqw] font-mono text-[1.5cqw] font-bold text-ink-950/70">
               {displayUrl(project)}
             </span>
           </div>

@@ -1,24 +1,36 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-type Variant = "primary" | "secondary" | "ghost";
+type Variant = "primary" | "secondary" | "ghost" | "ink";
 type Size = "sm" | "md" | "lg";
 
 const base =
-  "group relative inline-flex items-center justify-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] transition-all duration-300 ease-out-expo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 disabled:pointer-events-none disabled:opacity-50";
+  "group/btn relative inline-flex items-center justify-center gap-2 overflow-hidden border-2 font-mono text-[11px] font-bold uppercase tracking-[0.18em] transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 disabled:pointer-events-none disabled:opacity-50";
+
+/** Bold fill-sweep: a solid panel sweeps up on hover, inverting the label. */
+const sweep =
+  "after:absolute after:inset-0 after:translate-y-[101%] after:transition-transform after:duration-300 after:ease-out-expo hover:after:translate-y-0 [&>*]:relative [&>*]:z-10";
 
 const variants: Record<Variant, string> = {
-  primary:
-    "bg-brand-400 text-ink-950 hover:bg-brand-300",
-  secondary:
-    "border border-mist-100/20 text-mist-100 hover:border-brand-400 hover:text-brand-300",
-  ghost: "text-mist-300 hover:text-mist-100",
+  primary: cn(
+    sweep,
+    "border-brand-400 bg-brand-400 text-ink-950 after:bg-ink-950 hover:text-brand-400",
+  ),
+  secondary: cn(
+    sweep,
+    "border-mist-100/30 bg-transparent text-mist-100 after:bg-mist-100 hover:border-mist-100 hover:text-ink-950",
+  ),
+  ink: cn(
+    sweep,
+    "border-ink-950 bg-ink-950 text-brand-400 after:bg-brand-400 hover:text-ink-950",
+  ),
+  ghost: "border-transparent text-mist-300 hover:border-mist-100/20 hover:text-mist-100",
 };
 
 const sizes: Record<Size, string> = {
-  sm: "h-10 px-4",
-  md: "h-12 px-5",
-  lg: "h-14 px-6 text-xs",
+  sm: "h-11 px-5",
+  md: "h-13 px-7",
+  lg: "h-15 px-9 text-xs",
 };
 
 type ButtonProps = {

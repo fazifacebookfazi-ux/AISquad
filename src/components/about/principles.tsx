@@ -1,6 +1,6 @@
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { Reveal } from "@/components/ui/reveal";
+import { Reveal } from "@/components/motion/reveal";
 
 const principles = [
   {
@@ -37,7 +37,7 @@ const principles = [
 
 export function Principles() {
   return (
-    <section className="border-y border-mist-100/[0.07] bg-ink-900/40 py-24 lg:py-32">
+    <section className="border-y-2 border-mist-100/10 bg-ink-900/60 py-24 lg:py-32">
       <Container>
         <SectionHeading
           eyebrow="How we think"
@@ -52,23 +52,26 @@ export function Principles() {
           description="Not values on a wall. These are the arguments we've already had, settled into how we work."
         />
 
-        <div className="mt-14 grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+        <ol className="mt-14 grid gap-px overflow-hidden border-2 border-mist-100/15 bg-mist-100/10 sm:grid-cols-2 lg:grid-cols-3">
           {principles.map((item, i) => (
-            <Reveal key={item.title} delay={i * 0.06}>
-              <div className="flex flex-col gap-3 border-t border-mist-100/10 pt-6">
-                <span className="font-mono text-[10px] tracking-[0.18em] text-mist-500">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3 className="font-display text-lg font-semibold tracking-tight text-mist-100">
-                  {item.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-mist-400">
-                  {item.description}
-                </p>
-              </div>
+            <Reveal
+              key={item.title}
+              delay={(i % 3) * 0.06}
+              as="li"
+              className="group flex flex-col gap-4 bg-ink-950 p-8 transition-colors duration-300 hover:bg-brand-400"
+            >
+              <span className="font-display text-4xl font-black tracking-tight text-brand-400 transition-colors duration-300 group-hover:text-ink-950">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="font-display text-xl font-black tracking-tight text-mist-100 transition-colors duration-300 group-hover:text-ink-950">
+                {item.title}
+              </h3>
+              <p className="text-sm leading-relaxed text-mist-400 transition-colors duration-300 group-hover:text-ink-950/75">
+                {item.description}
+              </p>
             </Reveal>
           ))}
-        </div>
+        </ol>
       </Container>
     </section>
   );

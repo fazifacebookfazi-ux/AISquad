@@ -19,7 +19,7 @@ export default function PrivacyPage() {
         description="Short version: we use what you send to reply to you. We do not sell it, and we do not add you to a list."
       />
       <Container className="max-w-2xl pb-24 text-base leading-relaxed text-mist-400">
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-8 border-2 border-mist-100/12 bg-ink-900 p-8 sm:p-10">
           <p>
             If you submit the contact form, we receive your name, email, and
             whatever you write about the project, plus optional company,
@@ -38,7 +38,7 @@ export default function PrivacyPage() {
             an enquiry erased.
           </p>
           <p>
-            <Link href="/contact" className="text-mist-100 underline">
+            <Link href="/contact" className="font-bold text-mist-100 underline decoration-brand-400 decoration-2 underline-offset-4 transition-colors hover:text-brand-400">
               Back to contact
             </Link>
           </p>

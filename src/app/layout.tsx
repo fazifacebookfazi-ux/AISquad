@@ -1,10 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
+import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { JsonLd } from "@/components/json-ld";
 import { site } from "@/lib/site";
 
@@ -84,6 +84,7 @@ export default function RootLayout({
         className={`${inter.variable} ${fraunces.variable} ${jetbrains.variable} antialiased`}
       >
         <ThemeProvider>
+          <SmoothScroll />
           <JsonLd />
           <a
             href="#main"

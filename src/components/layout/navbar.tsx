@@ -3,12 +3,10 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { ButtonLink } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { Logo } from "./logo";
-import { StudioClock } from "@/components/studio-clock";
 import { navLinks } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -29,87 +27,112 @@ export function Navbar() {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [open]);
+  }, [open ]);
 
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
-        scrolled
-          ? "border-b border-mist-100/10 bg-ink-950/90 backdrop-blur-md"
-          : "border-b border-transparent",
-      )}
-    >
-      <Container className="flex h-16 items-center justify-between">
-        <Logo />
-
-        <nav className="hidden items-center gap-7 md:flex">
-          {navLinks.map((link) => {
-            const active =
-              link.href.startsWith("/") &&
-              !link.href.includes("#") &&
-              pathname === link.href;
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "text-[13px] tracking-tight transition-colors",
-                  active
-                    ? "text-mist-100"
-                    : "text-mist-400 hover:text-mist-100",
-                )}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
-        </nav>
-
-        <div className="flex items-center gap-4">
-          <StudioClock />
-          <ThemeToggle />
-          <ButtonLink href="/contact" size="sm">
-            Start
-          </ButtonLink>
-          <button
-            type="button"
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
-            className="grid size-10 place-items-center border border-mist-100/15 text-mist-300 md:hidden"
-          >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
-          </button>
-        </div>
-      </Container>
-
-      <div
+    <>
+      <header
         className={cn(
-          "overflow-hidden border-t border-mist-100/10 bg-ink-950 transition-[max-height,opacity] duration-500 ease-out-expo md:hidden",
-          open ? "max-h-[28rem] opacity-100" : "max-h-0 opacity-0",
+          "fixed inset-x-0 top-0 z-50 transition-all duration-300",
+          scrolled
+            ? "border-b-2 border-brand-400/60 bg-ink-950/92 shadow-[0_8px_30px_-12px_rgba(0,0,0,0.8)] backdrop-blur-md"
+            : "border-b-2 border-transparent bg-transparent",
         )}
       >
-        <Container className="flex flex-col gap-1 py-6">
-          {navLinks.map((link) => (
+        {/* Signature lime strip */}
+        <div aria-hidden className="h-1 bg-brand-400" />
+
+        <Container className="flex h-18 items-center justify-between">
+          <Logo />
+
+          <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
+            {navLinks.map((link) => {
+              const active =
+                link.href.startsWith("/") &&
+                !link.href.includes("#") &&
+                pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "relative font-mono text-[12px] font-bold tracking-[0.14em] uppercase transition-colors",
+                    active ? "text-brand-400" : "text-mist-300 hover:text-brand-400",
+                  )}
+                >
+                  {link.label}
+                  <span
+                    aria-hidden
+                    className={cn(
+                      "absolute -bottom-1.5 left-0 h-0.5 bg-brand-400 transition-all duration-300",
+                      active ? "w-full" : "w-0",
+                    )}
+                  />
+                </Link>
+              );
+            })}
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <ButtonLink href="/contact" size="sm" className="hidden sm:inline-flex">
+              Start a project
+              <ArrowUpRight className="size-4" />
+            </ButtonLink>
+            <button
+              type="button"
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+              onClick={() => setOpen((v) => !v)}
+              className="grid size-11 place-items-center border-2 border-mist-100/20 text-mist-100 transition-colors hover:border-brand-400 hover:text-brand-400 md:hidden"
+            >
+              {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            </button>
+          </div>
+        </Container>
+      </header>
+
+      {/* Mobile full-screen menu */}
+      <div
+        className={cn(
+          "fixed inset-0 z-40 flex flex-col bg-ink-950 transition-all duration-500 md:hidden",
+          open ? "visible opacity-100" : "invisible opacity-0",
+        )}
+        aria-hidden={!open}
+      >
+        <div aria-hidden className="h-1 shrink-0 bg-brand-400" />
+        <Container className="flex flex-1 flex-col justify-center gap-2 pt-20">
+          {navLinks.map((link, i) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="px-1 py-3 text-[15px] text-mist-300 hover:text-mist-100"
+              tabIndex={open ? 0 : -1}
+              className={cn(
+                "group flex items-baseline gap-4 border-b-2 border-mist-100/10 py-5 transition-all delay-75 duration-500",
+                open ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0",
+              )}
+              style={{ transitionDelay: open ? `${i * 60}ms` : "0ms" }}
             >
-              {link.label}
+              <span className="font-mono text-xs font-bold text-brand-400">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span className="font-display text-4xl font-black tracking-tight text-mist-100 transition-colors group-hover:text-brand-400">
+                {link.label}
+              </span>
             </Link>
           ))}
           <ButtonLink
             href="/contact"
+            size="lg"
             onClick={() => setOpen(false)}
-            className="mt-4 w-full"
+            tabIndex={open ? 0 : -1}
+            className="mt-8 w-full"
           >
             Start a project
+            <ArrowUpRight className="size-4" />
           </ButtonLink>
         </Container>
       </div>
-    </header>
+    </>
   );
 }

@@ -4,6 +4,7 @@ import { ProjectCover } from "@/components/project-cover";
 import type { Project } from "@/lib/projects";
 import { cn } from "@/lib/utils";
 
+/** Bold project card — thick border, sticker category, hard hover lift. */
 export function ProjectCard({
   project,
   className,
@@ -21,40 +22,29 @@ export function ProjectCard({
     <Link
       href={`/projects/${project.slug}`}
       className={cn(
-        "group relative flex overflow-hidden border border-mist-100/12 bg-ink-950 transition-colors duration-300 hover:border-brand-400/50",
+        "group relative flex overflow-hidden border-2 border-mist-100/12 bg-ink-900 transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-400 hover:shadow-[8px_8px_0_0_var(--color-brand-400)]",
         compact ? "flex-row" : "h-full flex-col",
         className,
       )}
     >
       <div
         className={cn(
-          "relative overflow-hidden",
-          compact ? "w-[42%] min-w-[8.5rem] self-stretch" : "aspect-16/10",
+          "relative overflow-hidden border-b-2 border-mist-100/12",
+          compact ? "w-[42%] min-w-[8.5rem] self-stretch border-r-2 border-b-0" : "aspect-16/10",
           featured && "aspect-[16/11] sm:aspect-[16/12]",
         )}
       >
         <ProjectCover
           project={project}
           priority={priority}
-          className="transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]"
+          className="transition-transform duration-700 ease-out-expo group-hover:scale-[1.05]"
         />
-        {project.cover ? (
-          <>
-            <div className="absolute inset-0 bg-gradient-to-t from-ink-950/85 via-ink-950/15 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-4">
-              <span className="font-mono text-[10px] tracking-[0.16em] text-brand-300 uppercase">
-                {project.category}
-              </span>
-              <span className="font-mono text-[11px] text-mist-300">
-                {project.year}
-              </span>
-            </div>
-          </>
-        ) : (
-          <span className="absolute top-3 right-3 font-mono text-[10px] tracking-[0.16em] text-mist-100">
-            {project.year}
-          </span>
-        )}
+        <span className="absolute top-4 left-4 -rotate-2 border-2 border-ink-950 bg-brand-400 px-2.5 py-1 font-mono text-[10px] font-black tracking-[0.14em] text-ink-950 uppercase">
+          {project.category}
+        </span>
+        <span className="absolute top-4 right-4 bg-ink-950/85 px-2 py-1 font-mono text-[10px] font-bold text-mist-100">
+          {project.year}
+        </span>
       </div>
 
       <div
@@ -66,14 +56,16 @@ export function ProjectCard({
         <div className="flex items-start justify-between gap-3">
           <h3
             className={cn(
-              "font-display tracking-tight text-mist-100 italic",
+              "font-display font-black tracking-tight text-mist-100",
               featured ? "text-3xl sm:text-4xl" : "text-xl",
               compact && "text-lg sm:text-xl",
             )}
           >
             {project.title}
           </h3>
-          <ArrowUpRight className="mt-1 size-4 shrink-0 text-mist-500 transition-transform duration-300 ease-out-expo group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-brand-400" />
+          <span className="grid size-9 shrink-0 place-items-center border-2 border-mist-100/15 text-mist-400 transition-all duration-300 group-hover:border-brand-400 group-hover:bg-brand-400 group-hover:text-ink-950">
+            <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </span>
         </div>
         <p
           className={cn(
@@ -88,7 +80,7 @@ export function ProjectCard({
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className="border border-mist-100/10 px-2 py-1 font-mono text-[10px] tracking-wide text-mist-500 uppercase"
+                className="border border-mist-100/15 px-2 py-1 font-mono text-[10px] font-bold tracking-wide text-mist-500 uppercase"
               >
                 {tag}
               </span>

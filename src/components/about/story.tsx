@@ -1,12 +1,13 @@
 import { Container } from "@/components/ui/container";
-import { Reveal } from "@/components/ui/reveal";
+import { Reveal } from "@/components/motion/reveal";
 import { Eyebrow } from "@/components/ui/eyebrow";
+import { Counter } from "@/components/motion/counter";
 
 const numbers = [
-  { value: "40+", label: "Products shipped" },
-  { value: "3 wks", label: "Average MVP launch" },
-  { value: "100%", label: "Client retention" },
-  { value: "< 1 day", label: "Reply time" },
+  { value: 40, suffix: "+", label: "Products shipped" },
+  { value: 3, suffix: " wks", label: "Average MVP launch" },
+  { value: 100, suffix: "%", label: "Client retention" },
+  { value: 1, suffix: " day", prefix: "< ", label: "Reply time" },
 ];
 
 export function Story() {
@@ -20,14 +21,14 @@ export function Story() {
 
           <div className="flex flex-col gap-7">
             <Reveal delay={0.05}>
-              <p className="font-display text-[1.6rem] leading-[1.35] font-medium tracking-[-0.02em] text-balance-pretty text-mist-100 sm:text-[2rem] sm:leading-[1.3]">
+              <p className="font-display text-[1.7rem] leading-[1.3] font-black tracking-[-0.02em] text-balance-pretty text-mist-100 sm:text-[2.1rem]">
                 Most agencies are slow because of how they&apos;re shaped, not
                 how hard they work.
               </p>
             </Reveal>
 
             <Reveal delay={0.1}>
-              <p className="leading-relaxed text-mist-400">
+              <p className="border-l-4 border-brand-400 pl-5 leading-relaxed text-mist-300">
                 Briefs pass from account manager to designer to developer, and
                 something is lost at every handoff. Three months later you get
                 back something close to what you asked for, but not quite. We
@@ -59,16 +60,20 @@ export function Story() {
         </div>
 
         <Reveal delay={0.1}>
-          <dl className="mt-20 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-mist-100/[0.07] bg-mist-100/[0.06] lg:grid-cols-4">
+          <dl className="mt-20 grid grid-cols-2 gap-px overflow-hidden border-2 border-mist-100/15 bg-mist-100/10 lg:grid-cols-4">
             {numbers.map((item) => (
               <div
                 key={item.label}
-                className="flex flex-col gap-2 bg-ink-950 p-8"
+                className="group flex flex-col gap-2 bg-ink-950 p-8 transition-colors duration-300 hover:bg-brand-400"
               >
-                <dd className="font-display text-3xl font-semibold tracking-[-0.03em] text-mist-100 sm:text-4xl">
-                  {item.value}
+                <dd className="font-display text-3xl font-black tracking-[-0.03em] text-brand-400 transition-colors duration-300 group-hover:text-ink-950 sm:text-4xl">
+                  <Counter
+                    value={item.value}
+                    suffix={item.suffix}
+                    prefix={item.prefix}
+                  />
                 </dd>
-                <dt className="font-mono text-[10px] tracking-[0.16em] text-mist-500 uppercase">
+                <dt className="font-mono text-[10px] font-bold tracking-[0.16em] text-mist-500 uppercase transition-colors duration-300 group-hover:text-ink-950/70">
                   {item.label}
                 </dt>
               </div>

@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ProjectCard } from "@/components/project-card";
+import { Reveal } from "@/components/motion/reveal";
 import { projects, projectCategories } from "@/lib/projects";
 import { cn } from "@/lib/utils";
 
@@ -29,50 +30,52 @@ export function ProjectsGallery() {
   );
 
   return (
-    <div className="flex flex-col gap-12">
-      <div
-        role="tablist"
-        aria-label="Filter projects by category"
-        className="scrollbar-none -mx-1 flex gap-2 overflow-x-auto px-1 pb-1"
-      >
-        {filters.map((option) => {
-          const active = option === filter;
-          const count =
-            option === "All"
-              ? projects.length
-              : projects.filter((p) => p.category === option).length;
+    <div className="flex flex-col gap-10">
+      <Reveal>
+        <div
+          role="tablist"
+          aria-label="Filter projects by category"
+          className="scrollbar-none -mx-1 flex gap-3 overflow-x-auto px-1 pb-1"
+        >
+          {filters.map((option) => {
+            const active = option === filter;
+            const count =
+              option === "All"
+                ? projects.length
+                : projects.filter((p) => p.category === option).length;
 
-          return (
-            <button
-              key={option}
-              type="button"
-              role="tab"
-              aria-selected={active}
-              onClick={() => setFilter(option)}
-              className={cn(
-                "inline-flex shrink-0 items-center gap-2 border px-4 py-2 font-mono text-[11px] tracking-[0.16em] whitespace-nowrap uppercase transition-colors duration-300",
-                active
-                  ? "border-brand-400 bg-brand-400 text-ink-950"
-                  : "border-mist-100/12 text-mist-400 hover:border-mist-100/30 hover:text-mist-100",
-              )}
-            >
-              {option}
-              <span
+            return (
+              <button
+                key={option}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                onClick={() => setFilter(option)}
                 className={cn(
-                  "font-mono text-[10px]",
-                  active ? "text-brand-300" : "text-mist-500",
+                  "inline-flex shrink-0 items-center gap-2 border-2 px-5 py-2.5 font-mono text-[11px] font-black tracking-[0.16em] whitespace-nowrap uppercase transition-all duration-300",
+                  active
+                    ? "-rotate-1 border-ink-950 bg-brand-400 text-ink-950"
+                    : "border-mist-100/15 text-mist-400 hover:border-brand-400 hover:text-brand-400",
                 )}
               >
-                {count}
-              </span>
-            </button>
-          );
-        })}
-      </div>
+                {option}
+                <span
+                  className={cn(
+                    "font-mono text-[10px] font-bold",
+                    active ? "text-ink-950/70" : "text-mist-500",
+                  )}
+                >
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </Reveal>
 
       <motion.div
         layout={!reduced}
-        className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+        className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
       >
         <AnimatePresence mode="popLayout">
           {visible.map((project, i) => (
@@ -99,7 +102,7 @@ export function ProjectsGallery() {
       </motion.div>
 
       {visible.length === 0 ? (
-        <p className="rounded-2xl surface p-10 text-center text-sm text-mist-400">
+        <p className="border-2 border-mist-100/12 p-10 text-center text-sm text-mist-400">
           Nothing here yet — more work coming soon.
         </p>
       ) : null}

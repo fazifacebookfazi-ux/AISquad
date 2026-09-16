@@ -1,7 +1,7 @@
 import { Accessibility, GitBranch, Rocket, Search, Smartphone, Zap } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { Reveal } from "@/components/ui/reveal";
+import { Reveal } from "@/components/motion/reveal";
 
 const included = [
   {
@@ -44,7 +44,7 @@ const included = [
 
 export function AlwaysIncluded() {
   return (
-    <section className="py-24 lg:py-32">
+    <section className="border-t-2 border-mist-100/10 py-24 lg:py-32">
       <Container>
         <SectionHeading
           eyebrow="Included as standard"
@@ -59,21 +59,21 @@ export function AlwaysIncluded() {
           description="These aren't line items on a quote. They come with everything we build."
         />
 
-        <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-mist-100/[0.07] bg-mist-100/[0.06] sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-px overflow-hidden border-2 border-mist-100/15 bg-mist-100/10 sm:grid-cols-2 lg:grid-cols-3">
           {included.map((item, i) => (
             <Reveal
               key={item.title}
-              delay={i * 0.05}
-              className="group flex flex-col gap-4 bg-ink-950 p-8 transition-colors duration-500 hover:bg-ink-850"
+              delay={(i % 3) * 0.06}
+              className="group flex flex-col gap-4 bg-ink-950 p-8 transition-colors duration-300 hover:bg-brand-400"
             >
               <item.icon
-                className="size-5 text-brand-300 transition-colors duration-500 group-hover:text-accent-400"
-                strokeWidth={1.6}
+                className="size-6 text-brand-400 transition-colors duration-300 group-hover:text-ink-950"
+                strokeWidth={2}
               />
-              <h3 className="font-display text-base font-semibold tracking-tight text-mist-100">
+              <h3 className="font-display text-lg font-black tracking-tight text-mist-100 transition-colors duration-300 group-hover:text-ink-950">
                 {item.title}
               </h3>
-              <p className="text-sm leading-relaxed text-mist-400">
+              <p className="text-sm leading-relaxed text-mist-400 transition-colors duration-300 group-hover:text-ink-950/75">
                 {item.description}
               </p>
             </Reveal>

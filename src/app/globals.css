@@ -3,28 +3,32 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
- * Two semantic scales, both theme-aware:
- *   ink-*   background surfaces, darkest (950) to lightest elevation
- *   mist-*  foreground text, strongest (50/100) to faintest (500)
- * Both invert between themes, so a component written once works in both.
+ * AISquadX bold theme — single decisive dark identity.
+ *   ink-*    surfaces, near-black with a warm cast
+ *   mist-*   foreground text, off-white scale
+ *   brand-*  signature electric lime (#d4ff3a)
+ *   punch-*  supporting vivid orange, used sparingly
  */
 @theme {
-  --color-ink-950: var(--ink-950);
-  --color-ink-900: var(--ink-900);
-  --color-ink-850: var(--ink-850);
-  --color-ink-800: var(--ink-800);
-  --color-mist-50: var(--mist-50);
-  --color-mist-100: var(--mist-100);
-  --color-mist-300: var(--mist-300);
-  --color-mist-400: var(--mist-400);
-  --color-mist-500: var(--mist-500);
+  --color-ink-950: #0a0a08;
+  --color-ink-900: #131311;
+  --color-ink-850: #1c1c18;
+  --color-ink-800: #27271f;
 
-  --color-brand-300: var(--brand-300);
-  --color-brand-400: var(--brand-400);
-  --color-brand-500: var(--brand-500);
-  --color-brand-600: var(--brand-600);
-  --color-accent-400: var(--accent-400);
-  --color-accent-500: var(--accent-500);
+  --color-mist-50: #f7f4eb;
+  --color-mist-100: #edeade;
+  --color-mist-300: #cfc9b8;
+  --color-mist-400: #a29b87;
+  --color-mist-500: #706b5d;
+
+  --color-brand-300: #eaff7a;
+  --color-brand-400: #d4ff3a;
+  --color-brand-500: #b8ec1e;
+  --color-brand-600: #93bd0a;
+
+  --color-punch-400: #ff5c1f;
+  --color-punch-500: #e04a12;
+  --color-punch-600: #b93a0c;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-fraunces), Georgia, serif;
@@ -34,70 +38,8 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ---- Dark theme (default) ---- */
-:root,
-.dark {
-  color-scheme: dark;
-
-  --ink-950: #080706;
-  --ink-900: #100e0c;
-  --ink-850: #171411;
-  --ink-800: #211c18;
-
-  --mist-50: #fffaf3;
-  --mist-100: #f6f0e6;
-  --mist-300: #c9c0b3;
-  --mist-400: #9b9286;
-  --mist-500: #6f675c;
-
-  --brand-300: #eaff7a;
-  --brand-400: #d4ff3a;
-  --brand-500: #b6e00f;
-  --brand-600: #8fb000;
-  --accent-400: #ff9b6a;
-  --accent-500: #e87a45;
-
-  /* Hairline and tinted-fill strengths, tuned per theme. */
-  --line-alpha: 8%;
-  --grid-alpha: 5%;
-  --surface-top: 6%;
-  --surface-bottom: 1.5%;
-  --scrollbar-thumb: #22222f;
-  --scrollbar-thumb-hover: #33334a;
-}
-
-/* ---- Light theme ---- */
-.light {
-  color-scheme: light;
-
-  --ink-950: #f6f1e8;
-  --ink-900: #eee7db;
-  --ink-850: #e4dccf;
-  --ink-800: #d8cfc0;
-
-  --mist-50: #080706;
-  --mist-100: #14110e;
-  --mist-300: #3f3a34;
-  --mist-400: #5c564e;
-  --mist-500: #7a7368;
-
-  --brand-300: #4a5c00;
-  --brand-400: #5c7300;
-  --brand-500: #6d8800;
-  --brand-600: #3d4d00;
-  --accent-400: #b4532a;
-  --accent-500: #933c1a;
-
-  /* Black-on-white hairlines read heavier, so these differ from dark. */
-  --line-alpha: 11%;
-  --grid-alpha: 6%;
-  --surface-top: 4%;
-  --surface-bottom: 1%;
-  --scrollbar-thumb: #c7cad8;
-  --scrollbar-thumb-hover: #aeb2c4;
-}
-
 :root {
+  color-scheme: dark;
   --background: var(--color-ink-950);
   --foreground: var(--color-mist-100);
 }
@@ -105,14 +47,21 @@
 * {
   border-color: color-mix(
     in oklab,
-    var(--color-mist-100) var(--line-alpha),
+    var(--color-mist-100) 10%,
     transparent
   );
 }
 
 html {
-  scroll-behavior: smooth;
   -webkit-tap-highlight-color: transparent;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
 }
 
 body {
@@ -122,15 +71,17 @@ body {
   font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: clip;
 }
 
+/* Fine film grain over everything — keeps flat colour rich. */
 body::before {
   content: "";
   pointer-events: none;
   position: fixed;
   inset: 0;
-  z-index: 1;
-  opacity: 0.035;
+  z-index: 90;
+  opacity: 0.05;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
 }
@@ -148,7 +99,7 @@ h2.font-display {
 
 ::selection {
   background: var(--color-brand-400);
-  color: #080706;
+  color: #0a0a08;
 }
 
 ::-webkit-scrollbar {
@@ -158,67 +109,67 @@ h2.font-display {
   background: var(--color-ink-950);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
+  background: #2b2b24;
   border: 2px solid var(--color-ink-950);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover);
+  background: var(--color-brand-600);
 }
 
 @utility text-balance-pretty {
   text-wrap: balance;
 }
 
-/* Draftsman's construction grid — numbered columns, not a SaaS mesh. */
+/* Giant outlined ghost type for section backdrops. */
+@utility text-stroke-lime {
+  -webkit-text-stroke: 1.5px color-mix(in oklab, var(--color-brand-400) 35%, transparent);
+  color: transparent;
+}
+
+@utility text-stroke-faint {
+  -webkit-text-stroke: 1.5px color-mix(in oklab, var(--color-mist-100) 14%, transparent);
+  color: transparent;
+}
+
+/* Draftsman's construction grid. */
 @utility bg-grid {
   background-image:
     repeating-linear-gradient(
       to right,
-      color-mix(in oklab, var(--color-mist-100) var(--grid-alpha), transparent) 0
-        1px,
+      color-mix(in oklab, var(--color-mist-100) 6%, transparent) 0 1px,
       transparent 1px 88px
     ),
     repeating-linear-gradient(
       to bottom,
-      color-mix(in oklab, var(--color-mist-100) calc(var(--grid-alpha) * 0.55), transparent)
-        0 1px,
+      color-mix(in oklab, var(--color-mist-100) 3.5%, transparent) 0 1px,
       transparent 1px 88px
     );
 }
 
-@utility surface {
-  background: color-mix(
-    in oklab,
-    var(--color-mist-100) var(--surface-top),
-    transparent
-  );
-  border: 1px solid
-    color-mix(in oklab, var(--color-mist-100) var(--line-alpha), transparent);
+@utility bg-grid-dark {
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      color-mix(in oklab, #0a0a08 9%, transparent) 0 1px,
+      transparent 1px 88px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      color-mix(in oklab, #0a0a08 5%, transparent) 0 1px,
+      transparent 1px 88px
+    );
 }
 
-@utility crop-marks {
-  position: relative;
-  &::before,
-  &::after {
-    content: "";
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    border-color: color-mix(in oklab, var(--color-mist-100) 28%, transparent);
-    pointer-events: none;
-  }
-  &::before {
-    top: -1px;
-    left: -1px;
-    border-top: 1px solid;
-    border-left: 1px solid;
-  }
-  &::after {
-    right: -1px;
-    bottom: -1px;
-    border-right: 1px solid;
-    border-bottom: 1px solid;
-  }
+/* Utility: loading-bar sweep used by the loading state. */
+@keyframes loading-bar {
+  0% { transform: scaleX(0); transform-origin: left; }
+  55% { transform: scaleX(1); transform-origin: left; }
+  56% { transform-origin: right; }
+  100% { transform: scaleX(0); transform-origin: right; }
+}
+
+@utility animate-loading-bar {
+  animation: loading-bar 1.4s ease-in-out infinite;
 }
 
 @utility scrollbar-none {
@@ -226,17 +177,6 @@ h2.font-display {
   &::-webkit-scrollbar {
     display: none;
   }
-}
-
-@utility text-gradient {
-  background: linear-gradient(
-    105deg,
-    var(--color-brand-300) 0%,
-    var(--color-accent-400) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
 }
 
 @keyframes marquee {
@@ -248,30 +188,22 @@ h2.font-display {
   }
 }
 
-@keyframes aurora {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(3%, -4%, 0) scale(1.12);
-  }
-}
-
 .animate-marquee {
-  animation: marquee 38s linear infinite;
+  animation: marquee 30s linear infinite;
 }
 
-.animate-aurora {
-  animation: aurora 18s ease-in-out infinite;
+.animate-marquee-fast {
+  animation: marquee 18s linear infinite;
+}
+
+.marquee-paused:hover .animate-marquee,
+.marquee-paused:hover .animate-marquee-fast {
+  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
   .animate-marquee,
-  .animate-aurora {
+  .animate-marquee-fast {
     animation: none;
   }
 }

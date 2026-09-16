@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Eyebrow } from "./eyebrow";
-import { Reveal } from "./reveal";
+import { Reveal } from "@/components/motion/reveal";
 
 export function SectionHeading({
   eyebrow,
@@ -8,34 +8,47 @@ export function SectionHeading({
   description,
   align = "left",
   className,
+  dark = false,
 }: {
   eyebrow?: string;
   title: React.ReactNode;
   description?: React.ReactNode;
   align?: "left" | "center";
   className?: string;
+  /** Set when the heading sits on a lime/light section. */
+  dark?: boolean;
 }) {
   return (
     <div
       className={cn(
-        "flex flex-col gap-5",
+        "flex flex-col gap-6",
         align === "center" && "items-center text-center",
         className,
       )}
     >
       {eyebrow ? (
         <Reveal>
-          <Eyebrow>{eyebrow}</Eyebrow>
+          <Eyebrow tone={dark ? "ink" : "lime"}>{eyebrow}</Eyebrow>
         </Reveal>
       ) : null}
       <Reveal delay={0.05}>
-        <h2 className="max-w-3xl font-display text-[2.15rem] leading-[1.02] tracking-[-0.035em] text-balance-pretty text-mist-100 sm:text-[3rem] lg:text-[3.6rem]">
+        <h2
+          className={cn(
+            "max-w-4xl font-display text-[2.6rem] leading-[0.98] font-bold tracking-[-0.03em] text-balance-pretty sm:text-6xl lg:text-7xl",
+            dark ? "text-ink-950" : "text-mist-100",
+          )}
+        >
           {title}
         </h2>
       </Reveal>
       {description ? (
         <Reveal delay={0.1}>
-          <p className="max-w-2xl text-base leading-relaxed text-mist-400 sm:text-[1.0625rem]">
+          <p
+            className={cn(
+              "max-w-2xl text-base leading-relaxed sm:text-lg",
+              dark ? "text-ink-950/70" : "text-mist-400",
+            )}
+          >
             {description}
           </p>
         </Reveal>

@@ -28,14 +28,10 @@ const columns = [
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-mist-100/10 bg-ink-900">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-40 left-1/2 size-[36rem] -translate-x-1/2 rounded-full bg-brand-500/12 blur-[140px]"
-      />
+    <footer className="relative overflow-hidden border-t-4 border-brand-400 bg-ink-900">
       <Container className="relative py-16 lg:py-20">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col items-start gap-5">
             <Logo />
             <p className="max-w-xs text-sm leading-relaxed text-mist-400">
               {site.description}
@@ -47,7 +43,7 @@ export function Footer() {
                   href={s.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="border border-mist-100/12 px-3.5 py-1.5 font-mono text-[11px] tracking-[0.14em] text-mist-400 uppercase transition-colors hover:border-brand-400 hover:text-brand-400"
+                  className="border-2 border-mist-100/15 px-3.5 py-1.5 font-mono text-[11px] font-bold tracking-[0.14em] text-mist-400 uppercase transition-colors hover:border-brand-400 hover:bg-brand-400 hover:text-ink-950"
                 >
                   {s.label}
                 </a>
@@ -56,52 +52,59 @@ export function Footer() {
           </div>
 
           {columns.map((col) => (
-            <div key={col.title} className="flex flex-col gap-4">
-              <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-mist-500">
+            <nav key={col.title} aria-label={col.title} className="flex flex-col gap-4">
+              <h2 className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-brand-400">
                 {col.title}
-              </h3>
+              </h2>
               <ul className="flex flex-col gap-3">
                 {col.links.map((l) => (
                   <li key={l.label}>
                     <Link
                       href={l.href}
-                      className="text-sm text-mist-400 transition-colors hover:text-mist-100"
+                      className="text-sm font-medium text-mist-300 transition-colors hover:text-brand-400"
                     >
                       {l.label}
                     </Link>
                   </li>
                 ))}
               </ul>
-            </div>
+            </nav>
           ))}
 
-          <div className="flex flex-col gap-4">
-            <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-mist-500">
+          <div className="flex flex-col items-start gap-4">
+            <h2 className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-brand-400">
               Get in touch
-            </h3>
+            </h2>
             <a
               href={`mailto:${site.email}`}
-              className="group inline-flex items-center gap-1.5 font-display text-xl tracking-tight text-mist-100 italic"
+              className="group inline-flex items-center gap-1.5 font-display text-xl font-bold tracking-tight text-mist-100"
             >
               {site.email}
-              <ArrowUpRight className="size-4 text-brand-300 transition-transform duration-300 ease-out-expo group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <ArrowUpRight className="size-4 text-brand-400 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
-            <p className="text-sm text-mist-400">
+            <p className="border-l-4 border-brand-400 pl-4 text-sm leading-relaxed text-mist-400">
               Currently taking on new projects for the next quarter.
             </p>
           </div>
         </div>
-
-        <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-mist-100/10 pt-8 text-[11px] leading-relaxed text-mist-500 sm:flex-row sm:items-end">
-          <p>
-            © {new Date().getFullYear()} {site.name}. {site.domain}
-          </p>
-          <p className="max-w-sm sm:text-right">
-            Colophon: Fraunces for display, Inter for text, JetBrains Mono for
-            figures. Palette in oklab. Mesh is a seeded nearest-neighbour field.
-          </p>
-        </div>
       </Container>
+
+      {/* Oversized wordmark sign-off */}
+      <div aria-hidden className="relative select-none">
+        <Container>
+          <p className="font-display text-[18.5vw] leading-[0.8] font-black tracking-[-0.04em] text-mist-100/[0.07] lg:text-[13rem]">
+            AISquadX
+          </p>
+        </Container>
+        <div className="border-t-2 border-mist-100/10">
+          <Container className="flex flex-col gap-2 py-6 font-mono text-[11px] tracking-[0.08em] text-mist-500 sm:flex-row sm:items-center sm:justify-between">
+            <p>
+              © {new Date().getFullYear()} {site.name} — {site.domain}
+            </p>
+            <p>Designed & engineered in Pakistan. Serving the USA & Pakistan.</p>
+          </Container>
+        </div>
+      </div>
     </footer>
   );
 }

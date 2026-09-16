@@ -1,6 +1,6 @@
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { Reveal } from "@/components/ui/reveal";
+import { Reveal } from "@/components/motion/reveal";
 
 const steps = [
   {
@@ -33,6 +33,7 @@ const steps = [
   },
 ];
 
+/** Bold process — numbered blocks with giant lime numerals. */
 export function Process() {
   return (
     <section id="process" className="relative scroll-mt-24 py-24 lg:py-32">
@@ -41,36 +42,29 @@ export function Process() {
           eyebrow="Method"
           title={
             <>
-              Four stages. No{" "}
-              <span className="italic text-brand-400">theatre.</span>
+              Four stages. No <span className="italic text-brand-400">theatre.</span>
             </>
           }
           description="Visible progress from the first week — not a six-week discovery deck."
         />
 
-        <ol className="relative mt-16 border-l border-brand-400/40 pl-8 sm:pl-12">
+        <ol className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((item, i) => (
-            <Reveal
-              key={item.step}
-              as="li"
-              delay={i * 0.08}
-              className="relative pb-12 last:pb-0"
-            >
-              <span className="absolute top-1.5 -left-[2.15rem] size-2.5 bg-brand-400 sm:-left-[3.15rem]" />
-              <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                <span className="font-mono text-[11px] tracking-[0.22em] text-brand-400">
+            <Reveal key={item.step} as="li" delay={i * 0.08} className="h-full">
+              <div className="group flex h-full flex-col border-2 border-mist-100/12 bg-ink-900 p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-400">
+                <span className="font-display text-6xl font-black tracking-tight text-brand-400">
                   {item.step}
                 </span>
-                <h3 className="font-display text-3xl tracking-tight text-mist-100 italic">
+                <h3 className="mt-6 font-display text-xl font-black tracking-tight text-mist-100">
                   {item.title}
                 </h3>
-                <span className="font-mono text-[10px] tracking-[0.16em] text-mist-500 uppercase">
+                <span className="mt-2 inline-flex w-fit border border-brand-400/50 px-2 py-0.5 font-mono text-[10px] font-bold tracking-[0.16em] text-brand-300 uppercase">
                   {item.duration}
                 </span>
+                <p className="mt-4 flex-1 text-sm leading-relaxed text-mist-400">
+                  {item.description}
+                </p>
               </div>
-              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-mist-400 sm:text-[15px]">
-                {item.description}
-              </p>
             </Reveal>
           ))}
         </ol>

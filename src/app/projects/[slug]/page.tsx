@@ -1,278 +1,315 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, Code2, ExternalLink } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/container";
-import { Reveal } from "@/components/ui/reveal";
+import { ButtonLink } from "@/components/ui/button";
+import { Eyebrow } from "@/components/ui/eyebrow";
 import { ProjectCover } from "@/components/project-cover";
+import { ProjectCard } from "@/components/project-card";
 import { CTA } from "@/components/home/cta";
-import {
-  getAdjacentProject,
-  getProject,
-  projects,
-} from "@/lib/projects";
+import { Reveal } from "@/components/motion/reveal";
+import { projects, getProject, getAdjacentProject } from "@/lib/projects";
 
-type Params = { slug: string };
-
-export function generateStaticParams(): Params[] {
+export async function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<Params>;
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
   const project = getProject(slug);
-
-  if (!project) return { title: "Project not found" };
-
+  if (!project) return {};
   return {
-    title: `${project.title} — ${project.category}`,
+    title: `${project.title} — Case study | AISquadX`,
     description: project.summary,
     alternates: { canonical: `/projects/${project.slug}` },
-    openGraph: {
-      title: project.title,
-      description: project.summary,
-      type: "article",
-    },
   };
 }
 
 export default async function ProjectPage({
   params,
 }: {
-  params: Promise<Params>;
+  params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
   const project = getProject(slug);
-
   if (!project) notFound();
-
-  const next = getAdjacentProject(project.slug);
-
-  const meta = [
-    { label: "Client", value: project.client },
-    { label: "Our role", value: project.role },
-    { label: "Duration", value: project.duration },
-    { label: "Year", value: project.year },
-  ];
+  const index = projects.findIndex((p) => p.slug === slug);
+  const prev = projects[(index - 1 + projects.length) % projects.length];
+  const next = getAdjacentProject(slug);
 
   return (
     <>
-      {/* ---- Header ---- */}
-      <section className="relative overflow-hidden pt-32 pb-14 sm:pt-40">
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-grid [mask-image:radial-gradient(ellipse_65%_50%_at_50%_0%,black,transparent)]" />
-          <div
-            className="absolute -top-48 left-1/2 size-[38rem] -translate-x-1/2 rounded-full opacity-20 blur-[150px]"
-            style={{ backgroundColor: project.gradient[0] }}
-          />
-        </div>
-
-        <Container className="relative">
-          <Link
-            href="/projects"
-            className="group inline-flex items-center gap-2 text-sm text-mist-400 transition-colors hover:text-mist-100"
-          >
-            <ArrowLeft className="size-4 transition-transform duration-300 ease-out-expo group-hover:-translate-x-0.5" />
-            All projects
-          </Link>
-
-          <div className="mt-10 flex items-center gap-3">
-            <span className="rounded-full border border-mist-100/10 bg-mist-100/[0.04] px-3.5 py-1.5 font-mono text-[11px] tracking-[0.14em] text-mist-300 uppercase">
-              {project.category}
-            </span>
-            <span className="font-mono text-[11px] text-mist-500">
-              {project.year}
-            </span>
-          </div>
-
-          <h1 className="mt-7 max-w-3xl font-display text-[2.4rem] leading-[1.05] font-semibold tracking-[-0.04em] text-balance-pretty text-mist-100 sm:text-5xl lg:text-[3.75rem]">
-            {project.title}
-          </h1>
-
-          <p className="mt-7 max-w-2xl text-lg leading-relaxed text-balance-pretty text-mist-400">
-            {project.intro}
-          </p>
-
-          {project.liveUrl || project.repoUrl ? (
-            <div className="mt-9 flex flex-wrap gap-3">
-              {project.liveUrl ? (
-                <a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group inline-flex items-center gap-2 bg-brand-400 px-5 py-2.5 font-mono text-[11px] tracking-[0.18em] text-ink-950 uppercase transition-colors hover:bg-brand-300"
-                >
-                  Visit live site
-                  <ExternalLink className="size-4" />
-                </a>
-              ) : null}
-              {project.repoUrl ? (
-                <a
-                  href={project.repoUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full surface px-5 py-2.5 text-sm text-mist-100 transition-all duration-300 ease-out-expo hover:-translate-y-0.5 hover:border-brand-400/40"
-                >
-                  <Code2 className="size-4" />
-                  Source code
-                </a>
-              ) : null}
-            </div>
-          ) : null}
-        </Container>
-      </section>
-
-      {/* ---- Cover ---- */}
-      <Container>
-        <Reveal>
-          <div className="relative aspect-16/9 overflow-hidden border border-mist-100/12">
-            <ProjectCover
-              project={project}
-              priority
-              sizes="(min-width: 1152px) 1088px, 100vw"
-            />
-          </div>
-        </Reveal>
-      </Container>
-
-      {/* ---- Meta + metrics ---- */}
-      <Container className="pt-14">
-        <Reveal>
-          <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-mist-100/[0.07] bg-mist-100/[0.06] lg:grid-cols-4">
-            {meta.map((item) => (
-              <div
-                key={item.label}
-                className="flex flex-col gap-2 bg-ink-950 p-6"
-              >
-                <dt className="font-mono text-[10px] tracking-[0.16em] text-mist-500 uppercase">
-                  {item.label}
-                </dt>
-                <dd className="text-[15px] leading-snug font-medium text-mist-100">
-                  {item.value}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </Reveal>
-      </Container>
-
-      {/* ---- Narrative ---- */}
-      <section className="py-20 lg:py-28">
+      <article className="pt-36 sm:pt-44">
+        {/* Case-study header */}
         <Container>
-          <div className="grid gap-14 lg:grid-cols-[1.5fr_0.7fr] lg:gap-20">
-            <div className="flex flex-col gap-16">
-              <Reveal className="flex flex-col gap-5">
-                <h2 className="font-mono text-[11px] tracking-[0.18em] text-mist-500 uppercase">
+          <Reveal>
+            <Link
+              href="/projects"
+              className="inline-flex items-center gap-2 font-mono text-[11px] font-bold tracking-[0.18em] text-mist-500 uppercase transition-colors hover:text-brand-400"
+            >
+              <ArrowLeft className="size-4" />
+              All projects
+            </Link>
+          </Reveal>
+
+          <div className="mt-8 flex flex-col gap-8">
+            <Reveal delay={0.05}>
+              <div className="flex flex-wrap items-center gap-3">
+                <Eyebrow>{project.category}</Eyebrow>
+                <span className="font-mono text-[11px] font-bold tracking-[0.16em] text-mist-500 uppercase">
+                  {project.year} · Case study
+                </span>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <h1 className="max-w-5xl font-display text-[clamp(2.8rem,7vw,5.5rem)] leading-[0.95] font-black tracking-[-0.03em] text-balance-pretty text-mist-100">
+                {project.title}
+              </h1>
+            </Reveal>
+
+            <Reveal delay={0.16}>
+              <p className="max-w-2xl border-l-4 border-brand-400 pl-5 text-lg leading-relaxed text-mist-300">
+                {project.intro}
+              </p>
+            </Reveal>
+
+            {/* Facts strip */}
+            <Reveal delay={0.2}>
+              <dl className="grid grid-cols-2 gap-px overflow-hidden border-2 border-mist-100/15 bg-mist-100/10 lg:grid-cols-4">
+                <div className="bg-ink-900 p-5">
+                  <dt className="font-mono text-[10px] font-bold tracking-[0.18em] text-mist-500 uppercase">
+                    Role
+                  </dt>
+                  <dd className="mt-1 font-display text-lg font-bold text-mist-100">
+                    {project.role}
+                  </dd>
+                </div>
+                <div className="bg-ink-900 p-5">
+                  <dt className="font-mono text-[10px] font-bold tracking-[0.18em] text-mist-500 uppercase">
+                    Client
+                  </dt>
+                  <dd className="mt-1 font-display text-lg font-bold text-mist-100">
+                    {project.client}
+                  </dd>
+                </div>
+                <div className="bg-ink-900 p-5">
+                  <dt className="font-mono text-[10px] font-bold tracking-[0.18em] text-mist-500 uppercase">
+                    Duration
+                  </dt>
+                  <dd className="mt-1 font-display text-lg font-bold text-brand-400">
+                    {project.duration}
+                  </dd>
+                </div>
+                <div className="bg-ink-900 p-5">
+                  <dt className="font-mono text-[10px] font-bold tracking-[0.18em] text-mist-500 uppercase">
+                    Links
+                  </dt>
+                  <dd className="mt-1 flex flex-wrap gap-2">
+                    {project.liveUrl ? (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="border-2 border-mist-100/20 px-3 py-1 font-mono text-[10px] font-black tracking-[0.12em] text-mist-300 uppercase transition-colors hover:border-brand-400 hover:bg-brand-400 hover:text-ink-950"
+                      >
+                        Visit live
+                      </a>
+                    ) : null}
+                    {project.repoUrl ? (
+                      <a
+                        href={project.repoUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="border-2 border-mist-100/20 px-3 py-1 font-mono text-[10px] font-black tracking-[0.12em] text-mist-300 uppercase transition-colors hover:border-brand-400 hover:bg-brand-400 hover:text-ink-950"
+                      >
+                        Source
+                      </a>
+                    ) : null}
+                    {!project.liveUrl && !project.repoUrl ? (
+                      <span className="font-mono text-[10px] font-bold tracking-[0.12em] text-mist-500 uppercase">
+                        Runs locally
+                      </span>
+                    ) : null}
+                  </dd>
+                </div>
+              </dl>
+            </Reveal>
+          </div>
+        </Container>
+
+        {/* Big cover */}
+        <Container className="mt-12">
+          <Reveal>
+            <div className="border-2 border-mist-100/15">
+              <ProjectCover project={project} priority />
+            </div>
+          </Reveal>
+        </Container>
+
+        {/* Body */}
+        <Container className="mt-14 grid gap-14 lg:grid-cols-[1fr_0.55fr] lg:gap-20">
+          <div className="flex flex-col gap-10">
+            <Reveal>
+              <section className="flex flex-col gap-4">
+                <h2 className="font-mono text-[11px] font-black tracking-[0.2em] text-brand-400 uppercase">
                   The challenge
                 </h2>
-                <p className="text-lg leading-relaxed text-mist-300">
+                <p className="text-base leading-relaxed text-mist-300">
                   {project.challenge}
                 </p>
-              </Reveal>
+              </section>
+            </Reveal>
 
-              <Reveal className="flex flex-col gap-7">
-                <h2 className="font-mono text-[11px] tracking-[0.18em] text-mist-500 uppercase">
-                  What we did
-                </h2>
-                <ol className="flex flex-col gap-7">
-                  {project.approach.map((step, i) => (
-                    <li key={step} className="flex gap-5">
-                      <span className="font-display text-lg font-semibold text-brand-400/60 tabular-nums">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <p className="flex-1 leading-relaxed text-mist-400">
-                        {step}
-                      </p>
-                    </li>
-                  ))}
-                </ol>
-              </Reveal>
-
-              <Reveal className="flex flex-col gap-5">
-                <h2 className="font-mono text-[11px] tracking-[0.18em] text-mist-500 uppercase">
-                  The outcome
-                </h2>
-                <p className="text-lg leading-relaxed text-mist-300">
-                  {project.outcome}
-                </p>
-              </Reveal>
-
-              <Reveal>
-                <dl className="grid gap-px overflow-hidden rounded-2xl border border-mist-100/[0.07] bg-mist-100/[0.06] sm:grid-cols-3">
-                  {project.metrics.map((metric) => (
-                    <div
-                      key={metric.label}
-                      className="flex flex-col gap-2 bg-ink-900 p-7"
-                    >
-                      <dd className="font-display text-2xl font-semibold tracking-[-0.03em] text-mist-100">
-                        {metric.value}
-                      </dd>
-                      <dt className="text-xs leading-relaxed text-mist-500">
-                        {metric.label}
-                      </dt>
-                    </div>
-                  ))}
-                </dl>
-              </Reveal>
-            </div>
-
-            {/* Stack sidebar */}
-            <Reveal delay={0.1} className="lg:sticky lg:top-28 lg:self-start">
-              <div className="flex flex-col gap-5 rounded-2xl surface p-7">
-                <h2 className="font-mono text-[11px] tracking-[0.18em] text-mist-500 uppercase">
-                  Built with
+            <Reveal>
+              <section className="flex flex-col gap-4">
+                <h2 className="font-mono text-[11px] font-black tracking-[0.2em] text-brand-400 uppercase">
+                  What we built
                 </h2>
                 <ul className="flex flex-col gap-3">
-                  {project.stack.map((tech) => (
+                  {project.approach.map((feature) => (
                     <li
-                      key={tech}
-                      className="flex items-center gap-3 text-sm text-mist-300"
+                      key={feature}
+                      className="flex gap-3 border-l-4 border-brand-400/60 bg-ink-900 px-5 py-4 text-[15px] leading-relaxed text-mist-300"
                     >
-                      <span className="size-1.5 rounded-full bg-brand-400/70" />
-                      {tech}
+                      {feature}
                     </li>
                   ))}
                 </ul>
-              </div>
+              </section>
+            </Reveal>
+
+            <Reveal>
+              <section className="border-2 border-mist-100/12 bg-ink-900 p-7">
+                <h2 className="font-mono text-[11px] font-black tracking-[0.2em] text-brand-400 uppercase">
+                  Outcome
+                </h2>
+                <p className="mt-4 text-base leading-relaxed text-mist-300">
+                  {project.outcome}
+                </p>
+              </section>
             </Reveal>
           </div>
-        </Container>
-      </section>
 
-      {/* ---- Next project ---- */}
-      {next ? (
-        <section className="border-t border-mist-100/[0.07] py-20">
-          <Container>
-            <Reveal>
+          {/* Aside */}
+          <aside className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
+            {project.metrics.length > 0 ? (
+              <Reveal>
+                <section className="border-2 border-brand-400 bg-ink-900 p-7">
+                  <h2 className="font-mono text-[11px] font-black tracking-[0.2em] text-brand-400 uppercase">
+                    Results
+                  </h2>
+                  <dl className="mt-5 flex flex-col gap-5">
+                    {project.metrics.map((metric) => (
+                      <div key={metric.label} className="border-b-2 border-mist-100/10 pb-5 last:border-0 last:pb-0">
+                        <dd className="font-display text-4xl font-black tracking-tight text-mist-100">
+                          {metric.value}
+                        </dd>
+                        <dt className="mt-1 text-sm text-mist-400">{metric.label}</dt>
+                      </div>
+                    ))}
+                  </dl>
+                </section>
+              </Reveal>
+            ) : null}
+
+            <Reveal delay={0.08}>
+              <section className="border-2 border-mist-100/12 bg-ink-900 p-7">
+                <h2 className="font-mono text-[11px] font-black tracking-[0.2em] text-mist-500 uppercase">
+                  Stack
+                </h2>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {project.stack.map((item) => (
+                    <li
+                      key={item}
+                      className="border border-mist-100/15 px-2.5 py-1 font-mono text-[11px] font-bold tracking-wide text-mist-300 uppercase"
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </Reveal>
+          </aside>
+        </Container>
+
+        {/* Prev / next */}
+        <Container className="mt-20">
+          <nav
+            aria-label="More projects"
+            className="grid gap-5 border-t-2 border-mist-100/10 pt-10 sm:grid-cols-2"
+          >
+            {prev ? (
               <Link
-                href={`/projects/${next.slug}`}
-                className="group flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between"
+                href={`/projects/${prev.slug}`}
+                className="group flex items-center gap-4 border-2 border-mist-100/12 bg-ink-900 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand-400"
               >
-                <span className="flex flex-col gap-3">
-                  <span className="font-mono text-[11px] tracking-[0.18em] text-mist-500 uppercase">
-                    Next project
+                <ArrowLeft className="size-6 shrink-0 text-brand-400 transition-transform duration-300 group-hover:-translate-x-1" />
+                <span>
+                  <span className="block font-mono text-[10px] font-bold tracking-[0.18em] text-mist-500 uppercase">
+                    Previous
                   </span>
-                  <span className="font-display text-2xl font-semibold tracking-[-0.03em] text-mist-100 transition-colors duration-300 group-hover:text-brand-300 sm:text-4xl">
-                    {next.title}
+                  <span className="block font-display text-xl font-black tracking-tight text-mist-100">
+                    {prev.title}
                   </span>
-                  <span className="max-w-md text-sm leading-relaxed text-mist-400">
-                    {next.summary}
-                  </span>
-                </span>
-                <span className="grid size-14 shrink-0 place-items-center rounded-full border border-mist-100/10 text-mist-300 transition-all duration-500 ease-out-expo group-hover:border-brand-400/40 group-hover:bg-brand-500/10 group-hover:text-mist-100">
-                  <ArrowRight className="size-5 transition-transform duration-300 ease-out-expo group-hover:translate-x-0.5" />
                 </span>
               </Link>
-            </Reveal>
-          </Container>
-        </section>
-      ) : null}
+            ) : (
+              <span />
+            )}
+            {next ? (
+              <Link
+                href={`/projects/${next.slug}`}
+                className="group flex items-center justify-end gap-4 border-2 border-mist-100/12 bg-ink-900 p-6 text-right transition-all duration-300 hover:-translate-y-1 hover:border-brand-400"
+              >
+                <span>
+                  <span className="block font-mono text-[10px] font-bold tracking-[0.18em] text-mist-500 uppercase">
+                    Next
+                  </span>
+                  <span className="block font-display text-xl font-black tracking-tight text-mist-100">
+                    {next.title}
+                  </span>
+                </span>
+                <ArrowRight className="size-6 shrink-0 text-brand-400 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+            ) : null}
+          </nav>
+        </Container>
 
-      <CTA />
+        {/* More work */}
+        <Container className="mt-16">
+          <Reveal>
+            <h2 className="font-display text-3xl font-black tracking-tight text-mist-100">
+              More work
+            </h2>
+          </Reveal>
+          <div className="mt-8 grid gap-6 sm:grid-cols-2">
+            {projects
+              .filter((p) => p.slug !== project.slug)
+              .slice(0, 2)
+              .map((p, i) => (
+                <Reveal key={p.slug} delay={i * 0.08} className="h-full">
+                  <ProjectCard project={p} compact className="h-full" />
+                </Reveal>
+              ))}
+          </div>
+          <Reveal className="mt-10 flex justify-center">
+            <ButtonLink href="/projects" variant="secondary">
+              View all projects
+              <ArrowRight className="size-4" />
+            </ButtonLink>
+          </Reveal>
+        </Container>
+
+        <div className="mt-24">
+          <CTA />
+        </div>
+      </article>
     </>
   );
 }

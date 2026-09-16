@@ -1,5 +1,6 @@
 import { Hero } from "@/components/home/hero";
 import { TechMarquee } from "@/components/home/tech-marquee";
+import { Stats } from "@/components/home/stats";
 import { Services } from "@/components/home/services";
 import { FeaturedWork } from "@/components/home/featured-work";
 import { Process } from "@/components/home/process";
@@ -11,8 +12,9 @@ export default function HomePage() {
   return (
     <>
       <FaqJsonLd faqs={faqs} />
-      <Hero year={new Date().getFullYear()} />
+      <Hero />
       <TechMarquee />
+      <Stats />
       <Services />
       <FeaturedWork />
       <Process />
