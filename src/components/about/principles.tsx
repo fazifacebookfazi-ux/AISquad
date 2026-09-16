@@ -1,6 +1,6 @@
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { Reveal } from "@/components/ui/reveal";
+import { Reveal } from "@/components/motion/reveal";
 
 const principles = [
   {
@@ -37,32 +37,29 @@ const principles = [
 
 export function Principles() {
   return (
-    <section className="border-y border-mist-100/[0.07] bg-ink-900/40 py-24 lg:py-32">
+    <section className="border-y border-ink/12 bg-paper-deep/60 py-24 lg:py-32">
       <Container>
         <SectionHeading
           eyebrow="How we think"
           title={
             <>
-              Six things we{" "}
-              <span className="italic text-brand-400">
-                actually believe
-              </span>
+              Six things we <span className="text-accent">actually believe.</span>
             </>
           }
           description="Not values on a wall. These are the arguments we've already had, settled into how we work."
         />
 
-        <div className="mt-14 grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {principles.map((item, i) => (
-            <Reveal key={item.title} delay={i * 0.06}>
-              <div className="flex flex-col gap-3 border-t border-mist-100/10 pt-6">
-                <span className="font-mono text-[10px] tracking-[0.18em] text-mist-500">
+            <Reveal key={item.title} delay={i * 0.05} className="h-full">
+              <div className="card flex h-full flex-col gap-4 p-8">
+                <span className="display text-3xl text-accent">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="font-display text-lg font-semibold tracking-tight text-mist-100">
+                <h3 className="font-display text-lg font-bold tracking-[-0.01em] text-ink">
                   {item.title}
                 </h3>
-                <p className="text-sm leading-relaxed text-mist-400">
+                <p className="text-[15px] leading-relaxed text-ink-soft/70">
                   {item.description}
                 </p>
               </div>

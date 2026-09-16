@@ -1,7 +1,8 @@
 import { Check, X } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { Reveal } from "@/components/ui/reveal";
+import { Reveal } from "@/components/motion/reveal";
+import { cn } from "@/lib/utils";
 
 const rows = [
   {
@@ -38,53 +39,49 @@ export function Difference() {
           eyebrow="Why us"
           title={
             <>
-              The agency model,{" "}
-              <span className="italic text-brand-400">
-                rearranged
-              </span>
+              The agency model, <span className="text-accent">rearranged.</span>
             </>
           }
           description="Same deliverables, a fundamentally different way of getting there."
         />
 
         <Reveal delay={0.1}>
-          <div className="mt-14 overflow-hidden rounded-2xl border border-mist-100/[0.07]">
-            <div className="grid grid-cols-1 divide-y divide-mist-100/[0.07] sm:grid-cols-2 sm:divide-x sm:divide-y-0">
-              <div className="bg-ink-900/60 p-7">
-                <h3 className="font-mono text-[10px] tracking-[0.18em] text-mist-500 uppercase">
+          <div className="mt-14 overflow-hidden rounded-[24px] border border-ink/10">
+            <div className="grid sm:grid-cols-2">
+              <div className="bg-paper-deep/70 px-7 py-5">
+                <h3 className="font-mono text-[11px] tracking-[0.18em] text-mute uppercase">
                   The usual way
                 </h3>
               </div>
-              <div className="relative bg-brand-500/8 p-7">
-                <h3 className="font-mono text-[10px] tracking-[0.18em] text-brand-300 uppercase">
+              <div className="bg-accent px-7 py-5">
+                <h3 className="font-mono text-[11px] tracking-[0.18em] text-white uppercase">
                   With AISquadX
                 </h3>
               </div>
             </div>
 
-            {rows.map((row) => (
+            {rows.map((row, i) => (
               <div
                 key={row.ours}
-                className="grid grid-cols-1 divide-y divide-mist-100/[0.07] border-t border-mist-100/[0.07] sm:grid-cols-2 sm:divide-x sm:divide-y-0"
+                className={cn(
+                  "grid border-t border-ink/10 sm:grid-cols-2",
+                  i % 2 === 1 && "bg-paper-deep/40",
+                )}
               >
-                <div className="flex items-start gap-3 bg-ink-900/30 p-7">
-                  <X
-                    className="mt-0.5 size-4 shrink-0 text-mist-500"
-                    strokeWidth={2}
-                    aria-hidden
-                  />
-                  <p className="text-sm leading-relaxed text-mist-500">
+                <div className="flex items-start gap-3 px-7 py-6">
+                  <X className="mt-1 size-4 shrink-0 text-faint" strokeWidth={2} aria-hidden />
+                  <p className="text-[15px] leading-relaxed text-ink-soft/60">
                     {row.old}
                   </p>
                 </div>
-                <div className="flex items-start gap-3 bg-brand-500/4 p-7">
+                <div className="flex items-start gap-3 border-t border-ink/10 px-7 py-6 sm:border-t-0 sm:border-l sm:border-ink/10">
                   <span
-                    className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-brand-500/20 text-brand-300"
+                    className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-accent text-white"
                     aria-hidden
                   >
                     <Check className="size-3" strokeWidth={2.5} />
                   </span>
-                  <p className="text-sm leading-relaxed text-mist-300">
+                  <p className="text-[15px] leading-relaxed font-medium text-ink">
                     {row.ours}
                   </p>
                 </div>

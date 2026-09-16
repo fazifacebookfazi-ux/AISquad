@@ -1,223 +1,134 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
 /*
- * Two semantic scales, both theme-aware:
- *   ink-*   background surfaces, darkest (950) to lightest elevation
- *   mist-*  foreground text, strongest (50/100) to faintest (500)
- * Both invert between themes, so a component written once works in both.
+ * AISquadX v3 — "modern aesthetic web agency"
+ * Light-first. Warm paper, deep ink, one electric-blue accent.
  */
 @theme {
-  --color-ink-950: var(--ink-950);
-  --color-ink-900: var(--ink-900);
-  --color-ink-850: var(--ink-850);
-  --color-ink-800: var(--ink-800);
-  --color-mist-50: var(--mist-50);
-  --color-mist-100: var(--mist-100);
-  --color-mist-300: var(--mist-300);
-  --color-mist-400: var(--mist-400);
-  --color-mist-500: var(--mist-500);
+  --color-paper: #f6f4ee;
+  --color-paper-deep: #edeae0;
+  --color-card: #fffdf9;
+  --color-ink: #141412;
+  --color-ink-soft: #2b2b27;
+  --color-mute: #8a867b;
+  --color-faint: #b9b4a6;
+  --color-accent: #2e3bff;
+  --color-accent-deep: #1f29c4;
+  --color-accent-soft: #e9ebff;
+  --color-line: #141412;
 
-  --color-brand-300: var(--brand-300);
-  --color-brand-400: var(--brand-400);
-  --color-brand-500: var(--brand-500);
-  --color-brand-600: var(--brand-600);
-  --color-accent-400: var(--accent-400);
-  --color-accent-500: var(--accent-500);
-
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-fraunces), Georgia, serif;
-  --font-serif: var(--font-fraunces), Georgia, serif;
-  --font-mono: var(--font-mono-jb), ui-monospace, monospace;
+  --font-sans: var(--font-arch), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-grot), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-spacemono), ui-monospace, SFMono-Regular, monospace;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* ---- Dark theme (default) ---- */
-:root,
-.dark {
-  color-scheme: dark;
-
-  --ink-950: #080706;
-  --ink-900: #100e0c;
-  --ink-850: #171411;
-  --ink-800: #211c18;
-
-  --mist-50: #fffaf3;
-  --mist-100: #f6f0e6;
-  --mist-300: #c9c0b3;
-  --mist-400: #9b9286;
-  --mist-500: #6f675c;
-
-  --brand-300: #eaff7a;
-  --brand-400: #d4ff3a;
-  --brand-500: #b6e00f;
-  --brand-600: #8fb000;
-  --accent-400: #ff9b6a;
-  --accent-500: #e87a45;
-
-  /* Hairline and tinted-fill strengths, tuned per theme. */
-  --line-alpha: 8%;
-  --grid-alpha: 5%;
-  --surface-top: 6%;
-  --surface-bottom: 1.5%;
-  --scrollbar-thumb: #22222f;
-  --scrollbar-thumb-hover: #33334a;
-}
-
-/* ---- Light theme ---- */
-.light {
-  color-scheme: light;
-
-  --ink-950: #f6f1e8;
-  --ink-900: #eee7db;
-  --ink-850: #e4dccf;
-  --ink-800: #d8cfc0;
-
-  --mist-50: #080706;
-  --mist-100: #14110e;
-  --mist-300: #3f3a34;
-  --mist-400: #5c564e;
-  --mist-500: #7a7368;
-
-  --brand-300: #4a5c00;
-  --brand-400: #5c7300;
-  --brand-500: #6d8800;
-  --brand-600: #3d4d00;
-  --accent-400: #b4532a;
-  --accent-500: #933c1a;
-
-  /* Black-on-white hairlines read heavier, so these differ from dark. */
-  --line-alpha: 11%;
-  --grid-alpha: 6%;
-  --surface-top: 4%;
-  --surface-bottom: 1%;
-  --scrollbar-thumb: #c7cad8;
-  --scrollbar-thumb-hover: #aeb2c4;
+  --ease-snappy: cubic-bezier(0.34, 1.3, 0.64, 1);
 }
 
 :root {
-  --background: var(--color-ink-950);
-  --foreground: var(--color-mist-100);
+  color-scheme: light;
 }
 
 * {
-  border-color: color-mix(
-    in oklab,
-    var(--color-mist-100) var(--line-alpha),
-    transparent
-  );
+  border-color: color-mix(in oklab, var(--color-line) 12%, transparent);
 }
 
 html {
-  scroll-behavior: smooth;
   -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
   font-family: var(--font-sans);
   font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: clip;
 }
 
-body::before {
+/* Subtle paper grain over everything */
+body::after {
   content: "";
   pointer-events: none;
   position: fixed;
   inset: 0;
-  z-index: 1;
-  opacity: 0.035;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
-}
-
-.font-display {
-  font-feature-settings: "kern" 1, "liga" 1, "dlig" 1, "ss01" 1;
-  font-optical-sizing: auto;
-  font-variation-settings: "opsz" 72, "SOFT" 20, "WONK" 0;
-}
-
-h1.font-display,
-h2.font-display {
-  font-variation-settings: "opsz" 144, "SOFT" 35, "WONK" 1;
+  z-index: 90;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.6'/></svg>");
 }
 
 ::selection {
-  background: var(--color-brand-400);
-  color: #080706;
+  background: var(--color-accent);
+  color: #fff;
 }
 
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-ink-950);
+  background: var(--color-paper);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
-  border: 2px solid var(--color-ink-950);
+  background: #c9c5b8;
+  border: 2px solid var(--color-paper);
+  border-radius: 8px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover);
+  background: var(--color-accent);
 }
+
+/* ---- Utilities ---- */
 
 @utility text-balance-pretty {
   text-wrap: balance;
 }
 
-/* Draftsman's construction grid — numbered columns, not a SaaS mesh. */
-@utility bg-grid {
-  background-image:
-    repeating-linear-gradient(
-      to right,
-      color-mix(in oklab, var(--color-mist-100) var(--grid-alpha), transparent) 0
-        1px,
-      transparent 1px 88px
-    ),
-    repeating-linear-gradient(
-      to bottom,
-      color-mix(in oklab, var(--color-mist-100) calc(var(--grid-alpha) * 0.55), transparent)
-        0 1px,
-      transparent 1px 88px
-    );
-}
-
-@utility surface {
-  background: color-mix(
-    in oklab,
-    var(--color-mist-100) var(--surface-top),
-    transparent
+/* Dotted construction grid for light sections */
+@utility bg-dots {
+  background-image: radial-gradient(
+    color-mix(in oklab, var(--color-line) 14%, transparent) 1px,
+    transparent 1.5px
   );
-  border: 1px solid
-    color-mix(in oklab, var(--color-mist-100) var(--line-alpha), transparent);
+  background-size: 26px 26px;
 }
 
-@utility crop-marks {
-  position: relative;
-  &::before,
-  &::after {
-    content: "";
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    border-color: color-mix(in oklab, var(--color-mist-100) 28%, transparent);
-    pointer-events: none;
-  }
-  &::before {
-    top: -1px;
-    left: -1px;
-    border-top: 1px solid;
-    border-left: 1px solid;
-  }
-  &::after {
-    right: -1px;
-    bottom: -1px;
-    border-right: 1px solid;
-    border-bottom: 1px solid;
+/* Hairline card on paper */
+@utility card {
+  background: var(--color-card);
+  border: 1px solid color-mix(in oklab, var(--color-line) 12%, transparent);
+  border-radius: 20px;
+}
+
+/* Big display type defaults */
+@utility display {
+  font-family: var(--font-display);
+  letter-spacing: -0.045em;
+  line-height: 0.94;
+  font-weight: 600;
+}
+
+/* Outlined ghost type */
+@utility text-stroke {
+  -webkit-text-stroke: 1.5px var(--color-ink);
+  color: transparent;
+}
+
+@utility text-stroke-paper {
+  -webkit-text-stroke: 1.5px var(--color-paper);
+  color: transparent;
+}
+
+/* Link with animated underline sweep */
+@utility link-sweep {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.35s var(--ease-out-expo);
+  padding-bottom: 2px;
+  &:hover {
+    background-size: 100% 1px;
   }
 }
 
@@ -228,18 +139,8 @@ h2.font-display {
   }
 }
 
-@utility text-gradient {
-  background: linear-gradient(
-    105deg,
-    var(--color-brand-300) 0%,
-    var(--color-accent-400) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-@keyframes marquee {
+/* ---- Marquee (CSS-driven, duplicated content) ---- */
+@keyframes marquee-x {
   from {
     transform: translateX(0);
   }
@@ -248,30 +149,56 @@ h2.font-display {
   }
 }
 
-@keyframes aurora {
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-x 30s linear infinite;
+}
+.marquee-track.fast {
+  animation-duration: 20s;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Slow spin for badges */
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: spin-slow 14s linear infinite;
+}
+
+/* Floating chips in the hero */
+@keyframes float-y {
   0%,
   100% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translateY(0);
   }
   50% {
-    transform: translate3d(3%, -4%, 0) scale(1.12);
+    transform: translateY(-10px);
   }
 }
-
-.animate-marquee {
-  animation: marquee 38s linear infinite;
+.animate-float-y {
+  animation: float-y 5s ease-in-out infinite;
 }
 
-.animate-aurora {
-  animation: aurora 18s ease-in-out infinite;
+/* Clip reveal defaults — JS animates from these states */
+[data-reveal-line] {
+  display: block;
+  overflow: hidden;
+}
+[data-reveal-line] > span {
+  display: block;
+  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  .animate-marquee,
-  .animate-aurora {
+  .marquee-track,
+  .animate-spin-slow,
+  .animate-float-y {
     animation: none;
   }
 }

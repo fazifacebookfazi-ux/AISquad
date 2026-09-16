@@ -1,30 +1,32 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, Archivo, Space_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { JsonLd } from "@/components/json-ld";
+import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { site } from "@/lib/site";
 
-const inter = Inter({
+const grotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-grot",
   display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
-const fraunces = Fraunces({
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--font-fraunces",
+  variable: "--font-arch",
   display: "swap",
-  axes: ["SOFT", "WONK", "opsz"],
+  weight: ["400", "500", "600"],
 });
 
-const jetbrains = JetBrains_Mono({
+const spaceMono = Space_Mono({
   subsets: ["latin"],
-  variable: "--font-mono-jb",
+  variable: "--font-spacemono",
   display: "swap",
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -64,40 +66,31 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f6f1e8" },
-    { media: "(prefers-color-scheme: dark)", color: "#080706" },
-  ],
+  themeColor: "#f6f4ee",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className="scroll-pt-24"
-      data-scroll-behavior="smooth"
-      suppressHydrationWarning
-    >
+    <html lang="en" className="scroll-pt-24">
       <body
-        className={`${inter.variable} ${fraunces.variable} ${jetbrains.variable} antialiased`}
+        className={`${grotesk.variable} ${archivo.variable} ${spaceMono.variable} antialiased`}
       >
-        <ThemeProvider>
-          <JsonLd />
-          <a
-            href="#main"
-            className="bg-brand-400 text-ink-950 focus:fixed focus:top-3 focus:left-3 focus:z-[200] focus:px-4 focus:py-2 sr-only focus:not-sr-only"
-          >
-            Skip to content
-          </a>
-          <Navbar />
-          <main id="main" className="min-h-screen">
-            {children}
-          </main>
-          <Footer />
-          <Analytics />
-        </ThemeProvider>
+        <SmoothScroll />
+        <JsonLd />
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[200] focus:bg-accent focus:px-4 focus:py-2 focus:text-white"
+        >
+          Skip to content
+        </a>
+        <Navbar />
+        <main id="main" className="min-h-screen">
+          {children}
+        </main>
+        <Footer />
+        <Analytics />
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 import { Container } from "@/components/ui/container";
-import { Reveal } from "@/components/ui/reveal";
 import { Eyebrow } from "@/components/ui/eyebrow";
+import { Reveal } from "@/components/motion/reveal";
+import { Manifesto } from "@/components/motion/text-fx";
 
 const numbers = [
   { value: "40+", label: "Products shipped" },
@@ -11,23 +12,20 @@ const numbers = [
 
 export function Story() {
   return (
-    <section className="relative py-20 lg:py-28">
+    <section className="py-20 lg:py-28">
       <Container>
         <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
-          <Reveal>
+          <Reveal className="lg:sticky lg:top-28 lg:self-start">
             <Eyebrow>Our story</Eyebrow>
           </Reveal>
 
           <div className="flex flex-col gap-7">
-            <Reveal delay={0.05}>
-              <p className="font-display text-[1.6rem] leading-[1.35] font-medium tracking-[-0.02em] text-balance-pretty text-mist-100 sm:text-[2rem] sm:leading-[1.3]">
-                Most agencies are slow because of how they&apos;re shaped, not
-                how hard they work.
-              </p>
-            </Reveal>
+            <Manifesto className="display max-w-3xl text-[clamp(1.7rem,3.4vw,2.6rem)] text-ink">
+              Most agencies are slow because of how they&rsquo;re shaped, not how hard they work.
+            </Manifesto>
 
-            <Reveal delay={0.1}>
-              <p className="leading-relaxed text-mist-400">
+            <Reveal delay={0.05}>
+              <p className="max-w-2xl text-lg leading-relaxed text-ink-soft/80">
                 Briefs pass from account manager to designer to developer, and
                 something is lost at every handoff. Three months later you get
                 back something close to what you asked for, but not quite. We
@@ -36,8 +34,8 @@ export function Story() {
               </p>
             </Reveal>
 
-            <Reveal delay={0.14}>
-              <p className="leading-relaxed text-mist-400">
+            <Reveal delay={0.1}>
+              <p className="max-w-2xl leading-relaxed text-ink-soft/75">
                 We work as a small squad that designs and builds in the same
                 room. AI handles the repetitive engineering, which means the
                 hours go into the parts that actually matter: how the product
@@ -48,8 +46,8 @@ export function Story() {
               </p>
             </Reveal>
 
-            <Reveal delay={0.18}>
-              <p className="leading-relaxed text-mist-400">
+            <Reveal delay={0.14}>
+              <p className="max-w-2xl leading-relaxed text-ink-soft/75">
                 We&apos;re deliberately small. A handful of projects at a time,
                 each one something we&apos;d be happy to put in the portfolio.
                 That&apos;s the whole business model.
@@ -58,23 +56,20 @@ export function Story() {
           </div>
         </div>
 
-        <Reveal delay={0.1}>
-          <dl className="mt-20 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-mist-100/[0.07] bg-mist-100/[0.06] lg:grid-cols-4">
-            {numbers.map((item) => (
-              <div
-                key={item.label}
-                className="flex flex-col gap-2 bg-ink-950 p-8"
-              >
-                <dd className="font-display text-3xl font-semibold tracking-[-0.03em] text-mist-100 sm:text-4xl">
+        <div className="mt-20 grid grid-cols-2 gap-px overflow-hidden rounded-[24px] border border-ink/10 bg-ink/10 lg:grid-cols-4">
+          {numbers.map((item, i) => (
+            <Reveal key={item.label} delay={i * 0.06} className="h-full">
+              <div className="flex h-full flex-col gap-2 bg-paper p-8">
+                <span className="display text-4xl text-ink sm:text-5xl">
                   {item.value}
-                </dd>
-                <dt className="font-mono text-[10px] tracking-[0.16em] text-mist-500 uppercase">
+                </span>
+                <span className="font-mono text-[10px] tracking-[0.16em] text-mute uppercase">
                   {item.label}
-                </dt>
+                </span>
               </div>
-            ))}
-          </dl>
-        </Reveal>
+            </Reveal>
+          ))}
+        </div>
       </Container>
     </section>
   );

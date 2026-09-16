@@ -1,108 +1,73 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ProjectCard } from "@/components/project-card";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import { Reveal } from "@/components/motion/reveal";
+import { ProjectCover } from "@/components/project-cover";
 import { projects, projectCategories } from "@/lib/projects";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 
-type Filter = "All" | (typeof projectCategories)[number];
+const filters = ["All", ...projectCategories];
 
 export function ProjectsGallery() {
-  const [filter, setFilter] = useState<Filter>("All");
-  const reduced = useReducedMotion();
-
-  // Only offer filters that actually match something.
-  const filters = useMemo<Filter[]>(() => {
-    const used = projectCategories.filter((category) =>
-      projects.some((project) => project.category === category),
-    );
-    return ["All", ...used];
-  }, []);
-
-  const visible = useMemo(
-    () =>
-      filter === "All"
-        ? projects
-        : projects.filter((project) => project.category === filter),
-    [filter],
-  );
+  const [filter, setFilter] = useState<string>("All");
+  const visible =
+    filter === "All" ? projects : projects.filter((p) => p.category === filter);
 
   return (
-    <div className="flex flex-col gap-12">
-      <div
-        role="tablist"
-        aria-label="Filter projects by category"
-        className="scrollbar-none -mx-1 flex gap-2 overflow-x-auto px-1 pb-1"
-      >
-        {filters.map((option) => {
-          const active = option === filter;
-          const count =
-            option === "All"
-              ? projects.length
-              : projects.filter((p) => p.category === option).length;
-
-          return (
-            <button
-              key={option}
-              type="button"
-              role="tab"
-              aria-selected={active}
-              onClick={() => setFilter(option)}
-              className={cn(
-                "inline-flex shrink-0 items-center gap-2 border px-4 py-2 font-mono text-[11px] tracking-[0.16em] whitespace-nowrap uppercase transition-colors duration-300",
-                active
-                  ? "border-brand-400 bg-brand-400 text-ink-950"
-                  : "border-mist-100/12 text-mist-400 hover:border-mist-100/30 hover:text-mist-100",
-              )}
-            >
-              {option}
-              <span
-                className={cn(
-                  "font-mono text-[10px]",
-                  active ? "text-brand-300" : "text-mist-500",
-                )}
-              >
-                {count}
-              </span>
-            </button>
-          );
-        })}
+    <div>
+      <div className="flex flex-wrap gap-2">
+        {filters.map((f) => (
+          <button
+            key={f}
+            type="button"
+            onClick={() => setFilter(f)}
+            className={cn(
+              "rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300",
+              filter === f
+                ? "bg-ink text-paper"
+                : "border border-ink/15 text-ink-soft hover:border-ink/40",
+            )}
+          >
+            {f}
+          </button>
+        ))}
       </div>
 
-      <motion.div
-        layout={!reduced}
-        className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
-      >
-        <AnimatePresence mode="popLayout">
-          {visible.map((project, i) => (
-            <motion.div
-              key={project.slug}
-              layout={!reduced}
-              initial={reduced ? false : { opacity: 0, scale: 0.96, y: 16 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={reduced ? undefined : { opacity: 0, scale: 0.96 }}
-              transition={{
-                duration: 0.45,
-                delay: reduced ? 0 : i * 0.04,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className={cn(
-                "h-full",
-                project.featured && filter === "All" && "lg:col-span-2",
-              )}
+      <div className="mt-12 grid gap-8 sm:grid-cols-2">
+        {visible.map((project, i) => (
+          <Reveal key={project.slug} delay={(i % 2) * 0.08} y={36}>
+            <Link
+              href={`/projects/${project.slug}`}
+              className="group block"
+              aria-label={`${project.title} — case study`}
             >
-              <ProjectCard project={project} priority={i < 3} />
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </motion.div>
-
-      {visible.length === 0 ? (
-        <p className="rounded-2xl surface p-10 text-center text-sm text-mist-400">
-          Nothing here yet — more work coming soon.
-        </p>
-      ) : null}
+              <div className="relative overflow-hidden rounded-[24px]">
+                <div className="relative aspect-[4/3] transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]">
+                  <ProjectCover project={project} sizes="(min-width: 640px) 50vw, 100vw" />
+                </div>
+                <span className="absolute top-4 left-4 rounded-full bg-paper/90 px-3.5 py-1.5 font-mono text-[10px] tracking-[0.14em] text-ink uppercase backdrop-blur">
+                  {project.category}
+                </span>
+              </div>
+              <div className="flex items-start justify-between gap-4 px-1 pt-5">
+                <div>
+                  <h2 className="font-display text-2xl font-bold tracking-[-0.02em] text-ink transition-colors duration-300 group-hover:text-accent">
+                    {project.title}
+                  </h2>
+                  <p className="mt-2 line-clamp-2 text-[15px] leading-relaxed text-ink-soft/70">
+                    {project.summary}
+                  </p>
+                </div>
+                <span className="grid size-11 shrink-0 place-items-center rounded-full border border-ink/15 text-ink transition-all duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-white">
+                  <ArrowUpRight className="size-4" />
+                </span>
+              </div>
+            </Link>
+          </Reveal>
+        ))}
+      </div>
     </div>
   );
 }

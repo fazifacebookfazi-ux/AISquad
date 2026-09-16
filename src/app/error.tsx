@@ -1,6 +1,7 @@
 "use client";
 
 import { ButtonLink } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
 
 export default function ErrorPage({
   reset,
@@ -9,28 +10,28 @@ export default function ErrorPage({
   reset: () => void;
 }) {
   return (
-    <div className="flex min-h-[70vh] flex-col items-center justify-center gap-6 px-6 text-center">
-      <p className="font-mono text-[11px] tracking-[0.22em] text-mist-500 uppercase">
+    <Container className="flex min-h-[70vh] flex-col items-start justify-center gap-6 py-24">
+      <p className="font-mono text-[11px] tracking-[0.22em] text-mute uppercase">
         Error
       </p>
-      <h1 className="font-display text-[clamp(2rem,5vw,3.5rem)] tracking-tight text-mist-100">
-        Something failed on our side.
+      <h1 className="display max-w-3xl text-[clamp(2.6rem,6vw,5rem)] text-ink">
+        Something failed <span className="text-accent">on our side.</span>
       </h1>
-      <p className="max-w-md text-mist-400">
+      <p className="max-w-md text-lg leading-relaxed text-ink-soft/70">
         Try again in a moment. If it keeps happening, email hello@aisquadx.tech.
       </p>
-      <div className="flex gap-3">
+      <div className="mt-2 flex flex-wrap gap-3">
         <button
           type="button"
           onClick={reset}
-          className="inline-flex h-12 items-center bg-brand-400 px-6 font-mono text-[11px] tracking-[0.18em] text-ink-950 uppercase"
+          className="inline-flex h-13 items-center rounded-full bg-accent px-7 font-display text-[15px] font-semibold text-white transition-colors hover:bg-accent-deep"
         >
           Try again
         </button>
-        <ButtonLink href="/" variant="secondary">
+        <ButtonLink href="/" variant="dark">
           Home
         </ButtonLink>
       </div>
-    </div>
+    </Container>
   );
 }

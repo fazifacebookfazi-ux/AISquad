@@ -4,8 +4,7 @@ import { Story } from "@/components/about/story";
 import { Principles } from "@/components/about/principles";
 import { Difference } from "@/components/about/difference";
 import { FounderNote } from "@/components/about/founder-note";
-import { TechMarquee } from "@/components/home/tech-marquee";
-import { CTA } from "@/components/home/cta";
+import { MarqueeBand } from "@/components/home/marquee-band";
 
 export const metadata: Metadata = {
   title: "About AISquadX",
@@ -21,8 +20,7 @@ export default function AboutPage() {
         eyebrow="About"
         title={
           <>
-            A small studio with an{" "}
-            <span className="italic text-brand-400">unfair advantage</span>
+            A small studio with an <span className="text-accent">unfair advantage.</span>
           </>
         }
         description="We pair senior craft with AI-assisted delivery, so you get considered work at a pace that used to be impossible."
@@ -32,8 +30,7 @@ export default function AboutPage() {
       <Principles />
       <Difference />
       <FounderNote />
-      <TechMarquee />
-      <CTA />
+      <MarqueeBand />
     </>
   );
 }

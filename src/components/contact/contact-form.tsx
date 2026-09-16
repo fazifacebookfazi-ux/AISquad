@@ -2,7 +2,7 @@
 
 import { useActionState, useId } from "react";
 import { useFormStatus } from "react-dom";
-import { AlertCircle, ArrowRight, Check, Loader2 } from "lucide-react";
+import { AlertCircle, ArrowUpRight, Check, Loader2 } from "lucide-react";
 import {
   initialContactState,
   submitEnquiry,
@@ -19,7 +19,7 @@ const timelines = [
 ];
 
 const fieldBase =
-  "w-full border border-mist-100/12 bg-ink-950 px-4 py-3 text-[15px] text-mist-100 transition-colors duration-200 outline-none placeholder:text-mist-500 hover:border-mist-100/25 focus:border-brand-400 focus:bg-ink-900";
+  "w-full rounded-xl border border-ink/15 bg-paper px-4 py-3.5 text-[15px] text-ink transition-colors duration-200 outline-none placeholder:text-faint hover:border-ink/30 focus:border-accent";
 
 function Field({
   label,
@@ -38,18 +38,18 @@ function Field({
     <div className="flex flex-col gap-2">
       <label
         htmlFor={htmlFor}
-        className="flex items-center gap-2 text-sm font-medium text-mist-300"
+        className="flex items-center gap-2 text-sm font-semibold text-ink"
       >
         {label}
         {optional ? (
-          <span className="font-mono text-[10px] tracking-[0.12em] text-mist-500 uppercase">
+          <span className="font-mono text-[10px] tracking-[0.12em] text-mute uppercase">
             Optional
           </span>
         ) : null}
       </label>
       {children}
       {error ? (
-        <p className="flex items-center gap-1.5 text-xs text-red-400">
+        <p className="flex items-center gap-1.5 text-xs text-red-600">
           <AlertCircle className="size-3.5" />
           {error}
         </p>
@@ -65,7 +65,7 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="group inline-flex h-13 w-full items-center justify-center gap-2 bg-brand-400 px-7 font-mono text-[11px] tracking-[0.18em] text-ink-950 uppercase transition-colors duration-300 ease-out-expo hover:bg-brand-300 focus-visible:ring-2 focus-visible:ring-brand-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-60 sm:w-auto"
+      className="group inline-flex h-14 w-full items-center justify-center gap-2 rounded-full bg-accent px-8 font-display text-base font-semibold text-white transition-colors duration-300 hover:bg-accent-deep focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-paper focus-visible:outline-none disabled:pointer-events-none disabled:opacity-60 sm:w-auto"
     >
       {pending ? (
         <>
@@ -75,7 +75,7 @@ function SubmitButton() {
       ) : (
         <>
           Send enquiry
-          <ArrowRight className="size-4 transition-transform duration-300 ease-out-expo group-hover:translate-x-1" />
+          <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </>
       )}
     </button>
@@ -91,14 +91,14 @@ export function ContactForm() {
 
   if (state.status === "success") {
     return (
-      <div className="flex flex-col items-start gap-5 border border-mist-100/12 p-10">
-        <span className="grid size-12 place-items-center bg-brand-400 text-ink-950">
+      <div className="flex flex-col items-start gap-5 rounded-[24px] border border-ink/10 bg-paper p-10">
+        <span className="grid size-14 place-items-center rounded-full bg-accent text-white">
           <Check className="size-6" strokeWidth={2} />
         </span>
-        <h2 className="font-display text-2xl font-semibold tracking-tight text-mist-100">
+        <h2 className="font-display text-2xl font-bold tracking-[-0.02em] text-ink">
           Message received
         </h2>
-        <p className="max-w-md leading-relaxed text-mist-400">{state.message}</p>
+        <p className="max-w-md leading-relaxed text-ink-soft/75">{state.message}</p>
       </div>
     );
   }
@@ -126,7 +126,7 @@ export function ContactForm() {
             autoComplete="name"
             defaultValue={values.name}
             placeholder="Ada Lovelace"
-            className={cn(fieldBase, errors.name && "border-red-500/50")}
+            className={cn(fieldBase, errors.name && "border-red-500/60")}
           />
         </Field>
 
@@ -138,7 +138,7 @@ export function ContactForm() {
             autoComplete="email"
             defaultValue={values.email}
             placeholder="you@company.com"
-            className={cn(fieldBase, errors.email && "border-red-500/50")}
+            className={cn(fieldBase, errors.email && "border-red-500/60")}
           />
         </Field>
 
@@ -162,7 +162,7 @@ export function ContactForm() {
           >
             <option value="">Select a timeline</option>
             {timelines.map((option) => (
-              <option key={option} value={option} className="bg-ink-850">
+              <option key={option} value={option}>
                 {option}
               </option>
             ))}
@@ -179,17 +179,11 @@ export function ContactForm() {
         >
           <option value="">Select a service</option>
           {serviceDetails.map((service) => (
-            <option
-              key={service.id}
-              value={service.title}
-              className="bg-ink-850"
-            >
+            <option key={service.id} value={service.title}>
               {service.title}
             </option>
           ))}
-          <option value="Something else" className="bg-ink-850">
-            Something else
-          </option>
+          <option value="Something else">Something else</option>
         </select>
       </Field>
 
@@ -207,7 +201,7 @@ export function ContactForm() {
           className={cn(
             fieldBase,
             "resize-y",
-            errors.message && "border-red-500/50",
+            errors.message && "border-red-500/60",
           )}
         />
       </Field>
@@ -215,7 +209,7 @@ export function ContactForm() {
       {state.status === "error" && state.message ? (
         <p
           role="alert"
-          className="flex items-center gap-2 rounded-xl border border-red-500/25 bg-red-500/8 px-4 py-3 text-sm text-red-300"
+          className="flex items-center gap-2 rounded-xl border border-red-500/25 bg-red-500/10 px-4 py-3 text-sm text-red-700"
         >
           <AlertCircle className="size-4 shrink-0" />
           {state.message}
@@ -224,9 +218,9 @@ export function ContactForm() {
 
       <div className="flex flex-col items-start gap-4 pt-2 sm:flex-row sm:items-center">
         <SubmitButton />
-        <p className="text-xs leading-relaxed text-mist-500">
+        <p className="text-xs leading-relaxed text-mute">
           We reply within one business day. No newsletters. See{" "}
-          <a href="/privacy" className="text-mist-300 underline">
+          <a href="/privacy" className="text-ink underline">
             how we use this
           </a>
           .

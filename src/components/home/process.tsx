@@ -1,6 +1,6 @@
 import { Container } from "@/components/ui/container";
-import { SectionHeading } from "@/components/ui/section-heading";
-import { Reveal } from "@/components/ui/reveal";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { Reveal } from "@/components/motion/reveal";
 
 const steps = [
   {
@@ -35,45 +35,47 @@ const steps = [
 
 export function Process() {
   return (
-    <section id="process" className="relative scroll-mt-24 py-24 lg:py-32">
+    <section id="process" className="scroll-mt-24 bg-ink py-24 text-paper lg:py-36">
       <Container>
-        <SectionHeading
-          eyebrow="Method"
-          title={
-            <>
-              Four stages. No{" "}
-              <span className="italic text-brand-400">theatre.</span>
-            </>
-          }
-          description="Visible progress from the first week — not a six-week discovery deck."
-        />
+        <Reveal>
+          <Eyebrow light>How we work</Eyebrow>
+        </Reveal>
+        <div className="mt-5 flex flex-wrap items-end justify-between gap-6">
+          <Reveal delay={0.06}>
+            <h2 className="display max-w-2xl text-[clamp(2.4rem,5.5vw,4.5rem)] text-paper">
+              Four stages. <span className="text-stroke-paper">No theatre.</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="max-w-sm leading-relaxed text-paper/60">
+              Visible progress from the first week — not a six-week discovery
+              deck.
+            </p>
+          </Reveal>
+        </div>
 
-        <ol className="relative mt-16 border-l border-brand-400/40 pl-8 sm:pl-12">
+        <div className="mt-16 grid gap-px overflow-hidden rounded-[28px] bg-paper/15 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((item, i) => (
-            <Reveal
-              key={item.step}
-              as="li"
-              delay={i * 0.08}
-              className="relative pb-12 last:pb-0"
-            >
-              <span className="absolute top-1.5 -left-[2.15rem] size-2.5 bg-brand-400 sm:-left-[3.15rem]" />
-              <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                <span className="font-mono text-[11px] tracking-[0.22em] text-brand-400">
+            <Reveal key={item.step} delay={i * 0.07} className="h-full">
+              <div className="group flex h-full flex-col gap-6 bg-ink p-8 transition-colors duration-500 hover:bg-accent lg:p-9">
+                <span className="display text-5xl text-paper/25 transition-colors duration-500 group-hover:text-white/40">
                   {item.step}
                 </span>
-                <h3 className="font-display text-3xl tracking-tight text-mist-100 italic">
-                  {item.title}
-                </h3>
-                <span className="font-mono text-[10px] tracking-[0.16em] text-mist-500 uppercase">
-                  {item.duration}
-                </span>
+                <div className="mt-auto flex flex-col gap-3">
+                  <h3 className="font-display text-xl font-bold tracking-[-0.02em] text-paper">
+                    {item.title}
+                  </h3>
+                  <p className="font-mono text-[11px] tracking-[0.18em] text-paper/45 uppercase transition-colors duration-500 group-hover:text-white/70">
+                    {item.duration}
+                  </p>
+                  <p className="text-sm leading-relaxed text-paper/60 transition-colors duration-500 group-hover:text-white/85">
+                    {item.description}
+                  </p>
+                </div>
               </div>
-              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-mist-400 sm:text-[15px]">
-                {item.description}
-              </p>
             </Reveal>
           ))}
-        </ol>
+        </div>
       </Container>
     </section>
   );

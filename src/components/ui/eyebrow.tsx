@@ -1,21 +1,25 @@
 import { cn } from "@/lib/utils";
 
+/** Small mono label with a blue dot — the section kicker. */
 export function Eyebrow({
   children,
   className,
+  light = false,
 }: {
   children: React.ReactNode;
   className?: string;
+  light?: boolean;
 }) {
   return (
-    <span
+    <p
       className={cn(
-        "inline-flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.28em] text-mist-400",
+        "inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.22em] uppercase",
+        light ? "text-paper/70" : "text-mute",
         className,
       )}
     >
-      <span className="h-px w-8 bg-brand-400" />
+      <span className="size-1.5 rounded-full bg-accent" aria-hidden />
       {children}
-    </span>
+    </p>
   );
 }

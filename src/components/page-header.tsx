@@ -1,5 +1,6 @@
 import { Container } from "@/components/ui/container";
 import { Eyebrow } from "@/components/ui/eyebrow";
+import { LineReveal } from "@/components/motion/text-fx";
 
 export function PageHeader({
   eyebrow,
@@ -11,17 +12,21 @@ export function PageHeader({
   description?: string;
 }) {
   return (
-    <section className="relative overflow-hidden pt-28 pb-10 sm:pt-32 sm:pb-12">
+    <section className="relative overflow-hidden pt-36 pb-12 sm:pt-44 sm:pb-16">
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-grid opacity-40" />
+        <div className="absolute inset-0 bg-dots opacity-60 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,black,transparent)]" />
       </div>
-      <Container className="relative flex flex-col gap-5">
-        <Eyebrow className="self-start">{eyebrow}</Eyebrow>
-        <h1 className="max-w-4xl font-display text-[clamp(2.2rem,5vw,4rem)] leading-[0.95] tracking-[-0.04em] text-mist-100">
-          {title}
-        </h1>
+      <Container className="relative">
+        <Eyebrow>{eyebrow}</Eyebrow>
+        <LineReveal className="mt-6">
+          <h1 className="display max-w-5xl text-balance-pretty text-[clamp(2.8rem,7vw,5.5rem)] text-ink">
+            <span data-reveal-line>
+              <span>{title}</span>
+            </span>
+          </h1>
+        </LineReveal>
         {description ? (
-          <p className="max-w-2xl text-base leading-relaxed text-mist-400 sm:text-lg">
+          <p className="mt-7 max-w-2xl text-lg leading-relaxed text-ink-soft/75">
             {description}
           </p>
         ) : null}

@@ -3,9 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Code2, ExternalLink } from "lucide-react";
 import { Container } from "@/components/ui/container";
-import { Reveal } from "@/components/ui/reveal";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { Reveal } from "@/components/motion/reveal";
+import { LineReveal } from "@/components/motion/text-fx";
 import { ProjectCover } from "@/components/project-cover";
-import { CTA } from "@/components/home/cta";
 import {
   getAdjacentProject,
   getProject,
@@ -62,38 +63,33 @@ export default async function ProjectPage({
   return (
     <>
       {/* ---- Header ---- */}
-      <section className="relative overflow-hidden pt-32 pb-14 sm:pt-40">
+      <section className="relative overflow-hidden pt-36 pb-12 sm:pt-44">
         <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-grid [mask-image:radial-gradient(ellipse_65%_50%_at_50%_0%,black,transparent)]" />
-          <div
-            className="absolute -top-48 left-1/2 size-[38rem] -translate-x-1/2 rounded-full opacity-20 blur-[150px]"
-            style={{ backgroundColor: project.gradient[0] }}
-          />
+          <div className="absolute inset-0 bg-dots opacity-50 [mask-image:radial-gradient(ellipse_70%_55%_at_50%_0%,black,transparent)]" />
         </div>
-
         <Container className="relative">
           <Link
             href="/projects"
-            className="group inline-flex items-center gap-2 text-sm text-mist-400 transition-colors hover:text-mist-100"
+            className="group inline-flex items-center gap-2 text-[15px] font-medium text-ink-soft/70 transition-colors hover:text-ink"
           >
-            <ArrowLeft className="size-4 transition-transform duration-300 ease-out-expo group-hover:-translate-x-0.5" />
+            <ArrowLeft className="size-4 transition-transform duration-300 group-hover:-translate-x-1" />
             All projects
           </Link>
 
-          <div className="mt-10 flex items-center gap-3">
-            <span className="rounded-full border border-mist-100/10 bg-mist-100/[0.04] px-3.5 py-1.5 font-mono text-[11px] tracking-[0.14em] text-mist-300 uppercase">
-              {project.category}
-            </span>
-            <span className="font-mono text-[11px] text-mist-500">
-              {project.year}
-            </span>
+          <div className="mt-10 flex flex-wrap items-center gap-3">
+            <Eyebrow>{project.category}</Eyebrow>
+            <span className="font-mono text-xs text-mute">{project.year}</span>
           </div>
 
-          <h1 className="mt-7 max-w-3xl font-display text-[2.4rem] leading-[1.05] font-semibold tracking-[-0.04em] text-balance-pretty text-mist-100 sm:text-5xl lg:text-[3.75rem]">
-            {project.title}
-          </h1>
+          <LineReveal className="mt-6">
+            <h1 className="display max-w-4xl text-balance-pretty text-[clamp(2.6rem,6.5vw,5rem)] text-ink">
+              <span data-reveal-line>
+                <span>{project.title}</span>
+              </span>
+            </h1>
+          </LineReveal>
 
-          <p className="mt-7 max-w-2xl text-lg leading-relaxed text-balance-pretty text-mist-400">
+          <p className="mt-7 max-w-2xl text-lg leading-relaxed text-ink-soft/80">
             {project.intro}
           </p>
 
@@ -104,10 +100,10 @@ export default async function ProjectPage({
                   href={project.liveUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="group inline-flex items-center gap-2 bg-brand-400 px-5 py-2.5 font-mono text-[11px] tracking-[0.18em] text-ink-950 uppercase transition-colors hover:bg-brand-300"
+                  className="group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-display text-[15px] font-semibold text-white transition-colors hover:bg-accent-deep"
                 >
                   Visit live site
-                  <ExternalLink className="size-4" />
+                  <ExternalLink className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>
               ) : null}
               {project.repoUrl ? (
@@ -115,7 +111,7 @@ export default async function ProjectPage({
                   href={project.repoUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full surface px-5 py-2.5 text-sm text-mist-100 transition-all duration-300 ease-out-expo hover:-translate-y-0.5 hover:border-brand-400/40"
+                  className="inline-flex items-center gap-2 rounded-full border border-ink/20 px-6 py-3 font-display text-[15px] font-semibold text-ink transition-colors hover:border-ink hover:bg-ink hover:text-paper"
                 >
                   <Code2 className="size-4" />
                   Source code
@@ -129,7 +125,7 @@ export default async function ProjectPage({
       {/* ---- Cover ---- */}
       <Container>
         <Reveal>
-          <div className="relative aspect-16/9 overflow-hidden border border-mist-100/12">
+          <div className="relative aspect-[16/9] overflow-hidden rounded-[28px]">
             <ProjectCover
               project={project}
               priority
@@ -139,19 +135,16 @@ export default async function ProjectPage({
         </Reveal>
       </Container>
 
-      {/* ---- Meta + metrics ---- */}
-      <Container className="pt-14">
+      {/* ---- Meta facts ---- */}
+      <Container className="pt-12">
         <Reveal>
-          <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-mist-100/[0.07] bg-mist-100/[0.06] lg:grid-cols-4">
+          <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-[24px] border border-ink/10 bg-ink/10 lg:grid-cols-4">
             {meta.map((item) => (
-              <div
-                key={item.label}
-                className="flex flex-col gap-2 bg-ink-950 p-6"
-              >
-                <dt className="font-mono text-[10px] tracking-[0.16em] text-mist-500 uppercase">
+              <div key={item.label} className="flex flex-col gap-2 bg-paper p-6">
+                <dt className="font-mono text-[10px] tracking-[0.16em] text-mute uppercase">
                   {item.label}
                 </dt>
-                <dd className="text-[15px] leading-snug font-medium text-mist-100">
+                <dd className="text-[15px] leading-snug font-medium text-ink">
                   {item.value}
                 </dd>
               </div>
@@ -166,25 +159,25 @@ export default async function ProjectPage({
           <div className="grid gap-14 lg:grid-cols-[1.5fr_0.7fr] lg:gap-20">
             <div className="flex flex-col gap-16">
               <Reveal className="flex flex-col gap-5">
-                <h2 className="font-mono text-[11px] tracking-[0.18em] text-mist-500 uppercase">
+                <h2 className="font-mono text-[11px] tracking-[0.18em] text-mute uppercase">
                   The challenge
                 </h2>
-                <p className="text-lg leading-relaxed text-mist-300">
+                <p className="text-xl leading-relaxed text-ink-soft/90">
                   {project.challenge}
                 </p>
               </Reveal>
 
               <Reveal className="flex flex-col gap-7">
-                <h2 className="font-mono text-[11px] tracking-[0.18em] text-mist-500 uppercase">
+                <h2 className="font-mono text-[11px] tracking-[0.18em] text-mute uppercase">
                   What we did
                 </h2>
-                <ol className="flex flex-col gap-7">
+                <ol className="flex flex-col gap-6">
                   {project.approach.map((step, i) => (
                     <li key={step} className="flex gap-5">
-                      <span className="font-display text-lg font-semibold text-brand-400/60 tabular-nums">
+                      <span className="display text-xl text-accent tabular-nums">
                         {String(i + 1).padStart(2, "0")}
                       </span>
-                      <p className="flex-1 leading-relaxed text-mist-400">
+                      <p className="flex-1 leading-relaxed text-ink-soft/80">
                         {step}
                       </p>
                     </li>
@@ -193,25 +186,22 @@ export default async function ProjectPage({
               </Reveal>
 
               <Reveal className="flex flex-col gap-5">
-                <h2 className="font-mono text-[11px] tracking-[0.18em] text-mist-500 uppercase">
+                <h2 className="font-mono text-[11px] tracking-[0.18em] text-mute uppercase">
                   The outcome
                 </h2>
-                <p className="text-lg leading-relaxed text-mist-300">
+                <p className="text-xl leading-relaxed text-ink-soft/90">
                   {project.outcome}
                 </p>
               </Reveal>
 
               <Reveal>
-                <dl className="grid gap-px overflow-hidden rounded-2xl border border-mist-100/[0.07] bg-mist-100/[0.06] sm:grid-cols-3">
+                <dl className="grid gap-px overflow-hidden rounded-[24px] border border-ink/10 bg-ink/10 sm:grid-cols-3">
                   {project.metrics.map((metric) => (
-                    <div
-                      key={metric.label}
-                      className="flex flex-col gap-2 bg-ink-900 p-7"
-                    >
-                      <dd className="font-display text-2xl font-semibold tracking-[-0.03em] text-mist-100">
+                    <div key={metric.label} className="flex flex-col gap-2 bg-paper p-7">
+                      <dd className="display text-3xl text-ink">
                         {metric.value}
                       </dd>
-                      <dt className="text-xs leading-relaxed text-mist-500">
+                      <dt className="text-sm leading-relaxed text-ink-soft/65">
                         {metric.label}
                       </dt>
                     </div>
@@ -220,19 +210,18 @@ export default async function ProjectPage({
               </Reveal>
             </div>
 
-            {/* Stack sidebar */}
             <Reveal delay={0.1} className="lg:sticky lg:top-28 lg:self-start">
-              <div className="flex flex-col gap-5 rounded-2xl surface p-7">
-                <h2 className="font-mono text-[11px] tracking-[0.18em] text-mist-500 uppercase">
+              <div className="card flex flex-col gap-5 p-7">
+                <h2 className="font-mono text-[11px] tracking-[0.18em] text-mute uppercase">
                   Built with
                 </h2>
                 <ul className="flex flex-col gap-3">
                   {project.stack.map((tech) => (
                     <li
                       key={tech}
-                      className="flex items-center gap-3 text-sm text-mist-300"
+                      className="flex items-center gap-3 text-[15px] text-ink-soft/85"
                     >
-                      <span className="size-1.5 rounded-full bg-brand-400/70" />
+                      <span className="size-1.5 rounded-full bg-accent" />
                       {tech}
                     </li>
                   ))}
@@ -245,7 +234,7 @@ export default async function ProjectPage({
 
       {/* ---- Next project ---- */}
       {next ? (
-        <section className="border-t border-mist-100/[0.07] py-20">
+        <section className="border-t border-ink/12 py-16 lg:py-20">
           <Container>
             <Reveal>
               <Link
@@ -253,26 +242,24 @@ export default async function ProjectPage({
                 className="group flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between"
               >
                 <span className="flex flex-col gap-3">
-                  <span className="font-mono text-[11px] tracking-[0.18em] text-mist-500 uppercase">
+                  <span className="font-mono text-[11px] tracking-[0.18em] text-mute uppercase">
                     Next project
                   </span>
-                  <span className="font-display text-2xl font-semibold tracking-[-0.03em] text-mist-100 transition-colors duration-300 group-hover:text-brand-300 sm:text-4xl">
+                  <span className="display text-3xl text-ink transition-colors duration-300 group-hover:text-accent sm:text-5xl">
                     {next.title}
                   </span>
-                  <span className="max-w-md text-sm leading-relaxed text-mist-400">
+                  <span className="max-w-md text-[15px] leading-relaxed text-ink-soft/70">
                     {next.summary}
                   </span>
                 </span>
-                <span className="grid size-14 shrink-0 place-items-center rounded-full border border-mist-100/10 text-mist-300 transition-all duration-500 ease-out-expo group-hover:border-brand-400/40 group-hover:bg-brand-500/10 group-hover:text-mist-100">
-                  <ArrowRight className="size-5 transition-transform duration-300 ease-out-expo group-hover:translate-x-0.5" />
+                <span className="grid size-16 shrink-0 place-items-center rounded-full bg-ink text-paper transition-all duration-300 group-hover:bg-accent group-hover:rotate-45">
+                  <ArrowRight className="size-5" />
                 </span>
               </Link>
             </Reveal>
           </Container>
         </section>
       ) : null}
-
-      <CTA />
     </>
   );
 }

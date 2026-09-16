@@ -1,20 +1,24 @@
 import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/container";
-import { Reveal } from "@/components/ui/reveal";
+import { Reveal } from "@/components/motion/reveal";
 import { site } from "@/lib/site";
 
 export function FounderNote() {
   return (
-    <section className="border-y border-mist-100/[0.07] bg-ink-900/40 py-24 lg:py-32">
+    <section className="pb-24 lg:pb-32">
       <Container>
         <Reveal>
-          <div className="relative overflow-hidden surface p-10 sm:p-14">
+          <div className="relative overflow-hidden rounded-[28px] bg-ink p-10 text-paper sm:p-14 lg:p-16">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -top-24 -right-24 size-96 rounded-full bg-accent/30 blur-[120px]"
+            />
             <div className="relative flex max-w-3xl flex-col gap-8">
-              <span className="font-mono text-[10px] tracking-[0.18em] text-mist-500 uppercase">
+              <span className="font-mono text-[11px] tracking-[0.22em] text-paper/50 uppercase">
                 A note from the founder
               </span>
 
-              <p className="font-display text-xl leading-[1.5] font-medium tracking-[-0.02em] text-balance-pretty text-mist-100 sm:text-2xl sm:leading-[1.45]">
+              <p className="display max-w-3xl text-[clamp(1.4rem,2.8vw,2rem)] text-paper">
                 &ldquo;I started this studio because I kept watching good ideas
                 die in a queue. The tools exist now to build properly and build
                 quickly — most people just haven&apos;t rewired how they work
@@ -22,25 +26,25 @@ export function FounderNote() {
                 it&apos;s what we do here every day.&rdquo;
               </p>
 
-              <div className="flex flex-wrap items-center gap-4 border-t border-mist-100/[0.07] pt-8">
-                <span className="grid size-12 place-items-center bg-brand-400 font-mono text-[11px] tracking-[0.12em] font-semibold text-ink-950">
+              <div className="flex flex-wrap items-center gap-4 border-t border-paper/15 pt-8">
+                <span className="grid size-12 place-items-center rounded-full bg-accent font-display text-sm font-bold text-white">
                   {site.founder.initials}
                 </span>
                 <span className="flex flex-col">
-                  <span className="font-display text-[15px] font-semibold tracking-tight text-mist-100">
+                  <span className="font-display text-base font-bold tracking-[-0.01em] text-paper">
                     {site.founder.name}
                   </span>
-                  <span className="text-xs text-mist-500">
+                  <span className="text-sm text-paper/55">
                     {site.founder.role}, {site.name}
                   </span>
                 </span>
 
                 <a
                   href={`mailto:${site.email}`}
-                  className="group ml-auto inline-flex items-center gap-1.5 text-sm text-mist-400 transition-colors hover:text-mist-100"
+                  className="group ml-auto inline-flex items-center gap-1.5 font-display text-[15px] font-semibold text-paper"
                 >
-                  Say hello
-                  <ArrowUpRight className="size-4 text-brand-300 transition-transform duration-300 ease-out-expo group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <span className="link-sweep">Say hello</span>
+                  <ArrowUpRight className="size-4 text-accent transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>
               </div>
             </div>
