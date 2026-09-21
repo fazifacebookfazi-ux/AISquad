@@ -18,10 +18,19 @@ export function BlogCard({ post }: { post: Post }) {
       className="group surface flex flex-col overflow-hidden transition-transform duration-300 ease-out-expo hover:-translate-y-1"
     >
       <div className="relative aspect-[16/9] overflow-hidden">
-        <BlogCover
-          post={post}
-          className="transition-transform duration-500 ease-out-expo group-hover:scale-[1.03]"
-        />
+        {post.image ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={post.image}
+            alt={post.title}
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out-expo group-hover:scale-[1.03]"
+          />
+        ) : (
+          <BlogCover
+            post={post}
+            className="transition-transform duration-500 ease-out-expo group-hover:scale-[1.03]"
+          />
+        )}
       </div>
       <div className="flex flex-1 flex-col gap-3 p-6">
         <h3 className="font-display text-[1.35rem] leading-[1.15] font-semibold tracking-[-0.02em] text-mist-100 text-balance">

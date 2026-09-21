@@ -50,6 +50,7 @@ export function ArticleJsonLd({
     date: string;
     author: string;
     keywords: string[];
+    image?: string;
   };
   url: string;
 }) {
@@ -74,6 +75,7 @@ export function ArticleJsonLd({
     },
     keywords: post.keywords.join(", "),
     inLanguage: "en-GB",
+    ...(post.image ? { image: [`${site.url}${post.image}`] } : {}),
   };
 
   return (

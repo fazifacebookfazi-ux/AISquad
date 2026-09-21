@@ -48,11 +48,13 @@ export async function generateMetadata({
       section: post.category,
       tags: post.keywords,
       locale: "en_GB",
+      ...(post.image ? { images: [{ url: post.image }] } : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
+      ...(post.image ? { images: [post.image] } : {}),
     },
   };
 }
@@ -110,7 +112,16 @@ export default async function BlogPostPage({
           </div>
 
           <div className="relative mt-10 aspect-[16/8] overflow-hidden rounded-lg border border-mist-100/12">
-            <BlogCover post={post} />
+            {post.image ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={post.image}
+                alt={post.title}
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            ) : (
+              <BlogCover post={post} />
+            )}
           </div>
 
           <div className="mx-auto mt-12 max-w-[46rem]">

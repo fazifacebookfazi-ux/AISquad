@@ -17,6 +17,8 @@ export type PostMeta = {
   categorySlug: string;
   keywords: string[];
   author: string;
+  /** Optional generated cover image path, e.g. "/blog/my-post/cover.webp". Falls back to CSS cover art. */
+  image?: string;
   /** Mirrors the article's FAQ section; used for FAQPage JSON-LD. */
   faq?: Faq[];
 };
