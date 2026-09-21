@@ -48,7 +48,8 @@ export function Navbar() {
             const active =
               link.href.startsWith("/") &&
               !link.href.includes("#") &&
-              pathname === link.href;
+              (pathname === link.href ||
+                pathname.startsWith(`${link.href}/`));
             return (
               <Link
                 key={link.href}
