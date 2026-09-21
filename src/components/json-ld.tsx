@@ -40,6 +40,50 @@ export function JsonLd() {
   );
 }
 
+export function ArticleJsonLd({
+  post,
+  url,
+}: {
+  post: {
+    title: string;
+    description: string;
+    date: string;
+    author: string;
+    keywords: string[];
+  };
+  url: string;
+}) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    author: {
+      "@type": "Person",
+      name: post.author,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: site.name,
+      url: site.url,
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": url,
+    },
+    keywords: post.keywords.join(", "),
+    inLanguage: "en-GB",
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
+
 export function FaqJsonLd({ faqs }: { faqs: { q: string; a: string }[] }) {
   const data = {
     "@context": "https://schema.org",
