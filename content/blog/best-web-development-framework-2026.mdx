@@ -1,0 +1,239 @@
+export const meta = {
+  title: "Best Web Development Framework in 2026: Our Studio Pick",
+  description:
+    "Best web development framework 2026: Next.js 16, RedwoodSDK, Node.js 26, .NET 11 and Astro compared — with honest build costs for US and Pakistan clients.",
+  date: "2026-09-23",
+  category: "Web Development",
+  categorySlug: "web-development",
+  keywords: [
+    "best web development framework 2026",
+    "web development stack 2026",
+    "Next.js 16 vs Astro",
+    "RedwoodSDK review",
+    "Node.js 26 FFI",
+    "web app development cost Pakistan",
+    ".NET 11 vs Node.js",
+  ],
+  author: "AISquadX Studio",
+  image: "/blog/best-web-development-framework-2026/cover.webp",
+  faq: [
+    {
+      q: "What is the best web development framework in 2026?",
+      a: "For most client projects — marketing sites, SaaS products, and dashboards — Next.js 16 is the best web development framework in 2026: it ships React Server Components, explicit caching, Turbopack builds, and Instant Navigations that make server-driven apps feel like SPAs. The exception is real-time edge workloads, where we'd look at RedwoodSDK on Cloudflare, and heavy enterprise backends, where .NET 11 remains the safer bet.",
+    },
+    {
+      q: "Is Next.js still the best choice for new projects in 2026?",
+      a: "Yes, with one caveat. Next.js 16.3 fixed the two complaints that followed the framework for years — slow-feeling navigations and a dev server that ate memory — through Instant Navigations and a leaner dev pipeline. We still wouldn't pick it for content-heavy sites where Astro is simpler, or for projects that need to run cheaply at global edge scale, where Cloudflare-native options win.",
+    },
+    {
+      q: "What's new in Node.js 26 for web developers?",
+      a: "Node.js 26.9.0, released in September 2026, enables the Foreign Function Interface (FFI) by default, letting JavaScript call native libraries directly without writing C/C++ addons or touching node-gyp. That makes performance-sensitive work — image processing, cryptography, ML inference — practical inside plain Node services. Node 26 is expected to reach Active LTS in October 2026, so we still run production on Node 22 for now.",
+    },
+    {
+      q: "How much does a custom website cost in Pakistan in 2026?",
+      a: "At our studio, a professional marketing website on Next.js with a headless CMS runs PKR 400,000–1,200,000 ($1,400–$4,200). A SaaS MVP typically costs PKR 1,500,000–4,000,000 ($5,000–$14,000), and a full custom web application starts around PKR 2,000,000 ($7,000). US agencies charge roughly 3–5x these figures for the same scope.",
+    },
+    {
+      q: "Should startups choose a headless CMS or WordPress in 2026?",
+      a: "If your team edits content weekly and wants marketing independence, a headless CMS (Sanity, Payload, or Strapi) paired with Next.js is the better long-term choice — you get modern performance, structured content, and AI-assistant-friendly code. WordPress still wins for simple brochure sites managed by non-technical owners. We'd no longer build a serious SaaS marketing site on a monolithic WordPress theme.",
+    },
+    {
+      q: "Is RedwoodSDK production-ready?",
+      a: "RedwoodSDK is promising but young: it's the Redwood team's new Cloudflare-native, server-first React framework with RSC and realtime support, deployable to Workers in seconds. For a greenfield realtime product with a team comfortable on the edge, it's worth evaluating. For anything with a deadline this quarter, Next.js is the safer recommendation — RedwoodJS itself remains maintained for existing projects.",
+    },
+  ],
+};
+
+September 2026 was an unusually loud month for web frameworks. Next.js 16.3 landed with Instant Navigations and a dev server that finally stops melting laptops. Node.js 26.9 switched on its Foreign Function Interface by default, quietly changing what JavaScript can touch. The Redwood team pivoted their whole framework onto Cloudflare Workers. Microsoft shipped .NET 11 RC1 while the clock ticks toward end-of-support for .NET 8 and 9.
+
+If you're choosing a stack for a new project right now — founder, CTO, or the poor soul who has to maintain it — this is the most important technical decision you'll make this year. Frameworks are not interchangeable. Pick wrong and you pay for it in slow pages, ballooning hosting bills, and developers who dread opening the repo. Pick right and the technology fades into the background while you get on with building the business.
+
+We build client sites and SaaS products for a living, across the US and Pakistan. This is how we'd choose today, with the trade-offs stated plainly and the prices we actually charge.
+
+## September 2026 in frameworks: the five releases that moved the needle
+
+Before the opinions, the facts. This month packed more framework news into three weeks than most quarters manage:
+
+- **Next.js 16.3 (early September)** shipped [Instant Navigations](https://medium.com/@mernstackdevbykevin/next-js-16-3-everything-new-3bd264da235f) — SPA-like routing for server-driven apps — plus a dramatic cut in dev-server memory usage. The 16.x line keeps compounding: the [16.2 release](https://www.pkgpulse.com/guides/nextjs-16-2-new-features-migration-2026) in March brought ~87% faster dev startup and 25–60% faster HTML rendering.
+- **Node.js 26.9.0 (16 September)** [enabled the Foreign Function Interface by default](https://www.linuxcompatible.org/story/nodejs-2690-releases-ffi-by-default-with-nodebench-and-web-workers/) — JavaScript calling native libraries with no addons, no node-gyp. Node 26 reaches Active LTS in October 2026.
+- **RedwoodSDK launched** as the Redwood team's pivot to a [Cloudflare-native, server-first React framework](https://github.com/gmotyl/motyl-dev/blob/HEAD/news/2026/this-week-in-react-273-redwoodsdk-async-react-tanstack-vite8-temporal.md) with RSC and realtime support, deploying to Workers in seconds.
+- **.NET 11 RC1 (8 September)** arrived alongside a hard deadline: [.NET 8 and 9 go end-of-support on 10 November 2026](https://github.com/infoconex/coding-blog/blob/HEAD/post/2026/09/12/net-11-rc1-is-here-is-your-upgrade-process-ready/index.md). If you're on either, the upgrade conversation is now, not Q1.
+- **Ktor 3.6.0 (18 September)** added [experimental HTTP/3 and typed OpenID Connect auth](http://dev.to/techpulse01239/jetbrains-releases-ktor-360-with-http3-openid-connect-support-5e2j) — a strong release for Kotlin shops.
+
+That's the raw material. Now, what we'd actually do with it.
+
+## How we judge a framework (the scorecard clients never see)
+
+Forget feature checklists. When a client asks us to recommend a stack, we score it on five things:
+
+1. **Time to a working product.** How fast can a competent team ship a real, deployed v1? This is the metric that decides whether a startup lives or dies.
+2. **Performance you get for free.** Does the framework make fast the default, or does every page need manual optimisation to avoid embarrassing Lighthouse scores?
+3. **Hosting cost at scale.** A framework that needs a chunky always-on server behaves very differently from one that runs on the edge for pennies. We'll put numbers on this later.
+4. **Hiring and maintenance.** Can you find developers who know it, in Lahore or in Austin? Will the framework still be maintained in three years?
+5. **Escape hatches.** When the framework's opinions stop fitting — and they will — how painful is it to go off-road?
+
+No framework wins all five. The honest answer to "which framework is best" is always "for what?" — and anyone who gives you a one-word answer is selling something.
+
+## Next.js 16: the default answer, and why it earned it
+
+Let's get the obvious out of the way. For most projects we'd take on today — marketing sites, SaaS dashboards, customer portals, content platforms — we'd reach for Next.js 16. Not because it's fashionable. Because it keeps winning the scorecard.
+
+September's 16.3 release killed the two complaints that haunted Next.js for years. **Instant Navigations** is an opt-in suite that makes server-driven apps feel like single-page apps: wrap slow segments in `<Suspense>` and the user sees a loading shell instantly while content streams in, or use `'use cache'` and the user sees previously cached UI reused between requests. Clicking a link no longer waits on a full network roundtrip before anything happens on screen. The same release gutted dev-server memory usage — the running joke about Next.js turning laptops into space heaters is finally dead.
+
+The 16.x line's bigger story is the caching model finally growing up. Cache Components with the explicit `'use cache'` directive let you cache pages, components, and functions with the compiler generating cache keys for you. Turbopack is the default bundler with dramatically faster builds. Server Actions are production-hardened. React 19 is fully integrated.
+
+### Where Next.js bites you
+
+Three honest caveats from projects we've shipped:
+
+**The caching model is powerful but unforgiving.** Explicit caching means explicit thinking about what is dynamic and what isn't. Teams new to the App Router ship pages that show stale data, then blame the framework. The learning curve is real — budget a week for your team to internalise it.
+
+**You're married to Vercel, sort of.** You can deploy Next.js elsewhere, but the framework's best features (ISR semantics, the image optimisation pipeline, the analytics integrations) assume Vercel. The 16.2 release stabilised the Adapters API so platforms can customise builds, which helps — but if your ops strategy is multi-cloud from day one, that's friction.
+
+**It's overkill for simple content sites.** A brochure site with five pages does not need React Server Components. Astro will build it faster, ship less JavaScript, and cost less to run. We say this as a studio that makes money building Next.js sites: don't use a bulldozer to plant a flower.
+
+## RedwoodSDK: the most interesting challenger this year
+
+The boldest framework move of September didn't come from Vercel. The Redwood team — of RedwoodJS fame — pivoted to **RedwoodSDK**, a server-first React framework built entirely for Cloudflare Workers, with React Server Components, server functions, and realtime capabilities out of the box.
+
+The pitch is compelling: it starts as a Vite plugin that unlocks SSR, RSC, and server functions; the router is standards-based with middleware and "interruptors" for fine-grained request control; you get native access to Workers, D1 databases, R2 storage, Queues, and Cloudflare's AI services; and local development emulates production through Miniflare. The philosophy is zero-magic, composable, web-standards-first. Deploys take seconds with a simple command.
+
+Why does this matter to you? Because the edge story is the one place Next.js is genuinely weak. A Cloudflare-native React framework means global latency without global infrastructure bills, realtime features without a separate socket service, and a database (D1) that lives next to your compute. For realtime collaboration tools, multiplayer-ish products, or apps serving users across continents from day one, this architecture is beautiful.
+
+Our honest read: RedwoodSDK is the framework we'd *evaluate* for a greenfield realtime product, and the one we'd *recommend* for a project with a deadline this quarter? No. It's young, the community is small, and betting production on a framework that pivoted its identity this month requires nerve. The original RedwoodJS remains maintained, so existing projects aren't stranded. Watch it. Prototype with it. Don't bet the company on it yet.
+
+## Node.js 26 and FFI: the quiet story that matters more than it looks
+
+The September release that will matter most in two years got the least hype. Node.js 26.9.0, released on 16 September, **enabled the Foreign Function Interface by default** — JavaScript can now call straight into native shared libraries (`.so`, `.dylib`, `.dll`) without writing a C or C++ addon, without node-gyp, without a build step. You describe the memory layout; Node handles the marshalling.
+
+This is a bigger deal than it sounds. For years, the boundary between JavaScript and native code was a moat: if you needed serious image processing, video encoding, cryptography, or ML inference inside a Node service, you either swallowed a native dependency with its build headaches or shipped the work to a separate service written in something else. FFI narrows that moat dramatically. The release also hardened the feature with validation on memory helpers, added first-class Web Workers in thread contexts, an experimental DTLS API, and a generic MAC crypto API.
+
+Two caveats, because we're not hype merchants. First, Node 26 is still in "Current" — **Active LTS is expected in October 2026**, and we wouldn't run production workloads on it until then. We're keeping client backends on Node 22 until the LTS line flips. Second, the new `node:bench` module got quietly moved behind an experimental flag after review raised benchmark-integrity concerns — a reminder that shiny and settled are different things.
+
+For backend architecture decisions: if your product does heavy media processing or calls into native libraries, Node with FFI (once LTS) is now a legitimate alternative to maintaining a separate Go or Rust service. That's one fewer service to deploy, monitor, and hire for. It won't make headlines, but it will make invoices smaller.
+
+### What FFI looks like in practice
+
+The old way of calling native code from Node meant writing a C++ addon, wrestling node-gyp into compiling on every developer's machine and in CI, and debugging segfaults through three layers of abstraction. The new way looks roughly like this:
+
+```js
+import { dlopen, ptr } from 'node:ffi';
+
+// Load a shared library directly — no addon, no build step
+const lib = dlopen('./libimage.so', {
+  resize_image: { args: ['pointer', 'int', 'int'], returns: 'pointer' },
+});
+
+const result = lib.resize_image(imageBuffer, 800, 600);
+```
+
+Describe the memory layout, and Node handles the marshalling. Is it as fast as a hand-written addon? Not quite — there's marshalling overhead, and you'll still profile hot paths. But for the 80% of native interop that's "call this library function and get a result back," the friction drops from days to minutes. The teams this helps most are the ones already running Node APIs who currently shell out to Python scripts or separate microservices for image work, PDF generation, or crypto operations. One runtime, one deployment pipeline, one set of logs.
+
+![Modern web application architecture: browser panels, server nodes and data streams](/blog/best-web-development-framework-2026/fig1.webp)
+
+## .NET 11: the enterprise case, with a deadline attached
+
+Microsoft shipped **.NET 11 Release Candidate 1 on 8 September 2026**. If you're running .NET, the RC itself isn't the urgent news — the calendar is. **.NET 8 and .NET 9 reach end of support on 10 November 2026.** After that date, no more patches, including security fixes. .NET 10 is the current LTS, supported through November 2028.
+
+Our position on .NET is boring and consistent: if you're an enterprise team with C# developers, Azure commitments, and compliance requirements, .NET remains an excellent backend choice and you should be moving to .NET 10 now, evaluating 11 for next year. If you're a startup choosing a backend from scratch in 2026, we wouldn't pick .NET — not because it's bad, but because the hiring pool, the hosting economics, and the velocity of the JavaScript ecosystem favour Node or the edge for new products. The one exception: teams integrating heavily with the Microsoft stack (Dynamics, SharePoint, Azure services), where .NET's first-class integrations pay for themselves.
+
+September also brought **Ktor 3.6.0** (18 September) with experimental HTTP/3 support and typed OpenID Connect authentication — a nice release for Kotlin shops, and further evidence that the JVM ecosystem isn't standing still. It just isn't where we'd start a new web project unless the team already lives there.
+## Astro, Nuxt, Laravel, and the honourable mentions
+
+No framework guide is complete without the runners-up — and for some projects, these aren't runners-up at all.
+
+**Astro** is our pick for content-heavy sites: marketing pages, blogs, documentation, portfolios. Its islands architecture ships near-zero JavaScript by default, which means blistering Lighthouse scores without trying. Pair it with a headless CMS and you get a site that's fast, cheap to host, and easy for non-developers to update. Where it falls short: once you need serious interactivity — dashboards, real-time features, complex state — you're bolting on what Next.js gives you natively.
+
+**Nuxt 4** is the Vue ecosystem's answer to Next.js, and it's genuinely good: stable release, Nitro engine with edge and multi-runtime support, strong type safety. The decision between Nuxt and Next is really a decision between Vue and React — pick the one your team already knows, because both frameworks are mature and neither will embarrass you. For hiring in Pakistan, React/Next.js developers are noticeably easier to find than Vue/Nuxt developers; in the US the gap is smaller but still real.
+
+**Laravel** remains the pragmatic choice for PHP teams and for projects where an admin panel, queue system, and ORM need to exist on day one. Laravel's ecosystem (Forge for deployment, Nova for admin, the queue and scheduling primitives) is the most complete "batteries included" story in web development. The honest downside: the modern frontend story is bolted on rather than native, and PHP hosting economics aren't what they were.
+
+**WordPress** still powers a huge share of the web, and for a simple site managed by a non-technical owner, it's fine. But we'd no longer build a serious SaaS marketing site or a product on a monolithic WordPress theme in 2026 — the performance ceiling, the plugin security surface, and the pain of making it AI-assistant-friendly all argue for a headless approach. The WP Creative workflow making headlines this month — Next.js frontends with headless CMS and AI-assisted development under human engineering oversight — is exactly the direction serious agencies are moving.
+
+## The comparison, in one table
+
+| Project type | Our pick | Runner-up | Why |
+|---|---|---|---|
+| SaaS product / dashboard | Next.js 16 | RedwoodSDK | RSC + Server Actions + hiring pool; edge challenger for realtime |
+| Marketing site + blog | Next.js 16 or Astro | — | Astro if content-heavy and simple; Next.js if interactive |
+| Realtime / multiplayer product | RedwoodSDK (evaluate) | Next.js 16 | Cloudflare edge + realtime primitives; Next.js is the safe fallback |
+| Enterprise backend (existing MS stack) | .NET 10/11 | Node.js 22 LTS | Compliance, integrations, existing team |
+| Content site, tiny budget | Astro + headless CMS | WordPress | Performance and cost; WP only if owner is non-technical |
+| E-commerce storefront | Next.js 16 (headless) | Shopify themes | Headless for scale and UX; Shopify for speed-to-launch |
+| Heavy media/native processing | Node.js 26 LTS (when live) | Separate Go/Rust service | FFI narrows the moat — revisit once LTS lands |
+
+## What it actually costs to build (and run)
+
+Frameworks are free; building on them isn't. These are our studio's observed ranges for 2026 — what we charge clients in Pakistan and the US, not numbers from a pricing blog:
+
+| Build | Our range (PKR) | Our range (USD) | Typical US agency |
+|---|---|---|---|
+| Marketing site, Next.js + headless CMS | 400,000–1,200,000 | $1,400–$4,200 | $8,000–$25,000 |
+| SaaS MVP (auth, billing, dashboard) | 1,500,000–4,000,000 | $5,000–$14,000 | $30,000–$80,000 |
+| Custom web application | 2,000,000–6,000,000+ | $7,000–$21,000+ | $50,000–$150,000+ |
+| E-commerce, headless | 1,200,000–3,500,000 | $4,200–$12,000 | $25,000–$70,000 |
+
+And the running costs people forget to budget:
+
+- **Hosting a Next.js app on Vercel:** free tier covers prototypes; Pro is $20 per seat per month, and bandwidth overages are where bills surprise people. A busy SaaS can run $100–$500/month before you notice.
+- **Cloudflare Workers:** absurdly cheap — the free tier is generous and paid plans start at $5/month plus usage. This is RedwoodSDK's secret weapon: global edge hosting for the price of a coffee.
+- **A traditional VPS (Laravel, Node, .NET):** $10–$50/month for small apps, but you're now the ops team — updates, monitoring, SSL, backups. Factor in the human cost.
+- **Headless CMS:** Sanity and Payload have workable free tiers; production plans run $20–$200/month depending on seats and usage.
+
+The framework choice moves the total cost of ownership more than most founders expect. An Astro content site on Cloudflare can run for nearly nothing; a Next.js app with heavy ISR on Vercel can cost more per month than the VPS it replaced. We model this for clients before writing a line of code — it's part of [our web development services](https://www.aisquadx.tech/services), and it's the conversation that prevents the most expensive surprises. If you want the full breakdown for the Pakistani market specifically, our [website development cost guide for 2026](https://www.aisquadx.tech/blog/website-development-cost-pakistan-2026) goes deeper.
+
+![Choosing between web development frameworks: a glowing fork in the digital road](/blog/best-web-development-framework-2026/fig2.webp)
+
+## Our pick, by project — the judgment calls
+
+Enough hedging. If you forced us to choose today:
+
+**Building a SaaS product?** Next.js 16, deployed on Vercel, with a headless CMS for marketing content. The ecosystem — auth (Clerk, Auth.js), billing (Stripe), UI (shadcn/ui, Tailwind), AI SDKs — is unmatched. You'll ship faster than on anything else, and when you need to hire developer number four, the pool is the deepest in the industry.
+
+**Building a marketing site that needs to convert?** If it's mostly content: Astro with Sanity or Payload. If it has interactive calculators, configurators, or a logged-in area: Next.js 16. Either way, pair it with proper SEO foundations — the kind we wrote about in [our guide to SEO for AI search](https://www.aisquadx.tech/blog/seo-for-ai-search-2026) — because the prettiest site in the world is worthless if nobody finds it.
+
+**Building something realtime — collaboration, live dashboards, multiplayer?** Prototype it on RedwoodSDK. If the team gels with the Cloudflare-native model, the architecture is genuinely better for this workload than anything else on the list. If the timeline is tight, fall back to Next.js and add realtime via a dedicated service.
+
+**Running an enterprise on Microsoft?** Move to .NET 10 now (LTS through 2028), evaluate .NET 11 next year, and treat the November 10 end-of-support for .NET 8/9 as the deadline it is. This is not a framework debate; it's maintenance hygiene.
+
+**Starting from zero with no team yet?** Pick the stack your first hire knows best. A great Laravel developer will outship a mediocre Next.js developer every time. Frameworks don't build products; people do.
+
+## The mistakes we keep getting hired to fix
+
+We see the same five framework mistakes in rescue projects, year after year. Each one cost somebody real money.
+
+**1. Choosing by hype, not by hiring.** The CTO read a great blog post about a new framework, the team built the MVP in it, and now nobody within a thousand miles can be hired to maintain it. We've inherited two such projects this year alone. Hiring pool is a technical constraint — treat it like one. Before you commit to a stack, post a hypothetical job ad in your head: how many qualified applicants show up in your market, at the salary you can pay?
+
+**2. WordPress for products.** A plugin stack held together with hope, now creaking under the weight of the product it was never meant to be. The pattern is always the same: it started as "just a marketing site," then someone added a customer portal via plugin, then a booking flow, then custom post types doing things post types should never do. If you're building software, build software. The migration off a Franken-WordPress install typically costs more than building properly would have.
+
+**3. No caching strategy on day one.** Teams ship a Next.js app with everything dynamic, then panic at the hosting bill or the TTFB. Decide what's static, what's cached, and what's dynamic before launch — the framework gives you the tools; it won't decide for you. The Cache Components model in Next.js 16 makes this easier to express, but you still have to think it through. Our rule of thumb: if it doesn't change per user or per minute, it probably shouldn't be rendered per request.
+
+**4. Ignoring the November .NET deadline.** If you're on .NET 8 or 9, you have weeks, not quarters. Upgrades under time pressure are where the expensive bugs live — the ones found at 2am by your customers instead of in staging. Start the .NET 10 migration now; it's the current LTS and it's boring in the best way.
+
+**5. Building for scale you don't have.** Microservices, Kubernetes, multi-region deployments — for an MVP with twelve users. Start with a monolith on a boring host. Every framework above lets you extract services later; premature distribution is just premature. The most expensive architecture is the one you have to operate before you have revenue.
+
+## Frequently asked questions
+
+**What is the best web development framework in 2026?**
+For most client projects — marketing sites, SaaS products, and dashboards — Next.js 16 is the best web development framework in 2026: React Server Components, explicit caching, Turbopack builds, and Instant Navigations that make server-driven apps feel like SPAs. The exceptions are real-time edge workloads (look at RedwoodSDK on Cloudflare) and heavy enterprise backends (where .NET 11 remains the safer bet).
+
+**Is Next.js still the best choice for new projects in 2026?**
+Yes, with one caveat. Next.js 16.3 fixed the two complaints that followed the framework for years — slow-feeling navigations and a dev server that ate memory. We still wouldn't pick it for content-heavy sites where Astro is simpler, or for projects that need to run cheaply at global edge scale, where Cloudflare-native options win.
+
+**What's new in Node.js 26 for web developers?**
+Node.js 26.9.0 (September 2026) enables the Foreign Function Interface by default, letting JavaScript call native libraries directly without C/C++ addons or node-gyp — making performance-sensitive work practical inside plain Node services. Active LTS is expected in October 2026; until then, we keep production on Node 22.
+
+**How much does a custom website cost in Pakistan in 2026?**
+A professional marketing website on Next.js with a headless CMS runs PKR 400,000–1,200,000 ($1,400–$4,200) at our studio. A SaaS MVP typically costs PKR 1,500,000–4,000,000 ($5,000–$14,000); a full custom web application starts around PKR 2,000,000 ($7,000). US agencies charge roughly 3–5x for the same scope.
+
+**Should startups choose a headless CMS or WordPress in 2026?**
+For teams editing content weekly, a headless CMS (Sanity, Payload, or Strapi) with Next.js is the better long-term choice — modern performance, structured content, and code that AI assistants can actually work with. WordPress still wins for simple brochure sites managed by non-technical owners.
+
+**Is RedwoodSDK production-ready?**
+Promising but young: the Redwood team's new Cloudflare-native, server-first React framework with RSC and realtime support, deployable to Workers in seconds. Worth evaluating for a greenfield realtime product; for anything with a deadline this quarter, Next.js is the safer recommendation.
+
+---
+
+Choosing a framework is choosing your constraints for the next three years. Get it right and the technology disappears into the background while you build the business. Get it wrong and every sprint starts with an apology to the codebase.
+
+If you'd rather have a team that's made these calls — and lived with the consequences — make the right one for you, [talk to us](https://www.aisquadx.tech/contact). We'll tell you which stack fits your project, your team, and your budget, even if the answer is "you don't need us." That's the whole point of [how we work](https://www.aisquadx.tech/about).
