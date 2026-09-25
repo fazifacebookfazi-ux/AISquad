@@ -1,0 +1,250 @@
+export const meta = {
+  title: "Core Web Vitals 2026: The Studio's Fix-First Speed Guide",
+  description:
+    "Core Web Vitals 2026 decoded: what LCP, INP and CLS scores mean for your rankings and revenue, how to measure them, and the fixes that actually work today.",
+  date: "2026-09-25",
+  category: "Web Development",
+  categorySlug: "web-development",
+  keywords: [
+    "core web vitals 2026",
+    "website speed optimization",
+    "improve LCP score",
+    "INP optimization",
+    "fix cumulative layout shift",
+    "page experience ranking factor",
+    "Next.js performance 2026",
+  ],
+  author: "AISquadX Studio",
+  image: "/blog/core-web-vitals-2026/cover.webp",
+  faq: [
+    {
+      q: "What are Core Web Vitals in 2026?",
+      a: "Core Web Vitals are Google's three real-user performance metrics: Largest Contentful Paint (LCP, loading — good at 2.5 seconds or less), Interaction to Next Paint (INP, responsiveness — good under 200 milliseconds) and Cumulative Layout Shift (CLS, visual stability — good under 0.1). Google evaluates them at the 75th percentile of real Chrome visits, split between mobile and desktop, and factors them into page experience ranking signals alongside content relevance and authority.",
+    },
+    {
+      q: "What is a good Core Web Vitals score?",
+      a: "Good means LCP of 2.5 seconds or less, INP under 200 milliseconds, and CLS under 0.1 — measured at the 75th percentile of real page visits, not in a single lab test. All three must pass for the page experience benefit, and the thresholds themselves did not change in 2026; what changed is how Google measures, with broader INP measurement and site-wide assessment reported in coverage this year.",
+    },
+    {
+      q: "Does page speed affect Google rankings in 2026?",
+      a: "Yes, as one part of the page experience signals Google says align with what its ranking systems reward — though perfect scores won't outrank more relevant content. The bigger lever is commercial: Amazon found each extra 100ms of load time costs about 1% of revenue, and only around 42% of mobile sites passed all three Core Web Vitals in 2026 reporting, so beating the threshold is a genuine competitive edge.",
+    },
+    {
+      q: "How do I check my Core Web Vitals?",
+      a: "Start with PageSpeed Insights on your live URL and read the 'real user experience' field data before the lab score — field data is what Google actually evaluates. Then check the Core Web Vitals report in Google Search Console for site-wide failing pages grouped by metric. Developers can instrument pages with Google's open-source web-vitals JavaScript library to log real scores into their own analytics.",
+    },
+    {
+      q: "Why is my INP score failing?",
+      a: "INP is the most commonly failed Core Web Vital in 2026 because it measures responsiveness across the entire visit — every tap and click — not just the first one. The usual culprits are heavy third-party scripts (chat widgets, ad tags, analytics), long JavaScript tasks blocking the main thread, and client-side hydration on framework-heavy pages. Fix it by deferring or removing third-party scripts, splitting long tasks with scheduling, and reducing work done on every interaction.",
+    },
+    {
+      q: "How much does it cost to fix Core Web Vitals in Pakistan?",
+      a: "At our studio, a focused Core Web Vitals audit and remediation on a marketing site runs PKR 150,000–450,000 ($500–$1,600), while full optimisation of a large e-commerce or SaaS site with INP and LCP surgery runs PKR 500,000–1,200,000 ($1,800–$4,200). US agencies typically charge $5,000–$25,000 for equivalent work. The price depends on platform — WordPress plugin sprawl costs more to fix than a lean Next.js rebuild.",
+    },
+  ],
+};
+
+Your website loads in 3.2 seconds on a phone. That's not a technical footnote — it's a slow leak in revenue. Google's own research puts the bounce probability at 32% higher when a page takes 3 seconds instead of 1, and reporting this year found only about 42% of mobile sites pass all three Core Web Vitals. Your visitors are not waiting politely. They are hitting back, and Google is watching them do it.
+
+This guide is the fix-first version: no theory lectures, no tool roundups that read like sponsored posts. We ship client websites at AISquadX, and this is the exact sequence we follow when a site fails its vitals — what the three metrics actually measure, how to read your real scores, and the specific fixes that move each number. Prices in PKR and USD included, because someone has to pay for the work.
+
+## Why speed still decides who gets the click in 2026
+
+Core Web Vitals became a ranking factor in 2021. Five years on, they are not the hot new thing — they are the baseline, and the bar keeps shifting in ways that quietly punish complacent sites.
+
+**2026 changed the measurement, not the thresholds.** The three targets are exactly what they were: LCP at 2.5 seconds or less, INP under 200 milliseconds, CLS under 0.1. What moved this year is the machinery around them — coverage of the 2026 updates notes that Google now evaluates performance more holistically, site-wide rather than purely page-by-page, and INP measurement has tightened with broader coverage of single-page app navigations. Translation: the old trick of optimising your homepage and ignoring the other 400 pages no longer works. A slow blog template or a heavy checkout page now drags your standing site-wide.
+
+**INP is the metric everyone is failing.** Technical SEO coverage this year consistently names Interaction to Next Paint as the most commonly failed Core Web Vital in 2026. LCP is a solved problem for most competent teams — compress the hero image, fix the fonts, done. INP measures responsiveness across the whole visit: every menu tap, every form keystroke, every filter click. It catches all the sins that happen after the page looks loaded, which is exactly where modern websites are fattest: chat widgets, analytics stacks, ad tags, consent banners, and client-side hydration on framework pages. If you only fix one thing after reading this, fix INP.
+
+**The commercial case is brutal and simple.** Amazon's famous finding still circulates because it still holds up as a rule of thumb: roughly 1% of revenue lost per extra 100 milliseconds of load time. Google's research found bounce probability jumping 32% as load time moves from 1 to 3 seconds, and hitting 90% at 5 seconds. More than half of visits are abandoned once load times cross 3 seconds, per Google research cited in 2026 coverage. Speed is not an engineering vanity metric. It's the difference between a visitor and a bounce, and between a bounce and a sale.
+
+One honest caveat before we start: Google is explicit that perfect vitals do not outrank more relevant content. A slow page with the answer still beats a fast page without one. Fix speed after you have something worth speeding up.
+
+## The three metrics, in plain language
+
+Forget the acronyms for a second. Each Core Web Vital answers one question a visitor asks unconsciously:
+
+- **LCP — "Can I see the thing?"** Largest Contentful Paint measures when the biggest visible element renders: the hero image, the headline block, the product photo. Good is 2.5 seconds or less.
+- **INP — "Does it react when I touch it?"** Interaction to Next Paint measures how fast the page visually responds to your taps, clicks and keystrokes — across the whole visit, roughly the worst interactions. Good is under 200 milliseconds.
+- **CLS — "Does it stay put while I read it?"** Cumulative Layout Shift measures unexpected visual movement: the button that jumps just as you tap it, the paragraph that gets shoved down by a late-loading ad. Good is under 0.1.
+
+| Metric | What it measures | Good | Needs improvement | Poor |
+|---|---|---|---|---|
+| **LCP** | Loading: main content visible | ≤ 2.5s | 2.5–4.0s | > 4.0s |
+| **INP** | Responsiveness: every interaction | ≤ 200ms | 200–500ms | > 500ms |
+| **CLS** | Visual stability: layout jumps | ≤ 0.1 | 0.1–0.25 | > 0.25 |
+
+The part most guides bury: **Google judges the 75th percentile of real visits.** Three-quarters of your visitors' sessions must hit "Good" for the page to pass — and it's measured separately for mobile and desktop, using real Chrome user data (the CrUX dataset), not a single synthetic test. A blazing test on your office fibre means nothing if half your traffic is on 4G in Lahore or on a mid-range Android in Texas. This is the single most important rule in the whole system, so remember it: **optimise for the p75 visitor, not the median.**
+
+INP replaced First Input Delay (FID) back in March 2024, and the distinction still trips people up. FID measured only the *first* interaction's delay. INP measures the full duration — input delay, processing, and the time to paint the result — across *all* interactions in the visit. A page can have a great first paint and a terrible INP because a chat widget hijacks the main thread thirty seconds in.
+
+## Measure first, optimise second
+
+The order matters. We have watched teams spend weeks "optimising" images while the real problem was a 900KB chat script. Measure the right thing first, and the fixes pick themselves.
+
+![Diagnosing website performance: measuring Core Web Vitals scores](/blog/core-web-vitals-2026/fig1.webp)
+
+### Field data first, lab data second
+
+Open your live page in **PageSpeed Insights**. Read the "Discover what your real users are experiencing" section *before* you look at the lab score at the top. Field data is what Google evaluates; the lab score is a debugging aid. Then answer three questions:
+
+1. **Is the failing data for this URL or the whole origin?** Origin-level data tells you about the template; URL-level data tells you about the page.
+2. **Mobile, desktop, or both?** Most failures we see in Pakistan and the US are mobile-only. Fix mobile first.
+3. **Which metric is red — LCP, INP, or CLS?** One red metric is a targeted job. Three red metrics usually means the platform itself (an overloaded theme, a plugin-stuffed CMS) and you should price a rebuild instead of patching.
+
+### The Search Console view
+
+The Core Web Vitals report in **Google Search Console** groups your failing pages by metric across the whole site — exactly the site-wide lens Google is using in 2026. This is where you discover that your blog template, which nobody ever audited, is failing LCP on 300 URLs. Work the report top-down: biggest traffic pages first.
+
+### Instrument it yourself
+
+For client sites we add Google's open-source `web-vitals` JavaScript library and pipe the real scores into the site's analytics — Google publishes a full [codelab walking through the setup](https://developers.google.com/codelabs/chrome-web-vitals-js). This is how you catch regressions before Search Console's 28-day field data window tells you about them. Lab tests in Lighthouse and DevTools come after: use them to *diagnose* a known failure, never to declare victory.
+
+### When there's no field data
+
+New or low-traffic sites often have no CrUX field data at all — Search Console shows "not enough data" and PageSpeed Insights falls back to lab scores. Don't treat a green lab score as a pass. In that case, instrument the `web-vitals` library from day one so you're collecting real-user data as traffic arrives, and use Lighthouse's mobile throttling as a pessimistic stand-in: if the lab numbers fail on a simulated mid-range phone, the field numbers will fail harder. We've seen brand-new client sites launch "passing" in the lab and show red field data two months later when the CrUX window filled in — always with the same culprits (chat widget, unoptimised hero, render-blocking fonts) that the lab data was too polite to flag.
+
+The output of this stage is a one-line diagnosis per page, like: "Homepage, mobile: INP 340ms, driven by chat widget + unminified bundle." Everything below assumes you have that sentence.
+
+## Fixing LCP: make the main content appear fast
+
+LCP is the most intuitive metric and, frankly, the easiest to fix. The largest visible element is almost always a hero image, a headline, or a video poster — and it is slow for a small set of repeatable reasons.
+
+![Optimising a website to load faster](/blog/core-web-vitals-2026/fig2.webp)
+
+### Images: the 80/20 fix
+
+Run your site's hero images through this checklist and you will fix most LCP failures in a single afternoon:
+
+- **Serve modern formats.** WebP everywhere, AVIF where the browser supports it. A hero JPEG that weighs 800KB usually lands at 90–150KB as WebP with no visible loss.
+- **Size them to the slot.** A 2400px-wide hero displayed at 700px on mobile is dead weight. Use `srcset`/`sizes` or your framework's image component so phones download phone-sized files.
+- **Prioritise the LCP image.** Mark the hero with `fetchpriority="high"` (or your framework's priority flag) and preload it in the document head. Lazy-load everything below the fold — but never the hero itself, a mistake we see constantly.
+- **Give images dimensions.** Width and height attributes (or aspect-ratio CSS) let the browser reserve space before the file arrives. This single habit fixes LCP *and* CLS at once.
+
+In Next.js — which we picked as [our studio's framework for 2026](/blog/best-web-development-framework-2026) — the `Image` component handles most of this: automatic format selection, responsive sizes, and lazy loading by default with `priority` for the hero. On WordPress, a plugin like ShortPixel or Imagify plus explicit dimensions gets you most of the way, though we've seen plugin-stacked WordPress sites where the optimisation plugins themselves cost 400ms.
+
+### Fonts: the invisible render blocker
+
+Web fonts are the LCP killer nobody checks. A 300KB font file downloaded synchronously blocks your headline from rendering — and the headline is often the LCP element.
+
+- Use `font-display: swap` so text renders immediately in a fallback and swaps when the font arrives.
+- Self-host fonts instead of pulling them from a third-party CDN: it removes a DNS lookup, a connection, and a redirect chain.
+- Subset ruthlessly. If your site is in English, you don't need the full Cyrillic and Greek glyph sets. Subsetting typically cuts font files by 60–80%.
+- Preload only the one or two weights used above the fold. Every preloaded font competes with the hero image for bandwidth.
+
+### Server speed: TTFB sets the floor
+
+Time to First Byte is the floor your LCP stands on. If the server takes 1.2 seconds to respond, your 2.5-second LCP budget is half gone before a single pixel renders.
+
+- **Host near your visitors.** If most customers are in Pakistan, a server in Singapore or a CDN edge in the region beats a US-East-only host by 200–400ms. For US audiences, deploy on the edge — Vercel, Cloudflare, or Netlify put your pages milliseconds from visitors.
+- **Cache aggressively.** Static pages should be served from a CDN, not rendered on every request. Dynamic pages get stale-while-revalidate caching so the first visitor doesn't pay the render cost.
+- **Kill redirect chains.** Each redirect is a full round trip. We've audited sites with four chained redirects on the homepage, costing nearly a second before anything renders.
+
+| Fix | Typical LCP improvement | Effort |
+|---|---|---|
+| WebP/AVIF + responsive hero sizes | 0.5–1.5s | Afternoon |
+| `font-display: swap` + self-host + subset fonts | 0.3–0.8s | Few hours |
+| Preload + `fetchpriority="high"` on hero | 0.2–0.5s | One hour |
+| CDN caching + edge hosting | 0.3–1.0s TTFB cut | A day |
+| Removing redirect chains | 0.2–0.9s | One hour |
+
+These ranges are what we observe across client audits, not lab theory. The image and font fixes alone take most sites from "poor" to "needs improvement" in a day of work.
+
+## Fixing INP: the metric everyone fails in 2026
+
+LCP is about the first paint. INP is about everything after — and that's where modern websites are heaviest. INP measures the worst interactions across the visit, so one greedy script can poison the score for the whole page. Here's the hit list, in the order we'd attack it.
+
+### Third-party scripts: the number one INP killer
+
+Analytics, chat widgets, ad tags, heatmaps, consent managers, social embeds. Each one is JavaScript you didn't write, running on your main thread, and most of them load with no regard for when *you* need them.
+
+- **Audit quarterly.** Open DevTools, list every third-party script, and ask who owns it and what it earns. The typical marketing site we audit carries 8–14 third-party scripts; half are for tools nobody opened in a year. Removing a dead heatmap script once bought a client 180ms of INP. Free fix.
+- **Defer or delay.** Scripts that don't need to run on load — chat widgets especially — should load after user interaction or on a timer. A chat bubble that appears 3 seconds in instead of instantly is invisible to users and dramatically kinder to INP.
+- **Use `partytown` or web workers** for analytics where the platform allows, moving the work off the main thread entirely.
+- **Self-host where possible.** Third-party scripts downloaded from someone else's CDN can't be cached, compressed, or controlled by you.
+
+### Break up long tasks
+
+Any JavaScript task running longer than 50ms blocks the main thread — the page can't respond to taps while it's busy. Framework-heavy pages (React hydration, big filter logic, client-side search over large datasets) are the usual suspects.
+
+- Split work with `scheduler.yield()` or `setTimeout` chunking so the browser can handle input between chunks.
+- Move heavy computation (search indexing, image processing, CSV parsing) into Web Workers.
+- Debounce inputs: a search-as-you-type field that re-renders 500 results per keystroke is an INP disaster. Debounce 150–250ms and cap rendered results.
+- Reduce hydration cost: server-render what you can, hydrate only interactive islands. This is the architectural reason we favour server-first frameworks — less client JavaScript means less main-thread contention, full stop.
+
+### Watch the interaction handlers themselves
+
+Sometimes the script isn't third-party at all — it's your own click handler doing a synchronous database write, a heavy DOM re-layout, or an unthrottled animation. Profile with DevTools' performance panel, find the interactions with the longest "presentation delay" (the gap between your code finishing and the paint happening), and shrink them. Expensive CSS selectors and layout-thrashing loops (`offsetHeight` reads inside a write loop) are classics.
+
+Our studio rule of thumb: **if a fix doesn't show up in field data within the 28-day CrUX window, it didn't happen.** Lab improvements that don't move real-user INP are theatre. This is also why [page experience work connects directly to AI search visibility](/blog/seo-for-ai-search-2026) — the same real-user signals feed both systems.
+
+## Fixing CLS: stop the page jumping
+
+CLS failures feel personal to visitors. Nothing erodes trust like a button that dodges your thumb. The causes are almost always one of three things, and all are cheap to fix.
+
+### Reserve space for everything that loads late
+
+- Images and videos get explicit `width`/`height` or `aspect-ratio` — same fix as LCP, double payoff.
+- Ad slots, embedded tweets, and newsletter forms get a fixed-size container. If the ad doesn't fill, the container stays. Empty reserved space is infinitely better than a jumping page.
+- Skeleton placeholders for dynamically injected content: the grey shimmer boxes you see on LinkedIn exist precisely to hold layout while content loads.
+
+### Tame web fonts and dynamic content
+
+- `font-display: swap` prevents invisible text, but the swap itself can shift layout if fallback and web fonts have different metrics. Use `size-adjust` in `@font-face` to match the fallback font's sizing, killing the jump at the source.
+- Never insert content above existing content after load — no "we've added a banner" injections, no cookie notices that push the page down. Overlays should use `position: fixed`, never document flow.
+- Animations should transform (`transform: translate/scale`), never animate `top`/`left`/`width` — layout-property animations trigger re-layout on every frame and show up in CLS.
+
+CLS is the metric where the fix is almost always under an hour. If your CLS is red, check image dimensions first; it's the cause in roughly three out of four audits we run.
+
+## Keep the stack patched: speed and security ship together
+
+Here's the 2026 angle most speed guides miss: **your framework version is a performance and security decision.** Old, unpatched stacks don't just carry vulnerabilities — they miss years of rendering, bundling, and caching improvements.
+
+September 2026 is a case study in why this matters. Vercel announced a scheduled [Next.js security release for September 30, 2026](https://releasebot.io/updates/vercel/next-js) — versions 16.3.7 and 15.5.27 — addressing nine vulnerabilities, one of them critical. Eight days earlier, on September 22, a critical remote code execution flaw was disclosed in Next.js's `next/og` `ImageResponse` API: crafted SVG input flowing into dynamically generated social images could execute code on the server, and those OG endpoints are public and unauthenticated by design, as the [detection and remediation write-up](https://securityarsenal.com/blog/critical-nextjs-imageresponse-rce-via-crafted-svg-detection-hunting-and-remediation-guide) explains. August had already brought a security release patching two critical vulnerabilities in 16.3.3 and 15.5.24.
+
+The lesson for site owners isn't to panic — it's to **treat framework updates as maintenance, not projects.** The sites we see failing vitals in 2026 are disproportionately the ones running 2023-era stacks: old Next.js versions, WordPress themes abandoned by their authors, jQuery-era plugins. A stack that hasn't been updated in two years is slow *and* exposed, and the fix for both is the same discipline: scheduled updates, staging environments, and a host or agency that applies patches without being asked.
+
+Google's own [Core Web Vitals documentation](https://developers.google.com/search/docs/appearance/core-web-vitals) remains the canonical reference for the thresholds and the measurement rules — bookmark it, because third-party "2026 update" posts contradict each other constantly. A recent [September 2026 Core Web Vitals guide](https://www.exeideas.com/2026/09/core-web-vitals-seo-ranking-guide.html) is a decent secondary read, but when a blog and Google disagree, Google wins.
+
+## What Core Web Vitals optimisation actually costs
+
+Honest numbers, from our studio's observed ranges. Prices vary with platform — a lean site on modern hosting is a day's work; a plugin-stuffed WordPress install or a legacy custom CMS is surgery.
+
+| Engagement | Scope | Typical price |
+|---|---|---|
+| **Vitals audit** | Field-data diagnosis, prioritised fix list, effort estimates — no code changes | PKR 50,000–120,000 ($175–$420) |
+| **Marketing site remediation** | Image/font pipeline, script audit, CLS fixes, caching setup | PKR 150,000–450,000 ($500–$1,600) |
+| **E-commerce / SaaS deep fix** | INP surgery: third-party rationalisation, hydration reduction, worker offloading | PKR 500,000–1,200,000 ($1,800–$4,200) |
+| **Rebuild on modern stack** | When the platform is the problem: Next.js rebuild with performance budget | PKR 1,500,000–4,000,000 ($5,000–$14,000) |
+
+US agencies charge roughly 3–5x these figures for equivalent scope — a US vitals engagement typically starts around $5,000 and enterprise e-commerce work runs $15,000–$25,000. The work is the same; the market rate isn't.
+
+When does remediation stop making sense? Our rule: **if fixing LCP, INP and CLS all require fighting the platform, rebuild.** A WordPress site with 40 plugins where each plugin owner blames the others will eat more billable hours than a fresh build — and you'll inherit the same plugin chaos next year. We wrote about the rebuild-vs-patch decision in the context of [what websites actually cost in Pakistan this year](/blog/website-development-cost-pakistan-2026); the same economics apply to speed work.
+
+And the DIY route is real for simple cases. A competent developer can take a basic marketing site from failing to passing in 2–4 days following the sequence above: measure, fix images and fonts, audit third-party scripts, reserve layout space, set up caching. The expensive part is never the code — it's knowing which fix to apply first, which is exactly what the audit buys you.
+
+## FAQ
+
+**What are Core Web Vitals in 2026?**
+Core Web Vitals are Google's three real-user performance metrics: Largest Contentful Paint (LCP, loading — good at 2.5 seconds or less), Interaction to Next Paint (INP, responsiveness — good under 200 milliseconds) and Cumulative Layout Shift (CLS, visual stability — good under 0.1). Google evaluates them at the 75th percentile of real Chrome visits, split between mobile and desktop, and factors them into page experience ranking signals alongside content relevance and authority.
+
+**What is a good Core Web Vitals score?**
+Good means LCP of 2.5 seconds or less, INP under 200 milliseconds, and CLS under 0.1 — measured at the 75th percentile of real page visits, not in a single lab test. All three must pass for the page experience benefit, and the thresholds themselves did not change in 2026; what changed is how Google measures, with broader INP measurement and site-wide assessment reported in coverage this year.
+
+**Does page speed affect Google rankings in 2026?**
+Yes, as one part of the page experience signals Google says align with what its ranking systems reward — though perfect scores won't outrank more relevant content. The bigger lever is commercial: Amazon found each extra 100ms of load time costs about 1% of revenue, and only around 42% of mobile sites passed all three Core Web Vitals in 2026 reporting, so beating the threshold is a genuine competitive edge.
+
+**How do I check my Core Web Vitals?**
+Start with PageSpeed Insights on your live URL and read the "real user experience" field data before the lab score — field data is what Google actually evaluates. Then check the Core Web Vitals report in Google Search Console for site-wide failing pages grouped by metric. Developers can instrument pages with Google's open-source web-vitals JavaScript library to log real scores into their own analytics; Google's [measurement codelab](https://developers.google.com/codelabs/chrome-web-vitals-js) walks through the setup.
+
+**Why is my INP score failing?**
+INP is the most commonly failed Core Web Vital in 2026 because it measures responsiveness across the entire visit — every tap and click — not just the first one. The usual culprits are heavy third-party scripts (chat widgets, ad tags, analytics), long JavaScript tasks blocking the main thread, and client-side hydration on framework-heavy pages. Fix it by deferring or removing third-party scripts, splitting long tasks with scheduling, and reducing work done on every interaction.
+
+**How much does it cost to fix Core Web Vitals in Pakistan?**
+At our studio, a focused Core Web Vitals audit and remediation on a marketing site runs PKR 150,000–450,000 ($500–$1,600), while full optimisation of a large e-commerce or SaaS site with INP and LCP surgery runs PKR 500,000–1,200,000 ($1,800–$4,200). US agencies typically charge $5,000–$25,000 for equivalent work. The price depends on platform — WordPress plugin sprawl costs more to fix than a lean Next.js rebuild.
+
+## The bottom line
+
+Speed work in 2026 is not mysterious. Measure field data, find the red metric, and apply the fix list in order: images and fonts for LCP, third-party scripts and long tasks for INP, reserved space for CLS — on a stack that gets patched. Most sites we audit are 2–4 days of focused work away from passing, and the revenue math (1% per 100ms, 32% more bounces at 3 seconds) makes it the cheapest conversion optimisation you'll ever buy.
+
+If your vitals are red and you'd rather have it handled, [talk to us](/contact) — a vitals audit is the fastest engagement we offer, and you'll have the fix list in hand either way. Our [web development services](/services) cover the full remediation, and you can read [more about the studio](/about) before you decide.
