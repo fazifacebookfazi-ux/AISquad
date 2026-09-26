@@ -1,0 +1,239 @@
+export const meta = {
+  title: "AI Voice Agents for Business: 2026 Pricing and Deployment Playbook",
+  description:
+    "AI voice agents for business answer calls, qualify leads and book appointments at $0.07–$0.31/min. Our 2026 playbook covers platforms, pricing and pitfalls.",
+  date: "2026-09-26",
+  category: "AI & Automation",
+  categorySlug: "ai-automation",
+  keywords: [
+    "AI voice agents for business",
+    "AI phone agent",
+    "voice AI pricing",
+    "AI voice agent platforms",
+    "AI receptionist for small business",
+    "outbound AI calling",
+    "inbound call automation",
+    "voice AI ROI",
+  ],
+  author: "AISquadX Studio",
+  image: "/blog/ai-voice-agents-business-2026/cover.webp",
+  faq: [
+    {
+      q: "How much do AI voice agents cost in 2026?",
+      a: "Expect USD 0.07–0.31 per minute all-in, depending on platform and model. Retell AI and Vapi sit in the USD 0.07–0.15 range for typical setups, Bland AI runs USD 0.09–0.14 with telephony bundled, and premium managed deployments (Synthflow, PolyAI) run into five-figure annual contracts. A small business running 500 minutes a month should budget roughly USD 50–150/month plus a one-time build cost of USD 600–3,000.",
+    },
+    {
+      q: "Can an AI voice agent handle inbound calls for my business?",
+      a: "Yes — inbound is the safest and highest-ROI starting point. The agent answers after-hours calls, collects details, books appointments and escalates anything it cannot resolve to a human. In our experience, around 60–75% of routine inbound enquiries (hours, pricing, appointment requests) resolve without human touch. Start with inbound before touching outbound calling.",
+    },
+    {
+      q: "Which is the best AI voice agent platform: Retell, Vapi, Bland or ElevenLabs?",
+      a: "There is no single best choice. Retell AI is the fastest path to a working inbound agent. Vapi gives developers full control over every component — speech-to-text, LLM and voice — at the cost of more assembly. ElevenLabs Agents leads on voice naturalness. Bland AI is built for high-volume outbound campaigns. Pick based on who will maintain it: non-developers lean Retell, engineers lean Vapi.",
+    },
+    {
+      q: "Do AI voice agents work in Pakistan?",
+      a: "They do, with two caveats: telephony and language. Twilio can provide international numbers that terminate to Pakistan, though per-minute telephony rates are higher than in the US. Urdu and mixed English-Urdu (Roman Urdu) callers are handled best by platforms with strong multilingual speech-to-text like Deepgram; test with real local callers before launch, because accent handling is where demos die.",
+    },
+    {
+      q: "How long does it take to deploy an AI voice agent?",
+      a: "A single-job agent — say, after-hours call answering with appointment booking — can be in production in 2–4 weeks: one week for call-flow design and script writing, one week for platform configuration and integration, and one to two weeks of supervised testing with real calls. Enterprise deployments with compliance reviews and CRM integration take 6–12 weeks.",
+    },
+    {
+      q: "Will callers know they are talking to an AI?",
+      a: "Usually, yes — and that is fine. The best practice in 2026 is disclosure in the first few seconds: 'Hi, I'm the AI assistant for [business name].' Undisclosed AI calling is illegal in several US states and against regulations in many markets. Transparency also sets expectations, which actually raises satisfaction scores.",
+    },
+    {
+      q: "What is the biggest risk when deploying a voice AI agent?",
+      a: "Hallucination on live calls. A text chatbot that makes something up gets corrected in chat; a voice agent that quotes the wrong price creates a dispute. The fix is grounding: the agent answers pricing, availability and policy questions only from your data sources, and anything outside its knowledge base goes to a human or a callback. Never let a voice agent improvise facts.",
+    },
+  ],
+};
+
+Your phone rang eleven times yesterday while you were in meetings. Three of those callers booked with a competitor who picked up. This is the entire business case for AI voice agents, and it has nothing to do with futuristic demos.
+
+An AI voice agent is software that answers a real phone call, holds a natural conversation in the caller's language, and does the job a junior receptionist used to do: take the details, answer routine questions, book the appointment, send the confirmation. In 2026, the technology crossed a line. The voices sound human enough that callers stop noticing after the first ten seconds, the latency dropped below the awkward-pause threshold, and the per-minute cost fell to a fraction of a human agent's wage. September brought a fresh wave of proof: Microsoft [rebuilt Copilot around always-on agentic AI](https://www.reuters.com/technology/microsoft-revamps-copilot-with-code-generation-agentic-ai-tools-2026-09-25/), Meta [opened up WhatsApp Business onboarding to AI agents](https://dynamicbusiness.com/ai-tools/whatsapp-business-tools-mcp-ai-onboarding-automation.html), and enterprise automation platform Workato [announced its customers had processed over 1.1 billion AI actions](https://www.businesswire.com/news/home/20260924888381/en/Workato-Customers-Surpass-1.1-Billion-Enterprise-AI-Actions-Processed-and-Share-Results-at-World-of-Workato-2026).
+
+We have deployed voice agents for service businesses on both sides of the world. This guide is what we tell clients before they spend a rupee or a dollar: what it costs, which platform to pick, what breaks, and how to launch without embarrassing your business. (For the short version of who we are: AISquadX is a [design-led engineering studio](https://www.aisquadx.tech/about) building web products and AI systems for clients in the US and Pakistan.)
+
+## What an AI voice agent actually is in 2026
+
+Strip away the marketing and a voice agent is four components working together on a live call:
+
+1. **Speech-to-text** transcribes the caller's words in real time. Deepgram and OpenAI's Whisper-class models lead here, and multilingual accuracy is the thing to check if your callers speak Urdu, Punjabi, or mixed English.
+2. **A language model** decides what to say and which action to take. This is the brain. It follows your call script, looks up information, and triggers tools — booking, logging, SMS confirmations.
+3. **Text-to-speech** turns the model's reply into audio. ElevenLabs is the quality leader; most platforms let you bring their voices.
+4. **Telephony** connects the whole stack to the public phone network — Twilio is the default carrier for most platforms.
+
+The older generation of these systems stitched the pieces together by hand, and the seams showed: 750–1,200 milliseconds of latency while the pipeline ran, callers interrupting and getting talked over, robotic voices reading sentences like telegrams. September 2026's releases show how far it has come. Google DeepMind's [Gemini 3.8 Live](https://www.autointerviewai.com/blog/gemini-3-8-live-review-voice-agents-ai-calling-2026), released in mid-September, is a native speech-to-speech model with streaming reasoning that benchmarks voice agentic task completion at 68.6% and drops audio operational costs to roughly USD 0.023 per minute — over thirteen times cheaper than the previous generation of real-time models, according to an independent engineering review. Microsoft, the same week, unveiled Copilot "Code" for building apps from natural language and "Autopilot", an always-on agent that carries its own identity in the company directory with controlled permissions. The enterprise framing matters: companies are not buying a clever bot, they are buying a governed employee with an audit trail.
+
+And then there is scale proof. At World of Workato 2026 this month, Workato announced customers had surpassed 1.1 billion enterprise AI actions processed, with brands like Lenovo and Vodafone sharing production deployments. The question for your business is no longer "does this work?" but "which job do I give it first?"
+
+## The numbers: what voice AI actually costs
+
+Pricing in this market is slippery because every vendor bills differently. Some bundle everything into one per-minute rate; others charge a platform fee and pass telephony, speech and model costs through separately. September 2026 comparison data from [independent platform reviews](https://www.firecrawl.dev/blog/ai-voice-agent-platforms) and [voice-AI pricing comparisons](https://reviews.wildrunai.com/blog/voice-ai-pricing-comparison) converges on these ranges:
+
+| Platform | Typical all-in cost (per min) | Billing shape | Best for |
+| --- | --- | --- | --- |
+| Retell AI | USD 0.07–0.15 | Per-minute, transparent component breakdown | Fastest managed inbound agent |
+| Vapi | USD 0.08–0.16 | USD 0.05/min platform + pass-through costs | Developers composing their own stack |
+| ElevenLabs Agents | USD 0.08–0.16 | Minutes bundled in plans from USD 6/mo | Premium voice quality |
+| Bland AI | USD 0.09–0.14 | Bundled per connected minute | High-volume outbound campaigns |
+| Deepgram (STT) + Twilio Voice | USD 0.10–0.15 | Component-level pay-as-you-go | Custom-built agent stacks |
+| Synthflow | USD 0.19–0.31 | Plan-based with annual contracts | No-code enterprise deployments |
+
+A few honest footnotes before you run with these numbers:
+
+- **Vapi's advertised USD 0.05/min is the platform fee only.** Speech-to-text, the language model, text-to-speech and telephony bill on top. Realistic all-in lands around USD 0.13–0.31 depending on your model choice. Pick Claude or GPT-4-class models and you are at the top of the range; pick a smaller open model and you sit at the bottom.
+- **Gemini 3.8 Live's audio pricing is absurdly cheap** — USD 0.005/min input, USD 0.018/min output — and platforms integrating it will pull the cost curve down further. If your volume is high, ask your platform about native speech-to-speech model options rather than the classic stitched pipeline.
+- **Build cost is separate.** A single-job agent configured on Retell or Bland typically costs USD 600–3,000 one-time at an agency — call-flow design, prompt engineering, CRM integration and testing. Complex deployments with compliance, multi-language support and custom integrations run USD 5,000–15,000.
+
+For a Pakistani business, convert at the going rate and add telephony reality: international call termination costs more, and a Twilio number that receives Pakistani calls typically runs USD 1–4 per month per number plus the per-minute rate. A clinic in Lahore running 400 inbound minutes a month would land around USD 60–120/month (roughly PKR 17,000–34,000) all-in — still below one receptionist's part-time salary.
+
+That is the maths that matters. Not the sticker price of the platform, but the cost per resolved call versus the cost of the missed one.
+
+## Inbound first, outbound later: pick the job before the platform
+
+The most expensive mistake we see is buying a voice platform and then asking what to use it for. Do the reverse. There are two fundamentally different jobs, and the right platform depends on which one you need.
+
+### The inbound job: never miss a call again
+
+Inbound is the agent answering when someone calls you. The use cases are gloriously boring, which is why they work:
+
+- Answering after-hours and weekend calls
+- Taking appointment bookings and sending confirmations
+- Answering routine questions: hours, location, prices, whether you deliver
+- Qualifying callers: name, need, budget, timeline — then routing to the right human
+- Logging every call with a summary into your CRM or a shared sheet
+
+Inbound is where you start because the risk is contained. The caller initiated contact; they want something from you. A slightly clumsy answer costs you nothing compared to the alternative, which is no answer at all. Our studio's observed range: 60–75% of routine inbound enquiries resolve without a human, and the remaining 25–40% arrive as structured call summaries that a human follows up in a fraction of the time.
+
+![AI voice agent answering inbound business calls and routing callers inside the business contact center](/blog/ai-voice-agents-business-2026/fig1.webp)
+
+### The outbound job: calling at scale
+
+Outbound is the agent dialling people: appointment reminders, payment follow-ups, lead re-engagement, post-service feedback calls. It works, but the bar is higher:
+
+- **Consent law is real.** Undisclosed AI cold-calling is illegal in multiple US states, and telemarketing rules in most markets require explicit consent. Always disclose the AI identity in the first seconds of the call.
+- **Answer rates punish bad data.** Calling stale lists burns money at per-minute rates and risks carrier flagging.
+- **Volume economics flip the platform choice.** At 50,000 minutes a month, the difference between USD 0.09 and USD 0.14 per minute is USD 2,500. This is where Bland's bundled outbound pricing or a LiveKit-based self-built stack earns its keep.
+
+Start with inbound. Prove the call quality, the escalation flow and the ROI maths on 500 minutes a month. Then, and only then, consider outbound — with clean consent records and a disclosed identity.
+
+## The platform shortlist, honestly compared
+
+We will not pretend every platform is equal. Here is how the main options actually differ when you are the one responsible for the deployment.
+
+### Retell AI
+
+The pragmatic default. Self-serve, fast to configure, transparent per-component cost breakdown, and a G2 rating of 4.8 across thousands of reviews as of September 2026. You can have a working inbound agent in an afternoon and a production-ready one in two weeks. The weakness: you are on their rails. Deep custom logic or exotic integrations mean workarounds. Choose Retell when a non-developer or a small agency team will own the agent.
+
+### Vapi
+
+The engineer's choice. Vapi gives you USD 0.05/min hosting and lets you pick every component — speech-to-text provider, language model, voice, telephony. Maximum flexibility, maximum responsibility: you are now the person debugging why barge-in broke on Tuesday. Amazon routes a share of Ring's inbound support through Vapi, which tells you the scale ceiling is real. Choose Vapi when you have a developer who can own the stack and you want to optimise cost at volume.
+
+### ElevenLabs Agents
+
+The voice-quality leader. If your brand lives or dies on how it sounds — a concierge service, a premium clinic — the extra polish matters. Free tier with 15 minutes to test, paid from USD 6/month, extra minutes around USD 0.08. You still bring telephony and pay for the language model separately. Choose ElevenLabs when callers' first impression of the voice is the whole game.
+
+### Bland AI
+
+The outbound specialist. Bundled per-connected-minute pricing (around USD 0.09–0.14) with telephony included, built for high-volume phone workflows and campaign-style calling. Less of an obvious fit for complex inbound with deep integrations. Choose Bland when your use case is "call 10,000 people this week" rather than "answer our phones beautifully."
+
+### What about the giants?
+
+[Zendesk launched specialised AI agents this month](https://cxm.world/customer-experience/specialised-ai-agents-zendesk-voice-translation/) — pre-configured for retail and e-commerce tasks like order tracking, returns and refunds, wired into Shopify, Stripe and Narvar out of the box — plus real-time voice translation in its contact centre. If you already run on Zendesk or Salesforce, staying inside your existing support platform usually beats bolting on a standalone voice vendor. The best voice agent is often the one your team never has to learn a new dashboard for.
+
+Our studio default for a small business: **Retell for inbound, tested for two weeks, escalate everything uncertain to a human.** This is exactly the kind of engagement our [AI integration services](https://www.aisquadx.tech/services) deliver — we design the call flow, wire the integrations, and stay through the supervised launch.
+
+## What goes wrong in practice
+
+Every vendor demo sounds perfect. Real deployments fail in the same five ways, and all five are avoidable if you know to look for them.
+
+**1. Hallucination on live calls.** This is the big one. A chatbot that invents a price gets a follow-up message; a voice agent that quotes the wrong price creates an angry customer and a dispute. The fix is architectural, not hopeful: the agent answers factual questions only from your grounded data — a price list, a FAQ document, a calendar API. Anything outside the knowledge base gets "Let me have someone call you back about that," not an improvised answer. We treat voice agents as strictly dumber than our chat agents on purpose: chat tolerates correction, voice does not.
+
+**2. Interruption handling.** Callers interrupt. A good agent yields the floor within a few hundred milliseconds, processes the interruption, and picks up naturally. A bad one ploughs on while the caller shouts "hello?" This is where platform choice shows up in production — test every candidate with a real person deliberately talking over the agent before you commit.
+
+**3. Latency that kills trust.** Under ~600ms turn latency, callers treat the agent like a person. Over ~1,200ms, they start saying "are you still there?" The classic stitched pipeline (separate STT, LLM, TTS) used to sit at 750–1,200ms. Native speech-to-speech models like Gemini 3.8 Live collapse that, and several platforms now offer turn-level benchmarks. Ask for them; do not take "it feels fast" as an answer.
+
+**4. Accent and language drift.** A voice agent tested on American English will embarrass itself on a Glasgow caller or a Karachi caller mixing English and Urdu. Multilingual speech-to-text is now genuinely good — Deepgram handles code-switching well in our testing — but you must test with recordings of your actual callers, not the vendor's sample voices. This is the step most deployments skip, and it is the step that determines whether your customers think the system "works."
+
+**5. The escalation cliff.** Agents fail gracefully or they fail catastrophically. Catastrophic looks like the agent looping through a misunderstanding for three minutes while the caller boils. Build an explicit tripwire: two failed attempts at the same task, any mention of a complaint, refund or legal threat, any caller frustration signal — immediate handoff to a human or a callback promise. Log the handoff reason. Review the logs weekly for the first month; they are your training data.
+
+## The 30-day deployment playbook we run at the studio
+
+This is the exact sequence we use for client voice-agent deployments. It assumes one job — say, after-hours inbound with appointment booking — and a platform like Retell.
+
+![Voice agent deployment workflow: phone call, conversation transcript, and calendar booking connected by voice](/blog/ai-voice-agents-business-2026/fig2.webp)
+
+**Week 1 — Design.** Map the call flow on paper before touching any platform. What are the five most common caller intents? What information does the agent need to collect for each? What are the exact escalation triggers? Write the opening line and the closing line verbatim — the middle can be improvised by the model, but the first ten seconds and the last ten seconds are your brand. Decide the disclosure wording: "Hi, you've reached [business]. I'm the AI assistant — how can I help?" Gather your source-of-truth documents: price list, hours, service descriptions.
+
+**Week 2 — Build.** Configure the agent: voice selection, prompt, knowledge base, tool integrations (calendar, CRM, SMS). Keep tools minimal — booking and logging first; payment or ordering integrations wait for phase two. Set the guardrails: grounded answers only, explicit blocklist of topics the agent must never discuss (medical advice, legal advice, pricing negotiations — whatever applies to your business).
+
+**Week 3 — Supervised testing.** Put a test number on the agent and call it. A lot. Different accents, different interruptions, wrong numbers, angry callers, silent callers, children. We make a checklist of fifty adversarial calls. Fix the prompt, not the caller. Then soft-launch: route 20% of after-hours traffic to the agent while a human monitors every transcript in real time.
+
+**Week 4 — Measure and widen.** Track four numbers: resolution rate (calls fully handled), escalation rate (handed to humans, and why), caller satisfaction (one-question SMS after the call), and cost per resolved call. If resolution holds above 60% and satisfaction is within ten points of your human baseline, widen to 100% of after-hours traffic. If not, you have a prompt and knowledge-base problem, not a platform problem — iterate there.
+
+One more thing about September 2026: Meta's new WhatsApp Business Tools MCP, announced mid-month and currently in beta, lets AI agents handle the WhatsApp Business onboarding work itself — creating accounts, verifying numbers, building message templates — through tools like Claude and ChatGPT. If your callers also reach you on WhatsApp, plan the voice agent and the messaging agent as one system from the start, not two projects that meet later.
+
+## Voice agent vs chatbot vs human: which job goes where
+
+Voice AI does not replace your whole front desk. It replaces a slice of it. Being clear about which slice keeps you out of trouble:
+
+| Channel | Handles best | Fails at | Relative cost |
+| --- | --- | --- | --- |
+| AI voice agent | Routine calls, bookings, reminders, qualification | Negotiation, complaints, anything emotional | USD 0.07–0.31/min |
+| AI chatbot (text) | FAQs, order tracking, after-hours questions | Callers who refuse to type, complex multi-step fixes | Near-zero per conversation |
+| Human receptionist | Judgment calls, upset customers, upselling | Being available 24/7 without burnout | USD 2,500–3,500/mo (US) |
+
+The pattern that works: voice agent as the always-on first line, chatbot as the self-service side door, humans as the escalation layer. Calls the agent cannot resolve arrive as structured summaries — name, number, intent, transcript — so the human spends two minutes instead of fifteen. We covered the broader [cost picture for AI automation in small businesses](/blog/ai-automation-cost-small-business-2026) earlier this month, and the same principle applies: automate the repetitive middle, keep humans on the edges where judgment lives.
+
+One more consideration that is easy to miss: the voice agent should share a brain with your chatbot, not run as a separate project. Same knowledge base, same escalation rules, same CRM logging. Callers will start on the phone and finish on your website, or the reverse. If the two systems contradict each other on price or policy, you have manufactured your own confusion. A single source of truth, consumed by both channels, is a week-one decision, not a year-two migration.
+
+## The Pakistan angle: telephony, language and cost
+
+Most voice-AI guidance is written for the US market, so here is the part that applies to Pakistan specifically.
+
+**Telephony works, but budget for it.** Twilio provides international numbers that receive calls from Pakistani callers, and the platforms above all run on it. Per-minute telephony rates for Pakistan are higher than US domestic, so the all-in number lands at the top of the platform ranges quoted earlier. Expect USD 0.12–0.20 per minute all-in for a Retell-class setup serving Pakistani callers.
+
+**Language is the make-or-break.** Callers will mix English and Urdu, sometimes mid-sentence. Test this explicitly. In our experience, Deepgram's speech-to-text handles English-Urdu code-switching better than most, and the text-to-speech side needs an Urdu-capable voice — English-only voices reading Urdu text sound broken. If 80% of your callers prefer Urdu, build the agent Urdu-first with English fallback, not the other way round.
+
+**The economics are even stronger than in the US.** A full-time receptionist in Karachi or Lahore costs PKR 45,000–70,000 per month; in the US the equivalent is USD 2,500–3,500. The voice agent serving 400–600 minutes a month costs roughly PKR 17,000–45,000 all-in. The ratio of missed-call cost to agent cost favours automation harder in Pakistan than almost anywhere else, because labour is cheap but missed calls are just as expensive.
+
+**Disclosure norms are looser; keep them anyway.** Pakistan's telemarketing regulation is lighter than the US, but we still open every call with the AI identity. It sets expectations, it is honest, and it costs nothing.
+
+## Is it worth it? The ROI maths
+
+Strip it to a single equation: a voice agent is worth it when the cost of the calls it resolves is less than the value of the calls it saves.
+
+Take a dental clinic. It misses 15 calls a week after hours. Its data shows a missed call converts to a booked appointment about 20% of the time, and an appointment is worth roughly USD 120 in margin. Fifteen missed calls times 20% times USD 120: USD 360 of weekly margin leaking out the door, about USD 1,440 a month. A voice agent answering those calls at USD 0.12/min, handling each call in four minutes, costs about USD 7 a week in usage plus amortised build cost. Even if the agent only books half the appointments a human would, the maths is not close.
+
+For outbound, the maths is tighter and the data matters more. Bland-style bundled pricing at USD 0.09–0.14 per connected minute means a 10,000-call campaign at a 40% connect rate and three minutes per call costs roughly USD 1,080–1,680 in platform fees. If each connected call is a payment reminder worth USD 30 in recovered revenue, you need a 4–6% recovery rate to break even. Run the numbers with your own recovery rates before you buy the campaign.
+
+The honest verdict: inbound voice agents are the clearest ROI in applied AI for small businesses in 2026. Outbound is a precision instrument — powerful on clean, consented data, expensive and risky on dirty lists. We have written a [detailed cost breakdown of AI automation for small businesses](/blog/ai-automation-cost-small-business-2026) that covers the broader automation picture, and our [playbook for deploying AI agents in your business](/blog/deploy-ai-agents-in-business-2026) covers the governance side that voice deployments inherit.
+
+## FAQ
+
+**How much do AI voice agents cost in 2026?**
+Expect USD 0.07–0.31 per minute all-in, depending on platform and model. A small business running 500 minutes a month should budget roughly USD 50–150/month plus a one-time build cost of USD 600–3,000.
+
+**Can an AI voice agent handle inbound calls for my business?**
+Yes — inbound is the safest and highest-ROI starting point. Around 60–75% of routine enquiries (hours, pricing, appointment requests) resolve without human touch in our deployments, and the rest arrive as structured summaries a human follows up in a fraction of the time.
+
+**Which is the best AI voice agent platform: Retell, Vapi, Bland or ElevenLabs?**
+Retell AI is the fastest path to a working inbound agent; Vapi gives developers full component control; ElevenLabs Agents leads on voice naturalness; Bland AI is built for high-volume outbound. Pick based on who will maintain it and which job it does — not on the demo voice.
+
+**Do AI voice agents work in Pakistan?**
+They do, with two caveats: higher telephony rates via Twilio international numbers, and the need to test English-Urdu code-switching with real local callers before launch. The economics are arguably stronger in Pakistan than in the US because the missed-call cost is the same while automation is cheap.
+
+**How long does it take to deploy an AI voice agent?**
+A single-job agent (after-hours answering with appointment booking) goes live in 2–4 weeks: one week of call-flow design, one week of build and integration, one to two weeks of supervised testing. Enterprise deployments with compliance review take 6–12 weeks.
+
+**Will callers know they are talking to an AI?**
+Usually, yes — and that is fine. Disclose the AI identity in the first few seconds. Undisclosed AI calling is illegal in several US states; transparency also sets expectations, which raises satisfaction scores.
+
+**What is the biggest risk when deploying a voice AI agent?**
+Hallucination on live calls. The fix is grounding: the agent answers factual questions only from your data sources, and anything outside its knowledge base goes to a human or a callback. Never let a voice agent improvise facts.
+
+---
+
+Still losing calls after hours? We design and deploy voice agents for service businesses in the US and Pakistan — call-flow design, platform setup, CRM integration and supervised launch included. [Tell us about your call volume on our contact page](https://www.aisquadx.tech/contact) and we will tell you honestly whether a voice agent pays for itself in your case. If the maths does not work, we will say so — we would rather lose a project than install a system that does not earn its keep.
