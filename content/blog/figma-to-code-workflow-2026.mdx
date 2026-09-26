@@ -1,0 +1,249 @@
+export const meta = {
+  title: "Figma to Code in 2026: The Workflow That Actually Ships",
+  description:
+    "Figma to code changed in 2026: Code Layers, Code Connect and AI design generators. Our studio's honest guide to what ships, what breaks, and what it costs.",
+  date: "2026-09-26",
+  category: "UI/UX Design",
+  categorySlug: "ui-ux-design",
+  keywords: [
+    "figma to code",
+    "figma code connect",
+    "figma code layers",
+    "design to code ai",
+    "design tokens dtcg",
+    "figma mcp server",
+    "design system handoff 2026",
+    "figma to react",
+  ],
+  author: "AISquadX Studio",
+  image: "/blog/figma-to-code-workflow-2026/cover.webp",
+  faq: [
+    {
+      q: "What is the best Figma to code workflow in 2026?",
+      a: "Design in Figma, build in code, and keep the two connected with a mapping layer: Figma Code Connect, a token pipeline in DTCG format, and one-way generation with human review. AI generators like Locofy, Uizard or Figma Make are excellent for scaffolding and landing pages; complex apps with conditional logic and dynamic states still need real engineering. Never maintain the same component library in Figma and in code by hand.",
+    },
+    {
+      q: "Is Figma Code Connect free?",
+      a: "The Code Connect CLI and the connection itself are free and open source — you npm install @figma/code-connect, write .figma.tsx mapping files, and publish them. The connected snippets surface inside Figma's Dev Mode, which Figma gates behind its paid tiers. For most teams the real cost is not the tool but the discipline: keeping the mappings in sync with every component release.",
+    },
+    {
+      q: "How accurate is AI-generated UI code in 2026?",
+      a: "For clean, well-constrained layouts, AI design-to-code tools reach roughly 90%+ structural accuracy, and industry reporting puts cost savings at up to 48% on simple dashboards with handoff times down as much as 73%. But messy files, hand-drawn elements and complex conditional logic still need substantial manual cleanup — and nobody serious ships AI-generated UI to production without human review, especially for accessibility.",
+    },
+    {
+      q: "Do designers need to learn code in 2026?",
+      a: "Not to ship code, but to read it and reason about it. Figma's Config 2026 additions — Code Layers, Motion, Shaders — all push design and code into one shared workspace. Designers who understand component props, tokens and basic layout logic produce work that survives the jump to production. Designers who refuse to learn it will find AI doing the parts of their job they were happy to outsource.",
+    },
+    {
+      q: "What are design tokens and do I need them?",
+      a: "Design tokens are the named values (colours, spacing, typography, radii) that let your Figma variables and your codebase reference the same source of truth, usually stored in the DTCG standard format. You need them the moment your product has more than one surface or more than one developer. Research puts 60% of teams at having no token pipeline at all — and that drift is where most design systems quietly die.",
+    },
+    {
+      q: "How much does setting up a Figma-to-code workflow cost?",
+      a: "Tool costs are small: AI generators run roughly $12–$25 per seat per month, and Code Connect is free. The real investment is setup time — mapping 30–50 core components typically takes one to three weeks of senior time. At our studio's rates that is roughly PKR 250,000–800,000 ($900–$2,800). It pays back on the second or third feature that reuses the system instead of being rebuilt from screenshots.",
+    },
+    {
+      q: "Does this workflow work for marketing sites or only for products?",
+      a: "Both, but the economics differ. Marketing sites and landing pages are where AI design-to-code tools shine — the layouts are simpler and the content is static. Products with authentication, dashboards, permissions and dozens of states are where Code Connect and a token pipeline earn their keep. We use both workflows in the same studio, often on the same client.",
+    },
+  ],
+};
+
+There used to be a ritual. The designer finished the screens, exported a tidy PDF of redlines, and the developers rebuilt every pixel by hand. Then the design drifted. The spacing was close but not right. The hover states were invented on the spot. Six months later the product and the Figma file described two different products, and everyone agreed the next redesign would fix the process. It never did.
+
+That ritual is over. Not because anyone wrote a better handoff document, but because the workflow underneath it changed. Figma's Config 2026 release put code editing, animation, and AI generation directly inside the canvas. AI generators now turn wireframes into React code that mostly works. And the industry has quietly settled on a rule that sounds boring and changes everything: **code is canonical for anything that ships; Figma is canonical for anything still being decided.**
+
+We have been shipping this workflow for clients in the US and Pakistan for the better part of two years — [our design and development services](https://www.aisquadx.tech/services) are built around it. This is the honest version: what the new tools do well, where they break, what it costs, and the failure modes we see every week in other teams' codebases.
+
+## What actually changed in 2026
+
+If you last thought seriously about the Figma-to-code pipeline in 2024, you are working from a dead map. Three developments in the last few months rewrote it.
+
+**Figma put code inside the canvas.** At Config 2026, Figma announced Code Layers — developers can clone a repository, work with real code inside the design canvas, generate variations with AI, and sync changes back to the codebase. Alongside it came Motion, a collaborative animation environment with both manual timelines and AI-prompted animation; Shaders, which generate WebGPU visual effects from plain-language prompts; and Generative Plugins, which turn a written description into a fully coded, publishable Figma plugin. Two weeks ago, Figma's Weave workflows learned to pull live designs straight off your canvas, so AI-generated content inherits actual on-brand components instead of hallucinating new ones. [CIOL's Config 2026 coverage](https://www.ciol.com/tech/figma-config-2026-intelligent-canvas-ai-full-stack-creation-12109011) has the full feature rundown.
+
+**AI plugins got real.** Figma's AI agent now builds fully coded plugins from a text prompt — bulk-restyling icons, generating type ramps, flagging broken flows — and designers can publish them to the Community. That sentence would have sounded absurd in 2024. It is now a Tuesday. The [AI UX Daily briefing from September 17](https://www.aiuxdesign.guide/news/ai-ux-daily-sep-17-figma-builds-your-plugins-metas-agent-browses-for-users-goog) covered it alongside something even more important for designers.
+
+**Agents now browse like screen readers.** Meta launched Muse, a consumer agent that browses websites, fills forms and makes payments — and it navigates by reading the page's accessibility tree, not the DOM. Read that again. The AI agents now coming for your website don't see your pixels. They see your semantic structure. Your headings, your labels, your landmarks. The sloppy markup most teams ship is about to become a navigation problem, not just an accessibility problem.
+
+Meanwhile Adobe is trying to steal the whole category from the other side: [Project Oasis](https://www.insidermonkey.com/blog/adobe-is-inviting-figma-users-to-test-a-new-ai-design-tool-should-investors-worry-1832387/), a web-based brand-aware AI design tool it began inviting Figma users to test under NDA in early September. The design-tool wars have moved from "who has the better vector pen" to "who owns the AI workflow." Figma is betting the canvas stays where humans decide.
+
+## The new rule: one-way flow, code is the record
+
+Here is the sentence that should replace every handoff document your team owns:
+
+> Code is canonical for anything that ships. Figma is canonical for anything still being decided. Tokens are canonical in a single DTCG file that both consume. And the mapping layer between them is the artefact teams actually maintain.
+
+That is not our invention — it is the centre of gravity that the best recent field research converges on. [Atebit's September 2026 survey of design-SDLC practice](https://github.com/atebit/ai-product-design-resources/blob/HEAD/docs/research/design-sdlc/01-source-of-truth-figma-vs-code.md) found that leading teams (Vercel, Notion, Linear, Atlassian) do not round-trip between design and code. They run **one-way generation with human re-adoption**: sketch in Figma, build in code (often agent-assisted), optionally push a screen back to the canvas for review — and the pull request is the record. Libraries flow from code into Figma on a release cadence, not the other way around.
+
+This is the judgement call most teams get wrong. The instinct is to keep both sides perfectly in sync — two libraries, two teams, one endless reconciliation meeting. Don't. Sync is a cost centre; the mapping layer is the product. Decide what's canonical where, generate one way, and let humans re-adopt at the review step. Everything else is busywork disguised as rigour.
+
+Figma itself has conceded the direction. "Code as design material," Code Connect as the bridge, Make kits built on npm packages, reusable agent skills — the entire Config 2026 programme is an admission that code is where products live and the canvas is where decisions get made. Their own 2026 data (41% of designers now doing development work, 20% of developers preferring to start on the canvas) supports a flow that goes both ways without pretending either side is the master copy.
+## Code Connect: the mapping layer is the product
+
+If you take one tool from this article, take Code Connect. It solves the oldest problem in the design-to-code pipeline: when a developer inspects a component in Figma's Dev Mode, they see auto-generated CSS or a guess at the framework code. Code Connect replaces the guess with your actual component — the real React, Vue or native code your team ships — mapped to the Figma component's properties.
+
+The setup is genuinely simple. You install the CLI, create a `figma.config.json` at the package root, and write one small mapping file per component:
+
+```bash
+npm install -g @figma/code-connect
+npx figma connect init
+npx figma connect publish
+```
+
+Each mapping lives next to its component — say `Button.figma.tsx` beside `Button.tsx` — and declares how Figma properties map to code props: `figma.boolean('Disabled')` to `disabled`, `figma.string('Label')` to `children`, variants to enum props. From then on, any developer who clicks your button in Dev Mode sees the exact import and usage, with the right props for the variant they're looking at. AI coding agents read the same mappings, which means agents generating UI from your Figma files produce your components instead of inventing lookalikes. That detail alone has cut our "wrong component regenerated" incidents to nearly zero.
+
+The discipline matters more than the tooling. Publish mappings in CI on every component-library release. Map your core 30–50 components first and ignore the long tail. And document fallback behaviour for when tokens diverge — they will, and the mapping file is where that conversation belongs, not in a Slack thread nobody can find later.
+
+The one honest caveat: Code Connect's connected snippets surface in Dev Mode, and Figma gates Dev Mode behind its paid tiers. The CLI, the mappings and the format are open and free; the viewing surface is not. For a studio like ours that is fine — our clients are on paid Figma already. For a two-person startup on the free tier, do the token pipeline first and add Code Connect when the team grows.
+
+## Design tokens: the boring layer that decides everything
+
+Tokens are the least exciting part of this workflow and the one that decides whether the whole thing holds together. A design token is a named value — a colour, a spacing unit, a type size, a corner radius — stored in one place, in the [DTCG standard format](https://github.com/atebit/ai-product-design-resources/blob/HEAD/docs/research/design-sdlc/01-source-of-truth-figma-vs-code.md), consumed by both your Figma variables and your code.
+
+Why bother? Because every design system dies the same death: the spacing scale in Figma says 8/16/24, the codebase says 8/12/20, and nobody notices until a client asks why the marketing site and the app feel like different companies. Tokens defined twice with no pipeline between them is one of the classic failure modes — the research puts **60% of teams** in exactly that position. No token pipeline, drift audited quarterly while AI tooling generates new screens weekly. The arithmetic does not work.
+
+![A glowing stream of geometric design tokens flowing through connected nodes, visualising a design token pipeline](/blog/figma-to-code-workflow-2026/fig1.webp)
+
+Our setup, for a typical Next.js + Tailwind client project:
+
+1. **Figma Variables** hold the primitive tokens (colour ramps, spacing, type scale) — this is the designer's editing surface.
+2. A single `tokens.json` in DTCG format in the repo is the canonical file — this is what ships.
+3. A sync script (Style Dictionary, or Tokens Studio's GitHub sync) converts Figma variables to `tokens.json` and generates the Tailwind/CSS custom properties on every merge to main.
+4. Code Connect's token support links the two, so Dev Mode shows the token name, not a hex value.
+
+The whole pipeline is maybe a day of setup for a new project and half an hour a month of maintenance. The alternative — manually reconciling two libraries — costs a day a month, forever. We have run both. The boring layer wins.
+
+One judgement call: don't tokenise everything on day one. Tokenise the primitives (colour, spacing, type, radius, shadow) and the semantic aliases (surface, text-primary, action). Leave the component-specific values alone until a pattern repeats three times. Premature tokenisation produces a token library so granular that nobody trusts it, which is worse than none at all.
+
+## AI design-to-code generators: what ships, what breaks
+
+The most hyped part of the 2026 workflow is also the most misunderstood. Tools like Uizard (rapid wireframes, around $12/month), Locofy (Figma to React/Next.js, around $25/month), Anima (pixel-perfect HTML/CSS), and Figma's own Make now generate production-looking code from designs, sketches, or prompts. Industry reporting from [Brief's August survey of the category](https://www.brief.news/tech/2026/08/28/ai-tools-transform-ui-design?briefFormat=TopStories&categories=Science&categories=World&categories=US&categories=AI&categories=Gaming&categories=Tech&categories=Financial+Markets&categories=Space&source=%2Fai&utm_source=category-page&utm_medium=web) puts the headline numbers at **48% cost savings on simple dashboards** and **up to 73% faster design-to-development handoffs**, with about 38% of product teams hiring fewer dedicated UI engineers as a result.
+
+We use these tools daily. Here is the honest breakdown nobody's marketing page gives you.
+
+**Where they genuinely shine:**
+- **Landing pages and marketing sites.** Static content, simple layouts, clear hierarchy. We scaffold a full landing page from a Figma file in under an hour and spend the saved time on copy, motion and conversion details — the things that actually move revenue.
+- **Dashboard scaffolding.** Tables, cards, filters, charts. The 48% savings figure is real for this category: the layouts are repetitive and the components are standard.
+- **Prototypes that need to feel real.** When a client needs to click through something convincing by Friday, AI generation beats hand-coding 10 to 1.
+- **Wireframe-to-first-draft.** Uizard-style sketch-to-screen for getting stakeholder feedback on structure before anyone invests in polish.
+
+**Where they break:**
+- **Conditional logic and dynamic states.** A settings page with six permission states, a checkout with twelve error paths, an onboarding flow that branches on user type — the generators produce the happy path beautifully and quietly ignore the rest. Complex apps still need substantial human engineering.
+- **Messy Figma files.** The accuracy numbers (roughly 92% for clean layouts) assume clean, well-named, auto-layouted files. Feed the generator a file with "Frame 47" and "Rectangle 238" and you will spend longer cleaning the output than building from scratch. Garbage in, garbage out was never more literal.
+- **Accessibility.** This is the one nobody trusts to AI, and the survey confirms it: executives may expect AI to handle full UI code within two years, but none will ship it to production without manual review. Generated code routinely fails contrast checks, skips focus states, and mislabels interactive elements. We run every AI-generated screen through automated checks plus a human pass. Budget for it.
+- **Design-system fidelity.** Generators invent components. Without Code Connect mappings or strict constraints, an AI will generate a perfectly good button that is not your button. Every AI-generated commit in our workflow gets a visual regression test against the component library.
+
+Our house rule, written after learning it the hard way: **AI generates the draft, humans sign the release.** Pair every AI-generated UI commit with automated visual regression tests, and budget real engineering time beyond the scaffolding. The 73% faster handoff is real — but only if you count the review as part of the handoff, not as a surprise at the end.
+## Motion is the last manual handoff
+
+Everything above gets you static screens in code. Motion — the transitions, micro-interactions and 3D scenes that make an interface feel expensive — is still mostly hand-built, and it is where most teams quietly give up. A gorgeous Figma prototype ships as a flat, lifeless app because nobody budgeted the animation engineering.
+
+Figma's Motion tool, announced at Config 2026, is the first serious attempt to close that gap: a collaborative animation environment where teams build transitions with a traditional timeline or with AI prompts, and the animations stay linked to the design system so they move into production workflows. It is early — our verdict after testing is that the timeline mode is genuinely useful and the AI-prompted animation needs heavy curation — but the direction is right.
+
+![Layered translucent interface panels with motion blur trails, visualising motion design handoff](/blog/figma-to-code-workflow-2026/fig2.webp)
+
+Until Motion matures, here is our working practice:
+
+- **Specify motion in tokens, not adjectives.** "Fast ease-out" is not a spec. `motion-duration-fast: 150ms`, `motion-ease-emphasis: cubic-bezier(0.2, 0, 0, 1)` is. Motion tokens live in the same DTCG file as colour and spacing, so the app and the design tool share the same curves.
+- **Prototype the five that matter.** Page transitions, modal/dialog behaviour, list enter/exit, button press feedback, and loading skeletons. That is the entire motion vocabulary of most apps. Everything else is garnish.
+- **Hand engineers easing curves, not videos.** A screen recording of an animation is a wish, not a specification. Export the curve, the duration, the delay and the property being animated. Framer Motion, CSS transitions, or native driver animations all accept the same four values.
+- **Respect reduced motion.** `prefers-reduced-motion` is not optional polish — it is the difference between a delightful app and one that makes people dizzy. Every animation spec we write includes its reduced-motion fallback.
+
+The studios winning on motion in 2026 are not the ones with the flashiest prototypes. They are the ones whose animation specs survive the jump to code unchanged.
+
+## Semantic HTML is now an agent skill — and a ranking factor
+
+Let us come back to Meta's Muse, because this is the sleeper story of the year for anyone who builds websites. When an agent navigates your site through the accessibility tree instead of the DOM, your markup stops being an implementation detail and becomes the interface. A `<div>` soup with click handlers is invisible architecture; real buttons, real headings, real form labels are navigable architecture.
+
+This lands on top of a trend we have been pushing clients on for two years: [designing for AI agents](https://www.aisquadx.tech/blog/ai-agent-ux-design-playbook-2026) is no longer a niche. AI search, AI shoppers, AI assistants — they all read your site the way a screen reader does. The same semantic rigour that serves blind users now serves robots with credit cards.
+
+Practical consequences for your next build:
+
+- **Use the right element.** Button for actions, anchor for navigation, headings in order, landmarks (`header`, `main`, `nav`, `footer`). This was always correct; now it is load-bearing.
+- **Label everything.** Every input gets a label. Every icon button gets an accessible name. Every image that matters gets alt text. Agents cannot guess what your unlabeled hamburger menu does any more than a screen reader user can.
+- **Keep the accessibility tree clean.** Modals that don't trap focus, carousels that announce every slide change, toasts that interrupt the agent mid-task — these are now UX bugs for machine visitors too.
+- **Test with a screen reader, not just Lighthouse.** A Lighthouse 100 means your markup is parseable. Ten minutes with a screen reader tells you whether it is navigable. We do both before any launch.
+
+There is a pleasing irony here. A decade of accessibility advocacy argued for semantic markup on moral grounds and got polite nods. AI agents arriving with purchasing power may finally make it an economic argument. Build accessible, and the machines will find you.
+
+## What this workflow costs in 2026
+
+Numbers, because this is a studio blog and you came for the honest version. These are our observed ranges for client work across the US and Pakistan in 2026 — what the workflow costs to set up and run, not what Figma charges.
+
+| Item | US studio range | Pakistan studio range (PKR) | Notes |
+|---|---|---|---|
+| Token pipeline setup (DTCG, Figma Variables sync, CI) | $800–$2,500 | PKR 220,000–700,000 | One-time; half a day of maintenance monthly after |
+| Code Connect mapping, 30–50 core components | $1,500–$5,000 | PKR 400,000–1,400,000 | Published via CI on every library release |
+| AI generator seats (Uizard/Locofy/Anima) | $12–$25/seat/month | PKR 3,400–7,000/seat/month | Pays for itself on the first landing page |
+| Landing page: AI-scaffolded, human-finished | $1,200–$4,000 | PKR 340,000–1,100,000 | 60–70% faster than hand-building |
+| Product feature: full workflow (tokens + Code Connect + review) | $3,000–$12,000 | PKR 850,000–3,400,000 | Depends on state complexity, not screen count |
+| Motion/animation engineering per app | $2,000–$8,000 | PKR 550,000–2,200,000 | The line item everyone forgets to budget |
+| Accessibility audit + remediation | $1,500–$6,000 | PKR 400,000–1,700,000 | Automated + screen-reader pass; non-negotiable before launch |
+
+The headline: the tools are cheap and the discipline is the cost. A team that spends $50/month on generator seats but won't spend two weeks on tokens and mappings has bought a faster way to produce drift.
+
+If you are pricing design work more broadly — what a full UI/UX engagement costs, where quotes diverge, how to buy without overpaying — our [UI/UX design cost guide](https://www.aisquadx.tech/blog/ui-ux-design-cost-2026) covers it in detail.
+
+## The failure modes we keep seeing
+
+We audit other teams' design-to-code pipelines regularly. The failures are depressingly consistent, and they match the research. If any of these sound familiar, you know where the quarter went:
+
+1. **Parallel libraries, maintained by hand.** The Figma component library and the code component library are both "the source of truth," which means neither is. Fix: code is canonical, Figma mirrors on release cadence.
+2. **Tokens defined twice.** Colours in Figma, different colours in the theme file, reconciled in a quarterly audit that everyone dreads. Fix: one DTCG file, synced in CI.
+3. **The Figma file treated as the deliverable.** The client signs off the Figma file; the shipped product diverges within a month; nobody is responsible for the gap. Fix: the pull request is the record. Sign off the built thing.
+4. **AI-generated prototypes forked silently.** Someone generates a lovely AI prototype for a demo, it becomes the demo, then the demo becomes "the design," and it shares nothing with the component library. Fix: constrain generators with Code Connect mappings and run visual regression on every AI commit.
+5. **Drift audited quarterly while AI generates weekly.** The review cadence assumes a 2022 world. Fix: automated checks in CI — token coverage, visual regression, accessibility — on every merge.
+6. **Motion specified as adjectives.** "Make it snappy." Fix: motion tokens, easing curves, reduced-motion fallbacks. Specs, not wishes.
+7. **Accessibility as a launch-week panic.** Fix: semantic markup from the first commit, because agents are browsing now.
+
+None of these is a tooling problem. Every one of them is a decision about what is canonical and who maintains the mapping. That is why the mapping layer — not the generator, not the canvas — is the artefact that matters.
+
+## Our recommended setup, in order
+
+If you are starting from a messy Figma file and a hand-built codebase, do not try to fix everything at once. This is the order we use with clients, because each step pays for the next:
+
+1. **Clean the Figma file.** Real names, auto layout everywhere, components not groups, variants not duplicates. No tool survives a messy file. One focused week.
+2. **Set up Figma Variables and the token pipeline.** Primitives and semantic aliases in DTCG, synced to code in CI. Two to three days.
+3. **Map your core components with Code Connect.** The 30–50 components that make up 90% of your screens. One to three weeks depending on prop complexity.
+4. **Add AI generation for scaffolding.** Landing pages and dashboard drafts first, behind visual regression tests. A day to wire up, then it compounds.
+5. **Tokenise motion.** Duration, easing and delay tokens; the five core animations specified properly.
+6. **Accessibility pass.** Semantic markup review, screen-reader session, automated checks in CI. Before launch, every time.
+7. **Document the canonicals.** One page: what is canonical where, what generates one-way, who re-adopts. Pin it. This page is worth more than any tool licence.
+
+Steps 1–3 are the foundation and they are unglamorous. Everyone wants to start at step 4. The teams that start at step 4 are the ones in the failure-modes list above.
+
+## Frequently asked questions
+
+### What is the best Figma to code workflow in 2026?
+
+Design in Figma, build in code, and keep the two connected with a mapping layer: Figma Code Connect, a token pipeline in DTCG format, and one-way generation with human review. AI generators like Locofy, Uizard or Figma Make are excellent for scaffolding and landing pages; complex apps with conditional logic and dynamic states still need real engineering. Never maintain the same component library in Figma and in code by hand.
+
+### Is Figma Code Connect free?
+
+The Code Connect CLI and the connection itself are free and open source — you install `@figma/code-connect`, write `.figma.tsx` mapping files, and publish them. The connected snippets surface inside Figma's Dev Mode, which Figma gates behind its paid tiers. For most teams the real cost is not the tool but the discipline: keeping the mappings in sync with every component release.
+
+### How accurate is AI-generated UI code in 2026?
+
+For clean, well-constrained layouts, AI design-to-code tools reach roughly 90%+ structural accuracy, and industry reporting puts cost savings at up to 48% on simple dashboards with handoff times down as much as 73%. But messy files, hand-drawn elements and complex conditional logic still need substantial manual cleanup — and nobody serious ships AI-generated UI to production without human review, especially for accessibility.
+
+### Do designers need to learn code in 2026?
+
+Not to ship code, but to read it and reason about it. Figma's Config 2026 additions — Code Layers, Motion, Shaders — all push design and code into one shared workspace. Designers who understand component props, tokens and basic layout logic produce work that survives the jump to production. Designers who refuse to learn it will find AI doing the parts of their job they were happy to outsource.
+
+### What are design tokens and do I need them?
+
+Design tokens are the named values (colours, spacing, typography, radii) that let your Figma variables and your codebase reference the same source of truth, usually stored in the DTCG standard format. You need them the moment your product has more than one surface or more than one developer. Research puts 60% of teams at having no token pipeline at all — and that drift is where most design systems quietly die.
+
+### How much does setting up a Figma-to-code workflow cost?
+
+Tool costs are small: AI generators run roughly $12–$25 per seat per month, and Code Connect is free. The real investment is setup time — mapping 30–50 core components typically takes one to three weeks of senior time. At our studio's rates that is roughly PKR 250,000–800,000 ($900–$2,800). It pays back on the second or third feature that reuses the system instead of being rebuilt from screenshots.
+
+### Does this workflow work for marketing sites or only for products?
+
+Both, but the economics differ. Marketing sites and landing pages are where AI design-to-code tools shine — the layouts are simpler and the content is static. Products with authentication, dashboards, permissions and dozens of states are where Code Connect and a token pipeline earn their keep. We use both workflows in the same studio, often on the same client.
+
+---
+
+The Figma-to-code pipeline of 2026 is not a tool you buy. It is a set of decisions: code is canonical for what ships, the canvas is canonical for what is being decided, tokens live in one file, and the mapping layer between them gets maintained like production code — because it is. Get those decisions right and the tools, old and new, fall into place. Get them wrong and no amount of AI generation will save you from the drift.
+
+If your team is rebuilding the same screens twice — once in Figma, once in code — we should talk. [AISquadX builds design systems and the pipelines around them](https://www.aisquadx.tech/services) for clients in the US and Pakistan, and the workflow in this article is the one we ship with. [Tell us about your project](https://www.aisquadx.tech/contact) — the audit of your current pipeline is on us.
