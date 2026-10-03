@@ -1,0 +1,194 @@
+export const meta = {
+  title: "Visual Search SEO: Search Console Now Tracks Lens Traffic",
+  description:
+    "Visual search SEO is measurable at last: Search Console now reports Lens and Circle to Search traffic separately — what the new data means for your site.",
+  date: "2026-10-03",
+  category: "Tech News",
+  categorySlug: "tech-news",
+  keywords: [
+    "visual search SEO",
+    "Google Lens traffic",
+    "multimodal search",
+    "Search Console multimodal filter",
+    "Circle to Search",
+    "image search optimisation",
+  ],
+  author: "AISquadX Studio",
+  image: "/blog/visual-search-seo-search-console-2026/cover.webp",
+  faq: [
+    {
+      q: "What is the multimodal search type in Google Search Console?",
+      a: "It is a new split under Web in the Performance report's search type filter, rolled out globally on 24 September 2026. Google defines Web: multimodal as searches that begin with an image, photo or screenshot — Google Lens, Circle to Search on Android, image uploads to Google Search, and Chrome's right-click 'Search this image'. Typed queries stay under Web: text-based. The same split appears in the Generative AI features report.",
+    },
+    {
+      q: "Why does Search Console show no query data for multimodal searches?",
+      a: "Because there is no query. When someone points a camera at a product or circles part of their screen, no words are ever typed, so Google has nothing to report in the Queries tab — it literally shows 'No query data for multimodal web search'. You get impressions, clicks, average position, and the Pages, Countries, Devices and Dates breakdowns instead. Plan your optimisation around pages and assets, not keywords.",
+    },
+    {
+      q: "How far back does the multimodal data go?",
+      a: "In the properties checked so far, the series starts on 10 September 2026 — roughly two weeks before Google announced the feature on 24 September. Google has not announced a common historical start date, so check the first available date in your own property. Also note the Search Console API does not expose the multimodal type yet, so you need the web interface or its export to see these numbers.",
+    },
+    {
+      q: "My old Search Console web totals look different after the update. What happened?",
+      a: "Google carved the multimodal slice out of your old Web totals rather than adding a new stream on top. This traffic was previously invisible inside the aggregate — one analysis found it was not counted in the old web numbers at all. That means historical web totals are not directly comparable to post-rollout totals. Re-baseline your reporting from mid-September 2026, or you will chase phantom traffic drops that are just reclassification.",
+    },
+    {
+      q: "Which websites benefit most from visual search?",
+      a: "Ecommerce sites selling physical products with their own product pages. Early checks of the first data showed two retailers pulling 3,303 and 5,056 multimodal impressions in two weeks, while 37 content, affiliate and service sites managed 110 impressions and 2 clicks between them. If what you sell or do can be photographed — products, menus, interiors, before-and-after work — this channel matters to you. If you sell pure text services, check the filter, but do not expect much.",
+    },
+    {
+      q: "How do I optimise my website for Google Lens and visual search?",
+      a: "Publish original, high-resolution photos on their own indexable pages, write descriptive page titles (matching keywords in the title tag correlate with Lens visibility), keep filenames and alt text honest and specific, add Product structured data with images, keep the same product images consistent everywhere they appear online, and make sure pages load fast on mobile. A Google Merchant Center product feed helps too, since shopping results draw on it.",
+    },
+  ],
+};
+
+Your customers have stopped typing.
+
+Not all of them. But enough of them. Someone sees a lamp in a café, a jacket on a stranger at the airport, a chair in an Instagram reel — and instead of trying to describe it in words, they point their phone camera at it. Or they circle it on their Android screen. Or they right-click a screenshot in Chrome. The search starts with a picture, not a phrase.
+
+Google says people do this nearly 20 billion times a month through Lens alone, and roughly one in five of those visual searches is shopping-related — figures [Google's own search statistics](https://www.demandsage.com/google-search-statistics/) trace to official disclosures. Those numbers were up from 12 billion a month in 2023. This is not a curiosity feature any more. It is a channel.
+
+Until last week, though, it was an invisible channel. If someone found your product by pointing a camera at it, that visit arrived in your Search Console reports buried inside one big Web aggregate — and according to one analysis of the rollout, in many cases it was not counted there at all. You could not see it, so you could not optimise for it, so nobody treated it as real.
+
+That ended on 24 September 2026. Google has now split Web into two lines inside Search Console's Performance report — and for the first time, visual search is a measurable line item for your website. If you sell anything that can be photographed, this is the most important quiet update Google has shipped for your business this quarter. Here is what changed, how big the opportunity actually is, and what to do about it — with the honest caveats, because there are several.
+
+## What Google actually changed
+
+On 24 September 2026, Google announced the new search type in a [Search Central post on 24 September 2026](https://www.thekeyword.co/news/search-console-multimodal-search-report), and the rollout began globally the same day. Inside the Performance report, the Search type filter now offers a split under Web:
+
+- **Web: text-based** — the searches you know. Someone typed words into the search box.
+- **Web: multimodal** — searches that began with an image, photo or screenshot.
+
+The multimodal slice covers four entry points, named explicitly by Google:
+
+| Entry point | How it happens |
+|---|---|
+| Google Lens | Pointing a phone camera at something, or searching with a saved photo |
+| Circle to Search | Circling part of the screen on an Android phone |
+| Image uploads | Uploading an image directly to Google Search |
+| Chrome "Search this image" | Right-clicking any image in the desktop browser |
+
+The filter appears in two reports: the standard **Search results** performance report, where you get clicks and impressions, and the newer **Generative AI features** report, where you get impressions only. That second placement matters — it is Google's first way of showing where image-led searches and AI-generated answers overlap on your own site. Your images can now surface inside AI Overviews and AI Mode, and you can measure it.
+
+Two practical catches arrive with the good news, and you should know both before you start drawing conclusions.
+
+**Catch one: there is no query data.** When someone searches with a photo, there is no typed phrase behind the search, so the Queries tab under the multimodal filter shows "No query data for multimodal web search". You get impressions, clicks, average position, and breakdowns by Pages, Countries, Devices and Dates. You can see *which pages* get discovered through image search, but never *what* someone searched to find them. Plan your optimisation around pages and assets, not keywords — which is a different muscle for most SEO work.
+
+**Catch two: your historical totals just got reclassified.** Google carved the multimodal slice out of the old Web aggregate. One detailed analysis of the rollout found that this traffic was not even included in the old web counts — it was a hole in the data, not a hidden line. The consequence is blunt: web totals from before mid-September 2026 are not directly comparable to totals after. If your Search Console dashboard shows web impressions dipping in late September, do not panic and do not fire your SEO person. Re-baseline from the rollout date and compare the combined Web total instead. Site owners who skip this step will spend October chasing a traffic drop that never actually happened.
+
+The Search Console API has not caught up yet either — at the time of writing it still accepts only the classic search types, so anything pulling web figures through the API is silently excluding multimodal numbers. Use the interface and its export button for now.
+
+## How big visual search actually is
+
+Let me be careful with the numbers here, because the write-ups all blur two different things: how much visual search happens, and how much of it reaches *your* website.
+
+The global number is real and it is large. Google says Lens handles nearly 20 billion visual searches every month, with roughly a fifth of them shopping-related. That is up from 12 billion a month in 2023 and about 20 billion in 2024 — the trajectory points one way. One recent analysis put the 2026 figure above 25 billion. Whether you take Google's conservative number or the higher one, the scale is comfortably beyond "emerging behaviour". It is bigger than TikTok search. It is bigger than most of the discovery channels businesses actively budget for.
+
+But the number that matters is not Google's. It is yours, and it now lives behind that multimodal filter. The first independent checks of real properties are instructive. [One technical SEO's analysis of the first two weeks of data](https://sunnypatel.co.uk/blog/search-console-multimodal-filter/) across 39 properties found two ecommerce retailers pulling **3,303 and 5,056 multimodal impressions** each between 10 and 25 September. The other 37 properties — content sites, affiliates, service businesses — managed **110 impressions and 2 clicks combined** over three months.
+
+Read that again, because it contains the whole strategic point. Visual search is enormous globally and nearly empty for most websites. The channel is not evenly distributed. It concentrates where it should concentrate: sites with physical products, their own photography, and dedicated product pages. This is Google telling you something about intent. People point cameras at *things* — products, places, food, plants, clothes — not at abstract concepts. If your business deals in things, the channel is open and almost nobody in your market is measuring it yet. If you sell pure services or text content, check the filter once, note the number, and move on.
+
+The other stat worth knowing: one analysis found that 32.5% of Google Lens results have a matching keyword in the page's title tag. Lens is computer vision, not keyword matching — but the pages that win still tend to have titles that describe what the image shows. And on the commerce side, visual search attacks a specific, expensive failure: the shopper who knows exactly what they want but cannot name it. [One guide to visual search for stores](https://www.fmemodules.com/en/blog/534-the-future-of-visual-search-why-prestashop-stores-need-ai-smart-image-search) puts it well: the conversion is hiding in the sessions where text search returned nothing.
+
+![A shopper scans retail products with a phone camera, connecting physical objects to search](/blog/visual-search-seo-search-console-2026/fig1.webp)
+
+## How to read the new report
+
+Enough theory. Here is the walkthrough we now run on every client property.
+
+1. **Open the report.** In Search Console, go to **Performance > Search results**. Click the **Search type** filter at the top and choose **Web: multimodal**. No setup is required — as a [walkthrough of the new filter](https://searchenginewatch.com/search-console-multimodal/) notes, metrics appear when your property receives qualifying activity as the rollout reaches you.
+
+2. **Set a sensible date range.** Available data appears to start around 10 September 2026, about two weeks before the announcement. Check the first available date in your own property. Compare a window after that date to nothing — there is no "before" for this channel, so treat this month as your baseline.
+
+3. **Read the Pages tab first.** Since there is no query data, the Pages breakdown is your primary instrument. Sort by impressions. The pages at the top are your visual discovery winners. Look at them and ask one question: what image is on that page? That image is doing search marketing work you never knew about.
+
+4. **Cross-reference Countries and Devices.** Expect a heavy mobile skew — Circle to Search is Android-only, and Lens lives overwhelmingly in the phone camera. If your multimodal traffic is concentrated in a market you care about, that is a signal to invest in that market's imagery specifically. For our clients, the US and Pakistan splits often look completely different, and that difference changes the priority list.
+
+5. **Check the Generative AI report too.** Select the multimodal type there and see whether your pages are surfacing inside AI Overviews and AI Mode from image-led searches. Remember: impressions only, no clicks. This is a visibility metric, not a traffic metric.
+
+6. **Export and re-baseline.** Use the export button, because your API pipelines are missing this data today. And recompute any September performance commentary: your web totals before and after 24 September are different quantities.
+
+The most common mistake we see is treating a thin multimodal line as proof the channel is irrelevant. It is almost certainly thin — remember, that 37-site sample produced 110 impressions. But "thin now" is not "irrelevant later". This data is two weeks old. The correct move is to establish the baseline today and check it monthly, so that when the line bends upward you notice in month one, not month nine. The businesses that will win at visual search are the ones that have six months of baselines when their competitors start caring.
+
+One more thing to check while you are in there: **duplicates**. We have already found product images surfacing for multiple near-identical product pages on one client's store — different colour variants with copied content. In text search, Google picks a canonical and moves on. In multimodal search, the *image* does the choosing, and it is less forgiving about which page wins. Consolidate variants or accept the split.
+
+## Making your site Lens-ready: the studio checklist
+
+Here is the honest part. Most advice about "optimising for visual search" is padding. The fix list is short, concrete, and boring — which is exactly why most of your competitors will not do it.
+
+**Publish original photography on indexable pages.** This is the single biggest factor, and it is the one most businesses fail. Stock photos of the same lamp appear on thousands of pages; Google's computer vision has seen them all, and they carry no distinctiveness for Lens to match against. A product shot you took yourself, of the actual product, on a page dedicated to that product, is what surfaces. For our ecommerce builds this is where most of the visual-SEO value lives — and it is a content problem, not a technical one. Our observed range: a proper product photography refresh for a 50–100 SKU store runs roughly $800–$2,500 in the Pakistan market, $3,000–$8,000 from a US studio. The spread is real; the requirement is not negotiable.
+
+**Write page titles that describe what the image shows.** That 32.5% title-tag figure is not a coincidence. "Navy linen throw pillow 45cm" beats "Product — Category — Brand". This costs nothing and it is usually a one-afternoon job with a spreadsheet and Screaming Frog.
+
+**Keep filenames and alt text honest and specific.** Not keyword-stuffed — honest. `navy-linen-throw-pillow-45cm.webp` is good. `buy-cheap-pillows-online-best-pillows.webp` is spam and it will not help. Alt text should describe the image for someone who cannot see it. That is its job; the SEO value follows.
+
+**Add Product structured data with images.** Lens matches what it sees against an index of product images plus the structured data attached to them. Product schema with clear images, prices and availability gives Google something firm to hold onto. Validate it in the Rich Results test. This is a half-day developer task on most platforms, not a project.
+
+**Keep the same product image everywhere it appears.** Here is a trade-off most merchants miss. If your product photo on your site, your Instagram, your Marketplace listings and your Google Business Profile are all different shots of the same product, you are fragmenting the visual identity Lens has to match. Consistency across surfaces helps recognition. It is unglamorous catalogue discipline, and it matters more than any single technical tweak.
+
+**Make the page fast on mobile.** Your multimodal traffic is overwhelmingly mobile — camera, Android, Chrome on the go. If the page that surfaces takes four seconds to load, the visit dies before your analytics ever records it properly. Run PageSpeed Insights on your top multimodal pages specifically, not just the homepage.
+
+**Feed Google Merchant Center if you sell products.** Shopping results — and increasingly Lens results — draw on Merchant Center product data. A clean feed with the same images as your product pages is the connective tissue between visual discovery and the buy box. Free to set up; fiddly to maintain; worth it.
+
+**What not to do:** do not build a separate "visual SEO" silo, do not buy tools promising to "optimise images for Lens" as if it were keyword density for photos, and do not panic-generate AI imagery to fill gaps. Google's whole September spam effort — including the SAFE system's multi-agent sweeps against coordinated AI-content networks — is aimed at exactly this kind of scaled, low-effort output. Synthetic images that do not show your actual products are the fastest way to waste this opportunity.
+
+For service businesses and publishers, the list is shorter: check your multimodal filter, fix anything embarrassing that surfaces, and spend the real effort on [getting cited in AI answers](/blog/seo-for-ai-search-2026), which is where your discovery is actually moving. Visual search is a product-and-places channel. Knowing it is not yours is also a useful finding.
+
+![Website image thumbnails rising through a search lens, showing how pages get discovered through image-led search](/blog/visual-search-seo-search-console-2026/fig2.webp)
+
+## Your 30-day action plan
+
+Advice is cheap. Here is the exact sequence we would run for a client this month, in order of payoff. Most of it costs time, not money.
+
+**Week 1: Measure.** Open Search Console, apply the Web: multimodal filter, export the Pages tab, and note your top 20 multimodal pages and the date the series starts for your property. Screenshot it. This is your baseline — future you will thank present you. While you are there, glance at the Generative AI report under the same filter: any impressions there mean your pages are already being pulled into AI answers from image-led searches, which changes their priority. If your property shows zero multimodal activity, that is also data: it tells you visual discovery is not your channel today, and you can say that with evidence instead of guessing.
+
+**Week 2: Triage your winners.** Open your top 10 multimodal pages and audit each one's imagery with fresh eyes. Ask: is the image original or stock? Is it the actual product? Does the page title describe it? Is there one clear primary image, or a gallery of thumbnails fighting each other? Fix titles first — it is the fastest win — then consolidate duplicate or near-duplicate product pages that are splitting the visual signal. One afternoon with a spreadsheet will cover most small stores.
+
+**Week 3: Fix the plumbing.** Add or repair Product structured data on product pages, with the image field pointing at the same high-resolution photo visitors see. Check that images load fast on mobile and that your most important pages pass Core Web Vitals on a mid-range Android device — in Pakistan, where entry-level Androids dominate, test on the hardware your customers actually use, not your iPhone. Submit or clean up your Google Merchant Center feed so the images there match the ones on your site.
+
+**Week 4: Ship new imagery.** Pick your five best-selling products and photograph them properly: clean background, multiple angles, the product as it actually looks when it arrives. Publish them as the primary images on those product pages. This is the one step that requires real work, which is why it goes last — by now you know exactly which pages it matters for.
+
+A note on budget. If you are doing this yourself, the whole plan costs four weeks of afternoons. If you are hiring it out: title and structured-data cleanup is a small technical engagement (our observed range: $300–$800 for a sub-200-page store); product photography is the variable part, anywhere from $15 a product in bulk in Pakistan to $150+ a product from a US commercial studio. Do not spend the photography money until weeks 1–3 tell you which products deserve it. Spending on photos for pages that never surface is how visual-SEO budgets die.
+
+## What this tells you about where search is going
+
+Step back from the filter for a moment. The multimodal split is one data point in a pattern that has been building all year, and the pattern points in one direction: the boundary between "search" and "seeing" is dissolving.
+
+AI Overviews now generate their own images. AI Mode passed a billion monthly users in June. Google's Generative AI report now carries a multimodal slice of its own. The search box is becoming a place where text, images and generated answers blend into one surface — and Google is rebuilding its measurement to match. First they gave you the AI visibility report so you could see citations. Now they give you the multimodal filter so you can see image-led discovery. Each new report is a hint about where the traffic is actually going.
+
+Our position, stated plainly: **stop treating images as decoration.** For a decade, SEO treated images as supporting actors — compress them, alt-tag them, move on. The ranking page was text; the image was garnish. That model is expiring. When discovery starts with a camera, the image is the query, the page is the answer, and your photography is your keyword research. The businesses that internalise this now — original photos, honest titles, clean structured data — will have a two-year head start on the ones that keep treating product images as a design afterthought.
+
+There is a cost angle too. Text-query SEO is increasingly expensive to compete in: the keywords are saturated, the AI answers intercept the clicks, and [AI Mode keeps eating the visits](/blog/google-ai-mode-traffic-drop-2026). Visual search, right now, is a channel where the competition is thin, the measurement just went live, and the barrier is mostly operational discipline rather than budget. That combination does not last. Channels this open close fast once the tooling catches up — and now that the data is public, the tooling will catch up.
+
+One judgement call for Pakistani businesses specifically: do not dismiss this as a Western-niche behaviour. Camera-first search maps naturally onto how people shop here — WhatsApp forwards of product screenshots, Instagram reels, bazaar photos. The instinct to search with a picture instead of struggling for the right English keyword is arguably stronger in a multilingual market like Pakistan than in the US. The multilingual angle is precisely why the no-query-data catch matters less here: nobody had good Urdu or Roman-Urdu query data anyway. Your photos were always the strategy.
+
+## Frequently asked questions
+
+**What is the multimodal search type in Google Search Console?**
+
+It is a new split under Web in the Performance report's search type filter, rolled out globally on 24 September 2026. Google defines Web: multimodal as searches that begin with an image, photo or screenshot — Google Lens, Circle to Search on Android, image uploads to Google Search, and Chrome's right-click "Search this image". Typed queries stay under Web: text-based. The same split appears in the Generative AI features report, so you can see where image-led searches intersect AI Overviews and AI Mode.
+
+**Why does Search Console show no query data for multimodal searches?**
+
+Because there is no query. When someone points a camera at a product or circles part of their screen, no words are ever typed, so Google has nothing to report in the Queries tab — it literally shows "No query data for multimodal web search". You get impressions, clicks, average position, and the Pages, Countries, Devices and Dates breakdowns instead. Plan your optimisation around pages and assets, not keywords.
+
+**How far back does the multimodal data go?**
+
+In the properties checked so far, the series starts on 10 September 2026 — roughly two weeks before Google announced the feature. Google has not announced a common historical start date, so check the first available date in your own property. And note the Search Console API does not expose the multimodal type yet, so you need the web interface or its export to see these numbers. Treat this month as your baseline: there is no "before" for this channel.
+
+**My old Search Console web totals look different after the update. What happened?**
+
+Google carved the multimodal slice out of your old Web totals rather than adding a new stream on top. This traffic was previously invisible inside the aggregate — and one analysis found it was not counted in the old web numbers at all. Historical web totals are not directly comparable to post-rollout totals. Re-baseline your reporting from mid-September 2026 and compare the combined Web total instead, or you will chase phantom traffic drops that are just reclassification.
+
+**Which websites benefit most from visual search?**
+
+Ecommerce sites selling physical products with their own product pages. The first independent checks of the new data showed two retailers pulling 3,303 and 5,056 multimodal impressions in two weeks, while 37 content, affiliate and service sites managed 110 impressions and 2 clicks between them. If what you sell or do can be photographed — products, menus, interiors, before-and-after work — this channel matters to you. If you sell pure text services, check the filter once, note the number, and move on.
+
+**How do I optimise my website for Google Lens and visual search?**
+
+Publish original, high-resolution photos of your actual products on their own indexable pages. Write page titles that describe what the image shows. Keep filenames and alt text honest and specific. Add Product structured data with images. Keep the same product imagery consistent across your site, social profiles and marketplaces. Make the pages fast on mobile, since multimodal traffic is overwhelmingly mobile. And keep a Google Merchant Center product feed clean and current. None of this requires exotic tooling — it requires operational discipline.
+
+---
+
+Google just handed you a new measurement for a channel that does 20 billion searches a month, and almost nobody in your market is looking at it yet. That window does not stay open. Open your Search Console, filter to Web: multimodal, and see what your camera-shy website has actually been doing. If you like what you see — or if you see nothing and want to fix that — [talk to us](https://www.aisquadx.tech/contact). We build [websites that get found](https://www.aisquadx.tech/services), in every sense of the word.
