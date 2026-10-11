@@ -1,0 +1,234 @@
+export const meta = {
+  title: "Deno's End of Life: The 2026 Migration Guide for Teams",
+  description: "Deno end of life is confirmed: Cloudflare acquired the team and the runtime gets one more year of fixes. Here is the migration playbook your team needs.",
+  date: "2026-10-11",
+  category: "Web Development",
+  categorySlug: "web-development",
+  keywords: ["Deno end of life", "Cloudflare Deno acquisition", "Deno Deploy shutdown", "Deno vs Node 2026", "migrate Deno to Cloudflare Workers", "Deno alternatives", "workerd self-hosting"],
+  author: "AISquadX Studio",
+  image: "/blog/deno-runtime-end-of-life-2026/cover.webp",
+  faq: [
+    {
+      q: "Is Deno really being discontinued?",
+      a: "Effectively, yes. The entire Deno team joined Cloudflare on 9 October 2026. The runtime gets monthly bug-fix and security releases for about a year — until roughly October 2027 — after which the company ends its development. Deno Deploy, the hosted service, shuts down in about six months. Both remain open source, so a community fork is possible, but no maintainer has stepped up yet."
+    },
+    {
+      q: "When does Deno Deploy shut down?",
+      a: "Around April 2027 — roughly six months from the 9 October 2026 announcement. Paying customers get migration support to move to Cloudflare Workers. If you host on Deno Deploy, you should already be planning your exit; six months vanishes quickly once you factor in testing and data migration."
+    },
+    {
+      q: "Should I migrate from Deno to Cloudflare Workers or Node.js?",
+      a: "If your app is small and uses standard Deno APIs, Cloudflare Workers is the natural landing spot — the fetch handler model maps closely, and Cloudflare offers migration help to paying Deno Deploy customers. If your app needs long-lived processes, background jobs with custom scheduling, or runs elsewhere already, Node.js (or Bun) on a VPS or PaaS gives you a more familiar environment. The honest answer depends on your code, not the announcement."
+    },
+    {
+      q: "What happens to Deno KV data when Deploy shuts down?",
+      a: "The announcement does not promise automatic KV data migration to Workers, so export your data yourself early. Map simple key-value data to Workers KV, transactional state to Durable Objects, and relational needs to Cloudflare D1. Test restores before the shutdown deadline — the one unrecoverable mistake in this migration is discovering your data is gone in April 2027."
+    },
+    {
+      q: "Is JSR shutting down too?",
+      a: "No. JSR, the JavaScript and TypeScript package registry, keeps operating, with its infrastructure moving to Cloudflare. Deno's rusty_v8 bindings also continue, with work toward integrating them into Cloudflare's workerd runtime."
+    },
+    {
+      q: "Is it safe to start a new project on Deno today?",
+      a: "We would not. A runtime whose core team has publicly moved on is a liability for anything expected to run in production for years. Start new server-side JavaScript on Node.js, Bun, or Cloudflare Workers depending on your architecture. The ecosystem energy — libraries, tutorials, hiring — has already started flowing back toward Node and Workers."
+    },
+    {
+      q: "What did Cloudflare actually buy?",
+      a: "The team and the ideas, mostly. The joint announcement says Ryan Dahl and co-founder Bert Belder will lead work on merging celld — Deno's system for self-hosting distributed apps — into workerd, Cloudflare's Workers runtime, to make self-hosted Workers and Durable Objects a first-class supported option. That is a long-term platform play, not a rescue of the Deno runtime."
+    }
+  ],
+};
+
+On 9 October 2026, the man who invented Node.js killed his second runtime. Ryan Dahl announced that the entire Deno team is joining Cloudflare, the Deno runtime will get one more year of maintenance releases, and Deno Deploy — the hosted service many teams bet their production workloads on — shuts down in about six months.
+
+This was the top story on Hacker News that day, with over 1,300 points and nearly 700 comments within 24 hours. The reaction was part mourning, part pragmatism. Here is the pragmatic part. If you run anything on Deno, this guide tells you exactly what changes, what your realistic options are, and what the migration actually looks like in practice. We have moved client workloads off sunsetting platforms before, and the pattern is always the same: the announcement feels far away, and then April arrives while you are still "planning".
+
+## What actually happened on 9 October
+
+Both companies published posts the same day. Dahl's announcement on the Deno blog was blunt: the team has "decided to put our future development work into this shared platform rather than continuing to develop a separate runtime and hosting service". Neither post gives deal terms, a price, or an ownership structure — one careful summary [reported the move](https://tsnmedia.org/deno-team-joins-cloudflare-runtime-one-year-deploy-six-months/) as the team "joining" Cloudflare rather than a priced acquisition. TechCrunch, via AppStack Insider, described it as an acquisition with undisclosed terms and noted Deno had raised $26 million in total, including a Sequoia-led Series A.
+
+The concrete commitments from Deno's own announcement:
+
+- **The Deno runtime:** monthly releases with bug fixes and security updates for another year — so roughly until October 2027. After that, the company ends its development of the runtime. It stays open source, and Deno "welcomes others who want to continue its development".
+- **Deno Deploy:** continues operating for six months, then shuts down — around April 2027. Paying customers get migration support moving to Cloudflare Workers.
+- **JSR:** the package registry continues operating, with its infrastructure moving to Cloudflare.
+- **rusty_v8:** support continues, with work toward integrating it into workerd, Cloudflare's open-source Workers runtime.
+
+The announcement does not say who, if anyone, will maintain the open-source runtime after the year ends. "Stays open source" is a legal fact, not a maintenance promise.
+
+## Two clocks, two different deadlines
+
+The single biggest mistake teams are making right now is treating this as one event. It is two, on two different timelines.
+
+![An illustration of a timeline splitting into two paths, representing the two separate Deno shutdown deadlines](/blog/deno-runtime-end-of-life-2026/fig1.webp)
+
+| Asset | Status | Deadline |
+|---|---|---|
+| Deno runtime | Monthly bug-fix and security releases | ~October 2027 (12 months) |
+| Deno Deploy | Shutdown, paying customers migrated to Workers | ~April 2027 (6 months) |
+| JSR (jsr.io) | Continues, infrastructure moves to Cloudflare | Ongoing |
+| rusty_v8 | Being integrated into workerd | No public deadline |
+| Fresh framework, Subhosting | Not mentioned in either announcement | Treat as unowned |
+
+The six-month clock is the one that can ruin your quarter. A shutdown in April 2027 sounds comfortable in October — until you count holidays, feature freezes, and the fact that data migration is the long pole. The twelve-month clock matters less urgently, but it is the harder constraint to negotiate around: after October 2027, nobody at the original company fixes your security vulnerability. Running an unmaintained runtime in production is not brave. It is a liability your future self will bill at emergency rates.
+
+## Why Cloudflare bought the team, not the runtime
+
+Read both announcements carefully and the story gets more interesting. Cloudflare did not buy Deno to run Deno. It bought the people to fix a gap in its own platform: self-hosting Workers.
+
+Here is the context. Cloudflare Workers runs on workerd, an open-source runtime, and [its programming model](https://appstackinsider.com/insights/cloudflare-s-deno-acquisition-could-reshape-the-workers/) centres on Durable Objects — units of code bound to persistent state, each with its own SQLite database, good for real-time collaboration, chat, and per-user state. The catch, which Cloudflare itself acknowledges, is that workerd's Durable Objects implementation is limited to a single instance and is not designed for distributed self-hosting at production scale. You can run Workers on Cloudflare's network, or you can self-host workerd in a limited way — but you cannot today self-host a serious Durable Objects deployment.
+
+Dahl's side project this year, **celld** — released in August 2026 — was exactly an answer to that problem: a system for self-hosting distributed applications built on the Workers programming model. The joint announcement says Dahl and Deno co-founder Bert Belder will now lead an effort to merge celld's code and ideas into workerd, making self-hosted Workers and Durable Objects "a first-class supported way to build and run apps". Kenton Varda, Cloudflare's principal engineer for Workers, co-authored the Cloudflare post.
+
+So the honest read: Cloudflare acquired a team with deep expertise in the Workers programming model to make its platform self-hostable. The Deno runtime itself was the price of the team, not the point of the deal. That framing matters for your planning, because it means there is no scenario in which the standalone Deno runtime gets a surprise reprieve. The team's future work is workerd work.
+
+## What this means for you, by situation
+
+Not every Deno user is in the same danger. Sort yourself into a tier and plan accordingly.
+
+**Tier 1: you host on Deno Deploy.** You have the tightest deadline. Around April 2027 your hosting goes dark. Start the exit now, not in February. The most dangerous assumption here is "we have six months". You have six months minus the time it takes to pick a destination, port the code, migrate data, re-point DNS, and soak the new setup under real traffic. That is realistically a 6–10 week project for a small app, and you do not want to do it under pressure.
+
+**Tier 2: you self-host the Deno runtime (VPS, Docker, on-prem).** You have about a year of security updates, then you are running an unmaintained runtime. For internal tooling this might be tolerable for a while. For anything internet-facing, plan the move before October 2027 — an unpatched runtime is exactly the kind of thing a [security audit flags](https://www.aisquadx.tech/blog/how-to-secure-a-website-2026) as an unacceptable risk, and rightly so.
+
+**Tier 3: side projects and experiments.** Honestly? Let them ride, but stop investing. Finish what is in flight, and do not start new Deno work. The ecosystem gravity — tutorials, libraries, Stack Overflow answers, hiring — is already flowing back toward Node and Workers. Swim with it.
+
+## Your four realistic exits
+
+Every Deno Deploy app we have seen uses the same small set of primitives: a server built with `Deno.serve`, some state in Deno KV, and possibly a cron job or queues. Each maps to something on every major platform. The destinations that make sense:
+
+| Destination | Best for | Watch out for |
+|---|---|---|
+| **Cloudflare Workers** | Small-to-medium apps; the path with migration support for paying Deploy customers | No long-lived process; in-memory state does not survive; Deno KV needs remapping to KV, D1, or Durable Objects |
+| **Node.js (VPS / PaaS)** | Apps with background jobs, WebSockets, or complex infra; biggest hiring pool | You own the ops again; needs Docker and deployment discipline |
+| **Bun** | Teams who liked Deno's modern feel and want a fast, TypeScript-first runtime | Smaller ecosystem, fewer battle-tested production references at enterprise scale |
+| **Appwrite Functions** | Teams that want to keep writing TypeScript on Deno 2.x without Cloudflare | A smaller vendor bet; evaluate its roadmap before committing |
+
+A word on the Workers path, since it is the one the announcement points to. The porting map is genuinely straightforward — one careful [migration walkthrough](http://dev.to/jamilxt/deno-deploy-shuts-down-in-six-months-here-is-the-migration-path-to-cloudflare-workers-1ef0) verified every API detail against official docs:
+
+- `Deno.serve()` becomes a Worker `fetch` handler. Workers are event-driven; there is no server to start. Route logic ports almost line for line.
+- `Deno KV` becomes Workers KV for simple key-value reads, or Durable Object storage when you need transactions and per-key consistency. This is the one real design decision in the migration — get it right early.
+- `Deno.cron()` becomes a Cron Trigger: a `triggers.crons` list in your Wrangler config and a `scheduled` handler.
+- npm dependencies mostly just work. With a compatibility date of 2026-08-04 or later, Node.js compatibility is on by default, so `node:` imports run without extra flags.
+- Static files move into the Wrangler assets config, which serves a static directory and falls through to your Worker for API routes.
+
+The subtle traps are the ones that bite at 2am. There is no long-lived process, so anything you cached in a top-level variable on Deno Deploy needs real storage on Workers. `Deno.env.get()` does not exist — environment variables arrive as the second `env` argument to `fetch`. And anything that keeps sockets or timers open between requests will not survive, as another [exit guide](https://if.codes/blog/deno-deploy-shutdown-exit-guide) puts it plainly.
+
+Our studio verdict on destinations: if your app is a standard API-plus-cron-plus-KV workload, go to Workers — it is where the migration support is, and the cost model stays friendly at small scale. If your app does anything with persistent connections, background workers, or scheduled jobs with real state, Node.js on a modest VPS or a PaaS like Render or Fly.io is the boring, correct answer. Picking a [runtime in 2026](https://www.aisquadx.tech/blog/best-web-development-framework-2026) is mostly about matching the platform to the workload, not loyalty to a brand.
+
+## The migration playbook, step by step
+
+Enough theory. Here is the sequence we would run for a client, in order.
+
+### 1. Inventory what you actually have
+
+List every Deno-specific API your code touches: `Deno.serve`, `Deno.KV`, `Deno.cron`, `Deno.env`, file system access, subprocess calls, permissions flags. Anything that only uses the Fetch API, Web APIs, and npm packages ports with near-zero friction. The inventory tells you whether this is a two-week port or a two-month rewrite — do not estimate until you have the list.
+
+### 2. Export your data first, before anything else
+
+The announcement does not promise automatic KV data migration, so assume you are on your own. Export Deno KV data now, while the service is healthy and unhurried. Decide the target store per dataset: Workers KV for cache-like reads, D1 for relational data, Durable Objects for transactional per-key state. Then test the restore path end to end. Data you have not test-restored is data you do not have.
+
+### 3. Decouple your app logic from Deno APIs
+
+Pull your request handling into a pure function — `handler(req) => Response` — with no `Deno.*` calls inside it. Environment, storage, and queues go behind a small interface you pass in. This single refactor is the difference between a clean port and a rewrite, and it is the one step most teams skip and regret.
+
+### 4. Build the destination skeleton
+
+On Workers, that means a module worker with a default `fetch` export, a Wrangler config, and the cron schedule in `triggers.crons`. On Node, it means your handler wired into an HTTP server with your existing cron approach. Get the skeleton serving traffic in staging before you port a single route.
+
+### 5. Port in slices, not in a big bang
+
+Route by route, with the old deployment still serving production. Feature flags or DNS weighting let you shift traffic gradually. This is also where you discover the traps: module-level state that got evicted, a queue consumer that assumed a persistent process, an env var that only existed on Deploy.
+
+### 6. Cut over and keep the old deployment warm
+
+DNS to the new stack, monitor for a week, keep Deno Deploy running as a rollback target until you are confident. Then decommission and cancel the billing. Migrations fail in the last 10% — the cutover — more often than in the first 90%.
+
+![Data migration visual: luminous cubes flowing from an old container into a bright modern server cluster](/blog/deno-runtime-end-of-life-2026/fig2.webp)
+
+## Deno vs Node in 2026: how the comparison reads now
+
+One of the stranger artefacts of this whole episode is that the Deno-versus-Node debate just ended — with Node winning by forfeit. It is worth saying plainly why, because teams still weighing runtimes for new work keep asking us.
+
+Deno was the better-engineered runtime on paper. Native TypeScript, secure-by-default permissions, a modern standard library, `deno fmt` and `deno lint` built in. Node's defenders never disputed the engineering. They disputed whether any of it mattered enough to leave the ecosystem — and the market answered. Node has the hiring pool, the library depth, the decade of Stack Overflow answers, and the hosting ubiquity. Deno never closed that gap far enough, and now the team maintaining it has moved on.
+
+That said, the interesting migration is not Deno-to-Node as a technology comparison. It is the developer migration already in progress: the week the announcement landed, threads filled with engineers describing their move from Deno back to Node, citing better TypeScript integration and fewer surprises in production. The ecosystem follows people, not runtimes. When the people leave, the libraries, the answers, and the jobs follow. That is the dynamic to watch if you are choosing a runtime today — not benchmarks, but gravity.
+
+Bun deserves an honest mention here too. It is the spiritual successor to Deno's pitch: fast, TypeScript-native, pleasant to use. Our position is that Bun is the better "Deno-like" bet going forward — it has independent momentum, real funding, and a community that is growing rather than dispersing. The caveat stands: thinner ecosystem, fewer production war stories at enterprise scale. For a side project or a greenfield internal tool, we would pick Bun over Node. For anything with compliance requirements or a team that turns over, Node's boring maturity wins.
+
+## The quiet winners: Workers, JSR, and the celld bet
+
+Not everything about this story is a loss. Three things actually got better, and they matter for your planning.
+
+First, **Cloudflare Workers just got a serious engineering injection**. Dahl and Bert Belder are not figureheads — they are runtime engineers being pointed at workerd's hardest unsolved problem: distributed self-hosting of Durable Objects. If that effort lands over the next 18–24 months, self-hosted Workers becomes a genuine alternative to the vendor's network, which changes the vendor-lock-in calculus that has always been Workers' quiet weakness. Teams choosing Workers today are betting on that trajectory, and for once the bet has named engineers behind it.
+
+Second, **JSR survived**. The registry keeps running with its infrastructure on Cloudflare, which is arguably a better home than it had — Cloudflare's network is absurdly good at serving static package content globally. If your Deno code imports from `jsr.io`, those imports keep working. Do not let anyone tell you your dependencies are evaporating; the registry is the one asset the announcement explicitly protected.
+
+Third, **the self-hosting story for the whole industry improves**. The celld-to-workerd merger is a bet that the Workers programming model — event-driven, stateful via Durable Objects — can run anywhere, not just on Cloudflare's metal. If you squint, this is the acquisition's real thesis: Cloudflare wants to own the programming model for stateful edge computing the way AWS owns the model for cloud VMs. Whether that thesis pays off is a 2028 question. But it is a more interesting future than "one more runtime", and it is the reason the team is worth more to Cloudflare than the runtime was to Deno.
+
+The practical upshot: if you land on Workers, you are landing on the platform this entire deal was made to strengthen. That is not a guarantee, but it is the closest thing to one available in this story.
+
+## What goes wrong in practice
+
+We have shepherded teams off discontinued platforms before, and the failure modes are consistent enough to name.
+
+**The Deploy Classic lesson.** Deno had already forced a migration once this year: "Deploy Classic" (dash.deno.com) shut down on 20 July 2026, moving users to a new platform where Deno queues were unsupported, KV data was not migrated automatically, and the region count dropped from six to two. Teams that lived through that know the drill. Teams that joined later have a false sense of platform stability. Either way, past behaviour predicts future behaviour: assume nothing carries over automatically.
+
+**The six-month mirage.** Every team estimates the migration at "a few weeks" and schedules it for February. Then a feature freeze lands, then Ramadan or the holidays land — Pakistan-based teams lose real velocity in March — and suddenly the deadline is eight weeks away with data still on Deploy. Start now. The cost of starting early is a few idle weeks. The cost of starting late is an emergency migration.
+
+**The "community fork will save us" hope.** It might. Deno is genuinely open source and genuinely well engineered. But "welcomes others who want to continue its development" is not a maintainer, a security SLA, or a release cadence. Betting production uptime on a hypothetical future fork is not a plan; it is a wish. If a credible fork with real backing emerges in 2027, you can always re-evaluate. Do not wait for it.
+
+**The underestimated KV problem.** Deno KV to Workers KV is not a copy-paste. Consistency models differ, key structures differ, and the transactional guarantees your code assumed may not exist on the other side. Budget real design time for the data layer, not just the code port.
+
+## Cost and effort: our studio's observed ranges
+
+What should the migration cost? Based on the shape of these projects — and being direct about it, since nobody else will be:
+
+- **Small app** (a handful of routes, one KV store, no queues): 2–4 weeks of focused work. Agency pricing typically lands at **$2,500–$8,000** (roughly **PKR 700,000–2,250,000**).
+- **Mid-size app** (dozens of routes, KV + queues, cron jobs, custom domains): 6–10 weeks. Expect **$8,000–$25,000** (roughly **PKR 2,250,000–7,000,000**).
+- **Complex platform** (multi-service, WebSockets, background workers, compliance needs): this is a re-platform, not a migration — 3–6 months, and the destination choice (Workers vs Node) materially changes the architecture. **$25,000+**.
+
+The DIY cost is your team's time at whatever your burn rate is, plus the risk premium of doing it under deadline pressure. Our honest take: a small Deploy app is a fine DIY project for a competent team that starts now. A mid-size app with real data is where bringing in outside help pays for itself — one failed cutover costs more than the engagement.
+
+A quick way to sanity-check your own estimate: count the Deno-specific API surface, multiply by two days per primitive for porting and testing, then double the total for data migration and cutover. Teams consistently underestimate the last two and consistently get the first one right. If your doubled number scares you, it is telling you the truth.
+
+One more cost most teams forget: the hosting bill delta. Deno Deploy's pricing was forgiving at small scale; Workers' free tier is generous too, but the paid tier maths differ once you add Durable Objects and D1 reads. Model a month of your actual traffic on the new platform before you commit — a migration that doubles your infra bill is a migration you should have designed differently.
+
+## Should anything new start on Deno?
+
+No. Say it plainly: do not start new production work on a runtime whose core team has publicly moved on. The technology is fine. The trajectory is not.
+
+For new server-side JavaScript in late 2026, our default recommendation is boring on purpose: Node.js for anything with a real backend, Cloudflare Workers for edge-friendly APIs and small services, Bun if your team wants the modern developer experience and can tolerate a thinner ecosystem. These are the platforms with maintainers, hiring pools, and a future. Deno had a good run — two of them, counting Node — and its ideas will live on inside workerd. That is a fine legacy. It is not a deployment target.
+
+## FAQ
+
+### Is Deno really being discontinued?
+
+Effectively, yes. The entire Deno team joined Cloudflare on 9 October 2026. The runtime gets monthly bug-fix and security releases for about a year — until roughly October 2027 — after which the company ends its development. Deno Deploy, the hosted service, shuts down in about six months. Both remain open source, so a community fork is possible, but no maintainer has stepped up yet.
+
+### When does Deno Deploy shut down?
+
+Around April 2027 — roughly six months from the 9 October 2026 announcement. Paying customers get migration support to move to Cloudflare Workers. If you host on Deno Deploy, you should already be planning your exit; six months vanishes quickly once you factor in testing and data migration.
+
+### Should I migrate from Deno to Cloudflare Workers or Node.js?
+
+If your app is small and uses standard Deno APIs, Cloudflare Workers is the natural landing spot — the fetch handler model maps closely, and Cloudflare offers migration help to paying Deno Deploy customers. If your app needs long-lived processes, background jobs with custom scheduling, or runs elsewhere already, Node.js (or Bun) on a VPS or PaaS gives you a more familiar environment. The honest answer depends on your code, not the announcement.
+
+### What happens to Deno KV data when Deploy shuts down?
+
+The announcement does not promise automatic KV data migration to Workers, so export your data yourself early. Map simple key-value data to Workers KV, transactional state to Durable Objects, and relational needs to Cloudflare D1. Test restores before the shutdown deadline — the one unrecoverable mistake in this migration is discovering your data is gone in April 2027.
+
+### Is JSR shutting down too?
+
+No. JSR, the JavaScript and TypeScript package registry, keeps operating, with its infrastructure moving to Cloudflare. Deno's rusty_v8 bindings also continue, with work toward integrating them into Cloudflare's workerd runtime.
+
+### Is it safe to start a new project on Deno today?
+
+We would not. A runtime whose core team has publicly moved on is a liability for anything expected to run in production for years. Start new server-side JavaScript on Node.js, Bun, or Cloudflare Workers depending on your architecture. The ecosystem energy — libraries, tutorials, hiring — has already started flowing back toward Node and Workers.
+
+### What did Cloudflare actually buy?
+
+The team and the ideas, mostly. The joint announcement says Ryan Dahl and co-founder Bert Belder will lead work on merging celld — Deno's system for self-hosting distributed apps — into workerd, Cloudflare's Workers runtime, to make self-hosted Workers and Durable Objects a first-class supported option. That is a long-term platform play, not a rescue of the Deno runtime.
+
+---
+
+If you are staring at a Deno Deploy dashboard wondering where to begin, start with the inventory — or skip straight to people who do this for a living. [Our web development services](https://www.aisquadx.tech/services) cover platform migrations end to end: audit, porting, data migration, cutover, and the unglamorous week of monitoring afterwards. [Talk to us](https://www.aisquadx.tech/contact) before April does the deciding for you.
