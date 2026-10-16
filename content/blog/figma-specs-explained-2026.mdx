@@ -1,0 +1,209 @@
+export const meta = {
+  title: "Figma Specs Explained: AI Agents That Follow Your Design Rules",
+  description:
+    "Figma Specs hands AI agents a written rulebook for your design system. What changed at Config India 2026, what it costs, and exactly how to set one up right.",
+  date: "2026-10-16",
+  category: "UI/UX Design",
+  categorySlug: "ui-ux-design",
+  keywords: [
+    "figma specs",
+    "figma code layers open beta",
+    "figma ai agents 2026",
+    "figma ai credits pricing",
+    "figma config india 2026",
+    "design system for ai agents",
+    "figma mcp integrations",
+    "figma make payload cms",
+  ],
+  author: "AISquadX Studio",
+  image: "/blog/figma-specs-explained-2026/cover.webp",
+  faq: [
+    {
+      q: "What is Figma Specs?",
+      a: "Figma Specs is a Markdown-based document that lives on the Figma canvas or as a standalone file, where a team writes down its design language: tokens, components, tone, accessibility rules. Both human teammates and Figma's AI agent read it as a shared reference, and enabled design libraries attach guidelines the agent consults on every prompt. It entered open beta at Config India on 15 October 2026 for Professional, Organization and Enterprise plans.",
+    },
+    {
+      q: "What is Figma Code Layers?",
+      a: "Code Layers lets you place working, running code directly on the Figma canvas next to design frames. You can generate a code layer from a design with the agent, import a GitHub repo, capture a live page with Figma's Chrome extension, or extract editable design layers back out of a running prototype. It moved from private beta to open beta at Config India in October 2026.",
+    },
+    {
+      q: "Are Figma Specs and Code Layers free?",
+      a: "Code generation and editing inside Code Layers is free on paid plans through 4 November 2026; after that it consumes Figma AI credits. Using the agent with Specs already consumes AI credits. Credit allowances per full seat per month are 3,000 on the $16 Professional plan, 3,500 on the $55 Organization plan, and 4,250 on the $90 Enterprise plan, resetting monthly with no rollover. Credits do not roll over, and only Enterprise can opt out of AI features org-wide.",
+    },
+    {
+      q: "Do AI agents actually follow design rules now?",
+      a: "Better than before, but not blindly. Specs, Guidelines and code sources give the agent richer, structured context, which cuts down on off-brand output. Figma's own internal tests claim its agent now wins over 60% of human-graded evaluations against professional designers, but those are Figma's tests, not independent ones. In practice, treat the agent like a fast junior: the rulebook keeps it honest, review keeps it safe.",
+    },
+    {
+      q: "Can coding agents like Cursor read my Figma design system?",
+      a: "Yes, through Figma's Model Context Protocol updates. At Config India, Figma added around 20 new MCP partner integrations — including OpenCode, which feeds design-system context to coding agents and sends prototypes back to Figma for review — and users can now generate code layers or edit Specs from inside the AI tools they already use, such as Claude Code or Cursor.",
+    },
+    {
+      q: "What is Payload in Figma Make?",
+      a: "Figma integrated Payload, the headless CMS, directly into Figma Make. That gives Make-built prototypes a real backend: you can generate dynamic websites and manage their content without leaving Figma. Downloads of Payload in India reportedly grew sixfold over the past year, which explains why Figma chose this as the debut CMS integration.",
+    },
+    {
+      q: "Should my team adopt Figma Specs now?",
+      a: "If you already run a documented design system on Professional or above, yes — start a Specs document for your most-reused patterns this week, while Code Layers code generation is still free. If you have no design tokens or component library yet, Specs will expose that gap fast; fix the system first, then write the rules. The tool rewards teams that already know their standards, not teams hoping the AI will invent them.",
+    },
+  ],
+};
+
+## The design rulebook AI agents have been missing
+
+Every AI design tool has shipped with the same blind spot. It could generate anything — a landing page, a dashboard, a full checkout flow — in seconds. But it could not follow your rules. Give an agent your brand, your tokens, your component library, your spacing scale, and it would still invent a button with a border-radius you never approved, in a shade of blue your style guide never defined. The output was fast and wrong in ways that cost senior designer time to correct.
+
+Figma just spent its first Config event in India trying to fix exactly that. On 14–15 October 2026, at Config India in Bengaluru, the company rolled out a set of features whose whole purpose is to hand AI agents a written, shared rulebook: **Figma Specs**, a Markdown-based editor for documenting your design language; **Guidelines** on design libraries that the agent reads on every prompt; **Code Layers** in open beta, putting running code on the canvas; **code sources** that let the agent draw on your real production code from GitHub or npm; and a batch of **MCP integrations** so coding agents outside Figma can read all of it.
+
+This is not a cosmetic update. It is Figma repositioning the canvas as the place where humans and AI negotiate what gets shipped — and it has immediate consequences for anyone planning a website build, a [redesign](/services), or a design-system investment. We have spent the week testing the betas and reading the fine print on the credit pricing, so you don't have to. Here is what changed, what it costs, and our honest read on whether your team should care.
+
+## What Figma actually announced at Config India
+
+Config India was Figma's first Config event in the country, and the company treated it as a genuine product launch, not a marketing roadshow. The timing tells you why: Figma made its on-canvas AI agent generally available on 6 October, one week earlier, with faster performance, better context pulling across Figma files, and the ability to watch teammates' agents working in real time. That agent was already generating designs from prompts. The new announcements are the guardrails around it.
+
+Here is the release board as of mid-October, with honest status labels, because betas are not releases:
+
+| Feature | Status | Who gets it |
+|---|---|---|
+| Code Layers | Open beta, gradual rollout | Starter, Professional, Organization, Enterprise; edit access required |
+| Figma Specs | Open beta | Professional, Organization, Enterprise (Education and Government also listed) |
+| Guidelines on design libraries | Open beta | Professional, Organization, Enterprise |
+| Code sources in libraries | Closed beta | Selected participants only |
+| Centralized design systems | Preview | Not generally released |
+| Figma MCP updates | Available now | Plan and client limits apply |
+| Payload in Figma Make | Announced | Make users; availability rolling out |
+
+Three things about this table matter for your planning. First, "open beta" still means gradual rollout — Figma is enabling Code Layers account by account over the coming weeks, so don't reorganise your sprint around a feature that may not be switched on for you yet. Second, the free window on Code Layers code generation ends 4 November 2026 on paid plans, which gives you about three weeks of free experimentation from today. Third, only Enterprise can opt out of AI features at the organisation level, so if your compliance team has feelings about AI in the toolchain, that conversation needs to happen before you roll this out, not after.
+
+## Figma Specs: a Markdown document that becomes your team's single source of truth
+
+Strip away the marketing and Specs is refreshingly simple. It is a Markdown document. Press D (or the Specs icon) and you get a multiplayer Markdown container that can live directly on the canvas or exist as a standalone file in Figma. You write your design language in plain text: colour tokens, type scale, spacing rules, component behaviour, accessibility requirements, tone guidelines for microcopy. Then you connect it to everything else — reference canvas elements, embed FigJam diagrams, link design libraries, code libraries and the new Guidelines.
+
+The reason this matters is who reads it. Specs is not documentation that dies in a wiki. It is a working reference for both your humans and your AI agents. Enable a library's guidelines and the agent consults them on every prompt — not when it feels like it, every prompt. When the agent generates a hero section, it now has your actual rules in context: this is our primary button, this is the hover state, this is the radius scale, never use this colour for text.
+
+![Figma Specs concept: a sleek document dissolving into translucent design layers, representing written design rules guiding AI agents](/blog/figma-specs-explained-2026/fig1.webp)
+
+In practice this attacks the single most expensive failure mode of AI-assisted design: the plausible-but-wrong output. Before Specs, an agent's training data was the entire internet's worth of interfaces — competent, generic, and wrong for your brand. Specs replaces that default context with your context. The agent still does the production labour; the rulebook keeps the production labour on-brand.
+
+That said, a Markdown document is only as good as what you put in it. Specs will faithfully encode a vague design system into vague output. If your "design system" is fourteen near-identical button variants and a colour palette called "Final_v2", Specs will not save you — it will just let the agent reproduce your chaos faster. The honest prerequisite is boring: tokens, components, and a written style guide. We tell clients this plainly: the tool rewards teams that already know their standards.
+
+## Code Layers: real, running code — on the design canvas
+
+If Specs is the rulebook, Code Layers is the workshop floor. The feature puts working, interactive code directly on the Figma canvas, next to your design frames. You can start from a design frame and ask the agent to generate a code layer, start from an empty layer with a prompt, import an existing GitHub repo, or capture a live web page through Figma's Chrome extension. Multiple prototypes can sit side by side on the canvas for comparison — a genuine improvement over the old workflow of generating one prototype at a time and losing the thread between versions.
+
+The direction it runs *backwards* is the more interesting part. You can extract editable design layers out of a running prototype — individual elements, captured flows, a particular state you only reached by clicking through the live interface. Designers who have ever tried to document an edge case that only exists in a staging environment will recognise how useful this is. It makes the prototype itself inspectable as design, not just demoable.
+
+![Code Layers concept: interactive prototypes stacked in 3D perspective above a glowing canvas, connected by flowing lines](/blog/figma-specs-explained-2026/fig2.webp)
+
+Figmas's own framing, via CEO Dylan Field at the event, is that customers prefer "working together with their teams on the canvas rather than alone with coding agents in a terminal or IDE." Read past the salesmanship and the point is defensible: design feedback happens where the work lives. When the running code and the design frames share a canvas, review becomes one conversation instead of three — design review, then code review, then the reconciliation meeting nobody wants.
+
+The feature shipped to private beta in June and is now in open beta across plans, including Starter. Code generation and editing inside code layers is free on paid plans through 4 November 2026 inclusive, after which it draws from AI credits. One catch from the fine print: only the code-layer creation and editing is free in that window. If the same prompt triggers other agent actions, those still consume credits. Keep an eye on that; promos with asterisks are where budgets go to die.
+
+## What this actually changes about building a website
+
+Our studio builds and redesigns websites every week — [that is the day job](/services) — so let me translate the announcements into build-day consequences.
+
+**The design-to-code handoff just got shorter, again.** This was already compressing. Our [Figma AI agent guide](/blog/figma-ai-agent-guide-2026) covered the canvas-native agent; our [Figma-to-code workflow piece](/blog/figma-to-code-workflow-2026) covered what ships well today. Code Layers removes another hop: the prototype you review with stakeholders can be running code, and the design you iterate on can come from that running code. For marketing sites and landing pages, we can see the gap between "approved design" and "live page" shrinking to a review pass plus polish. For complex app UIs, the human engineering pass remains — but the prototype is now a credible starting point instead of a picture of one.
+
+**Coding agents get your context, not just your files.** The MCP updates are the sleeper feature here. Twenty new partner integrations, including OpenCode — which feeds design-system context to coding agents and sends prototypes back to Figma for review — plus India's Sarvam AI. You can now generate code layers or edit Specs from inside the AI tools your developers already use, like Claude Code or Cursor. The wall between the design tool and the coding tool is getting porous in both directions. Teams that keep design context in Figma and code context in the repo, and let agents read across, will move faster than teams treating Figma as a picture-making app.
+
+**Design systems become executable, not decorative.** Code sources (closed beta, selected testers) let teams import from GitHub repositories or npm packages so the agent builds from real production code. Figma's Code Connect already maps design systems to components and tokens in code, which Field says saves customers 25–33% in token costs. Put that together with Specs and Guidelines and the design system stops being a PDF nobody reads: it becomes the constraint set every AI output is checked against. Centralised design systems — currently in preview — will bundle libraries, code and guidelines in one place, which is where this is clearly heading.
+
+**The differentiator shifts from production to taste.** Field's line at the event — as AI lowers coding barriers, design becomes the key differentiator — is self-serving from a design-tool CEO, but it matches what we see in client work. When any studio can generate a competent interface in an afternoon, the winners are the teams with a point of view: better research, sharper brand expression, interfaces that feel authored rather than assembled. Specs is interesting precisely because it encodes *your* point of view into the machine's context. The commodity layer gets automated; the judgement layer becomes the product.
+
+## The honest limitations — read this before you reorganise around the betas
+
+Every feature above is real, and most of the caveats are real too. Here is what we would tell a client in a kickoff meeting, not a keynote:
+
+**AI still wanders.** Figma says it plainly enough: given the non-deterministic nature of AI, the new context tools exist to steer output toward predictable outcomes. Specs and Guidelines reduce the wandering; they do not eliminate it. Figma's own internal testing claims the agent now wins more than 60% of human-graded evaluations against professional designers — but those are Figma's tests, shared by Figma, about Figma's product. Treat that number the way you would treat any vendor benchmark: directionally encouraging, independently unverified. For client-facing work, the review step stays mandatory.
+
+**Availability is a rollout, not a switch.** Code Layers is "open beta" but enabling gradually; Specs and Guidelines roll out per plan tier; code sources is closed; centralised design systems is a preview. If your team is on Starter, temper expectations: you get Code Layers eventually, but Specs — the actual rulebook — needs Professional or above. Audit which plan each seat is on before you promise anyone a workflow.
+
+**The free window closes soon.** Code-layer code generation is free on paid plans only through 4 November 2026. After that, everything draws from AI credits, and credit consumption varies by model and action — Figma has not published a fixed per-task price. Teams that build a heavy Code Layers habit in the next three weeks should model what that habit costs in credits before November, or get an unpleasant invoice-shaped surprise.
+
+**Specs with no design system is just a new to-do list.** We keep coming back to this because it is where implementations die. If your tokens live in someone's head and your components exist in three conflicting versions, writing a Specs document will surface that mess — which is useful, but it is not the same as the agent working. Do the unglamorous consolidation first.
+
+**Compliance teams need a seat at the table.** Only Enterprise can disable AI features organisation-wide. If you handle regulated data or your contracts restrict AI tooling, the plan tier you are on is now a compliance decision, not just a budget line.
+
+## What it costs: the AI credit maths
+
+Figma moved to a usage-based AI credit system in March 2026, and everything new draws from the same pool. Each full seat gets a monthly allocation; credits reset monthly and do not roll over; you cannot transfer them between users; extra credits come as subscriptions or pay-as-you-go. Here are the published allowances, with approximate PKR equivalents at current rates:
+
+| Plan | Price / full seat | AI credits per month | Rough PKR per seat |
+|---|---|---|---|
+| Starter | Free | 500 | PKR 0 |
+| Professional | $16/month | 3,000 | ≈ PKR 4,500 |
+| Organization | $55/month, billed annually | 3,500 | ≈ PKR 15,500 |
+| Enterprise | $90/month, billed annually | 4,250 | ≈ PKR 25,000 |
+
+Three practical notes from the fine print. First, Professional at roughly PKR 4,500 a month is where Specs becomes available, which makes it the realistic entry point for a small studio or freelancer who wants the rulebook workflow — Starter's 500 credits and missing Specs access make it a viewing deck, not a working setup. Second, agent usage inside Specs already consumes credits, while Code Layers code tasks are free only until 4 November; budget accordingly if your designers are prompt-happy. Third, consumption varies by task complexity, so treat the allowances as a pool to manage, not a price per action — admins can set budgets and user limits, and you should, because nothing teaches credit economics like a team discovering generation is fun.
+
+How does this compare to doing it the old way? A small agency doing a marketing-site redesign might previously have budgeted two to three weeks of designer time for production and handoff polish. With the agent handling bulk production against a Specs rulebook, our observed range is closer to one week of designer time plus review — the savings are real, but they concentrate in production labour, not in the strategy, research and taste that clients actually pay for. The credit cost is noise next to the labour cost; the risk is that teams mistake faster production for finished design and skip the review that makes it good.
+
+## How to write a Specs document an AI can actually follow
+
+If you take one actionable section from this article, make it this one. A Specs document that works has a specific shape, and it is not "paste your brand guidelines into Markdown and hope." Here is the structure we would ship to a client, based on how agents actually consume context:
+
+**1. Start with the non-negotiables, not the history.** The agent reads the top of the document with the most weight. Open with hard rules: colour tokens and their exact values, the type scale, the spacing scale, the radius scale, the approved button variants. No brand story, no mission statement. The agent does not need to know why your blue is your blue; it needs the hex code and the rule that body text never uses it.
+
+**2. Write rules as do/don't pairs.** "Primary buttons use the 8px radius scale" is good. "Primary buttons use the 8px radius scale — never pill-shaped, never square" is better. Agents fail most often on the negative space: things they should not invent. Every component section should include at least one explicit prohibition. The things you never wrote down are exactly the things the agent will hallucinate.
+
+**3. Reference real components, don't describe them.** Specs lets you reference canvas elements, design libraries and code libraries. Use that. A linked component with its variants beats three paragraphs describing it, because the agent gets the actual structure instead of your prose about the structure. Descriptions drift; references don't.
+
+**4. Include accessibility as rules, not aspirations.** "Be accessible" is an aspiration. "Minimum 4.5:1 contrast on body text, focus states on every interactive element, no colour-only status indicators" is a rule set. Agents are genuinely good at following explicit accessibility constraints and genuinely bad at inferring them from vibes. This is also the section your future self will thank you for — accessibility debt is the most expensive kind.
+
+**5. Keep it maintained or delete it.** A Specs document that is six months out of date is worse than none, because the agent will enforce stale rules with total confidence. Assign an owner. Review it on the same cadence as your design system releases. The multiplayer nature of Specs helps here — it is a living document on the canvas, not a PDF in a shared drive.
+
+**6. Connect it to code sources as soon as you can.** When code sources opens beyond closed beta, point it at your production component library. The combination — written rules in Specs, real components in code sources, guidelines on the library — is the full constraint stack. Each layer catches what the others miss: Specs catches intent, code sources catch implementation drift.
+
+Start small. One Specs document for your most-reused patterns — buttons, forms, cards, navigation — will teach you more about what the agent needs than a comprehensive document you spend a month writing. The teams that win with this tooling will be the ones iterating on their rulebook weekly, not the ones waiting for the perfect version.
+
+## The studio verdict: who should adopt this, and who should wait
+
+We have a bias here — we build websites for a living, and tooling that shortens the design-to-code path is directly good for our margins — but the honest segmentation matters more than the hype:
+
+**Adopt now if:** you run a documented design system on Professional or above; you ship marketing sites or product UI where production labour is the bottleneck; your developers already use Cursor, Claude Code or similar and would benefit from the MCP bridge; you have someone who can own the Specs document. For these teams, the next three weeks of free Code Layers generation are a genuine gift — run your real projects through it and learn where it breaks while the learning is free.
+
+**Wait if:** you have no design tokens or component library yet — Specs will just formalise the mess; you are on Starter and the features you actually want need Professional; your compliance posture forbids AI in the toolchain and you are not on Enterprise; your team is mid-delivery on a deadline and cannot absorb a workflow change. None of these are permanent. They are sequencing.
+
+**Our position, stated plainly:** Specs is the most important design-tooling announcement of the year, and it is not close. Not because Markdown documents are exciting, but because it is the first serious attempt to make AI output *accountable to a standard*. The design industry spent two years arguing about whether AI would replace designers; Figma's answer is more interesting — AI becomes the production layer, and the design system becomes the law it operates under. The designer's job shifts from making screens to writing the law and judging the output. That is a better job, and it is one most designers are already half doing.
+
+The risk we would flag is complacency. Faster production is not better design. Teams that treat the agent as a junior contractor — clear rules, mandatory review, human sign-off on anything client-facing — will ship more and better. Teams that treat it as a replacement will ship generic interfaces at unprecedented speed, then spend senior time unpicking them. The tooling is neutral. The workflow is the product.
+
+## FAQ
+
+**What is Figma Specs?**
+A Markdown-based document on the Figma canvas (or standalone file) where a team writes down its design language — tokens, components, behaviour rules, accessibility requirements. Both human teammates and Figma's AI agent read it as a shared reference, and enabled library guidelines are consulted by the agent on every prompt. It entered open beta at Config India on 15 October 2026 for Professional, Organization and Enterprise plans.
+
+**What is Figma Code Layers?**
+A feature that places working, running code directly on the Figma canvas next to design frames. Generate a code layer from a design with the agent, import a GitHub repo, capture a live page with Figma's Chrome extension, or extract editable design layers back out of a running prototype. It moved from private to open beta at Config India in October 2026, rolling out gradually across plans.
+
+**Are Figma Specs and Code Layers free?**
+Code generation and editing inside Code Layers is free on paid plans through 4 November 2026; after that it consumes AI credits. Agent use with Specs already consumes credits. Monthly allowances per full seat: 3,000 credits on the $16 Professional plan, 3,500 on the $55 Organization plan, 4,250 on the $90 Enterprise plan — resetting monthly, no rollover.
+
+**Do AI agents actually follow design rules now?**
+Better than before, not blindly. Specs, Guidelines and code sources give the agent structured context that cuts off-brand output, but AI still wanders. Figma's internal tests claim 60%+ win rates against professional designers in human-graded evaluations — Figma's tests, unverified independently. Treat the agent like a fast junior: the rulebook keeps it honest, review keeps it safe.
+
+**Can coding agents like Cursor read my Figma design system?**
+Yes, via the updated Figma MCP: around 20 new partner integrations (including OpenCode, feeding design-system context to coding agents and sending prototypes back for review), and the ability to generate code layers or edit Specs from inside tools like Claude Code or Cursor.
+
+**What is Payload in Figma Make?**
+The headless CMS Payload, now integrated directly into Figma Make — prototypes get a real backend, so you can generate dynamic websites and manage content without leaving Figma.
+
+**Should my team adopt Figma Specs now?**
+If you have a documented design system on Professional or above, start this week while Code Layers generation is free. If you have no tokens or component library, fix the system first — Specs rewards teams that already know their standards. If compliance forbids AI tooling, note only Enterprise can opt out org-wide.
+
+## The rulebook is the product now
+
+Figma's October announcements add up to one thesis: the future of design tooling is not faster generation, it is accountable generation. Specs writes the rules, Guidelines enforce them on every prompt, Code Layers proves the output runs, and the MCP integrations carry the whole stack into the coding tools where the final product gets built. The canvas stops being a picture of the product and becomes the place where the product gets negotiated between humans and machines.
+
+For business owners, the practical takeaway is simpler: your design system just became an AI enforcement mechanism, or it became a liability you can no longer hide. The teams that wrote their standards down will now get AI output that follows them. The teams that didn't will get faster chaos. There has never been a cheaper moment to do the unglamorous work — tokens, components, written rules — because the payoff is no longer just consistency. It is consistency at machine speed.
+
+If you want that applied to your product — a [redesign](/services) that ships with a real design system, a new build where the AI tooling works for your brand instead of against it, or just an honest audit of where your current setup stands — [talk to us](/contact). We do this every day across the US and Pakistan, and we would rather show you the work than sell you the slide deck.
+
+### Sources
+
+- [Figma announces new features to define how agents work on its platform](https://techcrunch.com/2026/10/14/figma-announces-new-features-to-define-how-agents-work-on-its-platform/) — TechCrunch
+- [Figma Draws New Lines for AI Agents With Specs, Code Layers and Shared Rules](https://www.webpronews.com/figma-draws-new-lines-for-ai-agents-with-specs-code-layers-and-shared-rules/) — WebProNews
+- [Figma Code Layers, Specs and Payload: What Changes](https://ux-news.com/figma-code-layers-specs-payload-update/) — UX News
+- [Figma Code Layers Open Beta: AI Agent Updates Explained](https://originpakistan.com/article/figma-code-layers-open-beta-ai-design-guidelines-2026) — Origin Pakistan
