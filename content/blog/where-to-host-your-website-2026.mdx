@@ -1,0 +1,227 @@
+export const meta = {
+  title: "Vercel Changed Billing Again: Where to Host Your Website in 2026",
+  description:
+    "Where to host your website in 2026, honestly: Vercel's October storage billing vs Cloudflare Pages vs Netlify — real prices in USD and PKR from a studio.",
+  date: "2026-10-17",
+  category: "Web Development",
+  categorySlug: "web-development",
+  keywords: [
+    "where to host your website 2026",
+    "vercel deployment storage cost",
+    "vercel vs cloudflare pages",
+    "vercel vs netlify pricing",
+    "cheapest way to host next.js app",
+    "cloudflare pages free hosting",
+    "vercel flat rate cdn",
+  ],
+  author: "AISquadX Studio",
+  image: "/blog/where-to-host-your-website-2026/cover.webp",
+  faq: [
+    {
+      q: "What changed in Vercel billing in October 2026?",
+      a: "Vercel started charging Pro teams $0.10 per GB-month for Deployment Storage and Functions Storage, and changed the default deployment retention window to 30 days. Deployments older than 30 days began being deleted on October 23, 2026 unless a team opted out in its retention settings. Vercel attributed the change to coding agents, which have sharply increased deployment frequency and stored deployment history.",
+    },
+    {
+      q: "Is Cloudflare Pages really free for unlimited bandwidth?",
+      a: "Yes — Cloudflare Pages serves static assets with unlimited bandwidth on its free plan, along with 500 builds per month, which makes it the cheapest serious option for high-traffic static and Jamstack sites. Dynamic compute via Workers has its own limits (100,000 requests per day on the free plan), and Workers is not Node.js, so some npm packages will not run.",
+    },
+    {
+      q: "Which is cheaper for a business website, Vercel or Netlify?",
+      a: "For a typical small business site, both cost about $20/month on their paid tiers — Vercel Pro is $20 per deploying seat plus metered usage, while Netlify Pro is a flat $20/month with unlimited seats and 3,000 credits. Netlify is usually cheaper for teams because the per-seat model is gone; Vercel's strength is the best Next.js experience rather than the lowest price.",
+    },
+    {
+      q: "What is the cheapest way to host a Next.js app in 2026?",
+      a: "For a side project, the cheapest serious options are Railway at $5/month (Hobby plan) or a self-hosted setup on a Hetzner VPS at about €5.99/month (~$7) with a tool like Coolify for git-push deploys. Cloudflare Workers can host dynamic apps for $0–5/month but only if your app runs on the Workers runtime rather than full Node.js. Vercel is rarely the cheapest — you choose it for the developer experience.",
+    },
+    {
+      q: "Do I need to do anything before Vercel's October 23 deployment deletion?",
+      a: "If you want to keep rollback targets older than 30 days, yes: open your team's retention settings before October 23 and set a longer retention period for production deployments (and, separately, pre-production, canceled and errored ones). Also check the Usage page for per-project Deployment Storage and Functions Storage so you can see which project will draw the $0.10/GB-month meter. If you never roll back more than a month, letting the default apply is the cheapest option.",
+    },
+    {
+      q: "Does hosting choice affect SEO or site speed?",
+      a: "Hosting affects speed, which affects rankings — particularly Core Web Vitals like LCP and TTFB. Edge networks (Cloudflare, Vercel) generally serve pages faster globally than a single-region VPS, though a well-configured VPS with a CDN in front can match them. The bigger SEO risk is reliability: cheap shared hosting that goes down or slows under load costs you far more in lost traffic than the hosting saves.",
+    },
+    {
+      q: "Can a coding agent really inflate my Vercel storage bill?",
+      a: "It can inflate the storage meter even if the dollar amounts stay small for most teams. Vercel itself said coding agents have increased deployment frequency and the amount of stored deployment history — every branch an agent deploys produces a preview deployment that sits in storage. The fix is retention policy discipline: separate retention for pre-production vs production, and let preview deployments expire fast.",
+    },
+  ],
+};
+
+Your hosting provider quietly changed the price of your website last week, and if you're on Vercel you have until October 23 to decide what to do about it. On October 9, Vercel posted a changelog entry that's easy to skim past: deployment storage billing begins for existing Pro teams — $0.10 per GB-month for Deployment Storage and Functions Storage, with the deployment retention window changing to 30 days. Deployments older than 30 days start being deleted on October 23 unless you opt out in your retention settings first.
+
+That line — deleted — is what makes this more than a routine price tweak. A deleted deployment can't be rolled back to. If you ever needed to revert production to a build from last spring for a client audit or a slow-moving release, that safety net now has an expiry date and a meter on it.
+
+We've hosted client sites on all three of the big frontend platforms, plus Railway, Render and plain VPS boxes, and this latest Vercel move is a good excuse to answer a question business owners ask us constantly: where should I actually host my website in 2026? Not the marketing answer. The one based on who bills you for what, where the money leaks, and which platform fits which kind of site. Let's start with what changed, then compare your real options.
+
+## What Vercel actually changed on October 9
+
+Two things happened at once, and they're easy to confuse. Here's the clean version, taken from Vercel's own changelog:
+
+1. **New paid storage meter.** Deployment Storage (your old deployments) and Functions Storage (your serverless function bundles) are now billed at $0.10 per GB-month for all Pro teams, [per Vercel's own changelog](https://vercel.com/changelog/deployment-storage-pricing-expands-to-existing-teams). Existing Pro teams had been outside this meter until now; billing start dates vary by team, and Vercel said it's emailing each team its date.
+
+2. **Retention window shrinks to 30 days.** The deployment retention window changes to 30 days, and deployments older than 30 days are deleted starting October 23 unless you opt out in retention settings beforehand. A [companion changelog entry](https://vercel.com/changelog/new-pro-teams-now-default-to-30-day-deployment-retention) sets the same 30-day default for new Pro teams, and [independent coverage](https://firerun.io/vercel-pro-deployment-storage-billing-retention-2026/) confirms the rollout details. Teams already set to 30 days or shorter are unaffected. Deleted deployments cannot be restored or used for rollback.
+
+You control the retention through a Deployment Retention Policy with separate periods for pre-production, production, canceled and errored deployments. The Usage page shows Deployment Storage and Functions Storage per project, so you can see which project is drawing the meter before the bill arrives.
+
+This follows two earlier moves. On September 16, Vercel said Hobby teams over the 10 GB cap would lose deployments immediately, pointing them at Pro's $0.10/GB rate. And in September 2026, Flat Rate CDN went generally available for Pro teams — on by default for new teams, replacing the metered bandwidth line with a fixed tier and spike protection, with older teams able to switch over in billing settings.
+
+The pattern is worth naming plainly: Vercel is gradually shifting from "deploy anything, pay mostly for traffic" to "every resource gets its own meter." None of the individual meters are expensive. The trap is that nobody reads a changelog email, nobody checks the Usage page, and the costs stack quietly.
+
+![Conceptual illustration of a billing meter and shrinking deployment storage](/blog/where-to-host-your-website-2026/fig1.webp)
+
+## Why Vercel blamed coding agents — and they're right
+
+The most interesting sentence in the whole announcement isn't about pricing. It's Vercel's stated reason for the change: coding agents have accelerated development, increasing deployment frequency and the amount of stored deployment history.
+
+If you've let Claude Code, Cursor or any agent open a pull request for every small task, every one of those branches has been producing a preview deployment, and all of that output has been sitting in storage. A year ago, a team deployed a few times a week. Now an agent can generate dozens of preview deployments in a weekend while you sleep. Multiply that across every Vercel team on Earth and you get a storage bill Vercel can no longer absorb for free.
+
+For most teams the actual dollar amounts will be small — at $0.10/GB-month you'd need 100 GB of stored deployments to pay $10. The real cost is the retention change, not the meter. But the deeper lesson applies wherever you host: your AI workflow changed your infrastructure profile, and the platforms are now pricing for the world agents created. Set spend limits and retention policies the same week you adopt an agent workflow, not six months later.
+
+## The real question: what is your host billing you for?
+
+Before comparing platforms, you need the mental model. The three big platforms charge for completely different things, and the cheapest choice depends entirely on your traffic and deploy pattern:
+
+- **Vercel charges for bandwidth by the GB** (plus, now, storage, seats and a growing list of add-ons). Pick Vercel on the free tier alone and a viral post can surprise you.
+- **Cloudflare Pages charges for builds and leaves bandwidth free.** Unlimited bandwidth on the free plan; 500 builds per month. Your cost comes from how often you deploy, not how popular you get.
+- **Netlify charges a pool of credits** that bandwidth, builds and requests all draw from (free plan caps at 300 credits; Pro is 3,000).
+
+That single difference is the whole decision for most sites. A brochure site with 500,000 monthly visitors costs nearly nothing on Cloudflare Pages and a real bill on Vercel. A site that deploys 40 times a day but serves little traffic is cheap on Vercel and expensive on Cloudflare. Know which curve you're on before you pick.
+
+## Vercel in late 2026: the best Next.js experience, meter by meter
+
+Let's be fair to Vercel, because we still recommend it often. It remains the best place to run Next.js — new framework features land there the day they ship, preview deployments are instant, edge config and analytics work with no setup. If your business runs on Next.js (ours does, and if you've been reading our [Next.js 16 upgrade guide](/blog/nextjs-16-upgrade-guide-2026) you know we live in this ecosystem), the developer experience dividend is real: fewer integration bugs, faster debugging, less time spent on plumbing.
+
+But you should price it honestly. Here's what a Pro team actually pays in late 2026:
+
+| Line item | Cost | Notes |
+|---|---|---|
+| Pro seats | $20/month per deploying seat | Per-seat, not per-team |
+| Flat Rate CDN | Fixed tier replacing metered bandwidth | GA Sept 2026; default for new teams, opt-in for older ones |
+| Deployment + Functions Storage | $0.10/GB-month | New meter; deletes from Oct 23 |
+| Image Optimization | $0.05–$0.0812 per 1,000 transformations | Billed on cache misses — trims hard with config |
+| Add-ons (Password Protection, Speed Insights Plus, etc.) | $10–$20/month each | Individually fine; five forgotten ones are $100+/month |
+
+That add-on row is where our studio sees the most waste in the wild. Someone turns on Password Protection for a staging project two years ago, and nobody ever turns it off. [One recent teardown of real Vercel invoices](https://norsky.dev/blog/vercel-pricing) found exactly this pattern — forgotten add-ons quietly costing $100+ a month. Open Settings → Billing → Add-Ons once a quarter and switch off what nobody uses. We do this for every client on a Vercel Pro team, and it's the cheapest optimisation we sell.
+
+The image optimisation line deserves its own warning. Every cache miss on `next/image` triggers a billed transformation, and the cache key includes width and quality — one source photo multiplied by every size in your `deviceSizes` and every quality value can become dozens of transformations. For sites with user-uploaded photos, resize once at upload time and serve a plain file. That single decision has saved clients more than any CDN tweak.
+
+**Who Vercel is for now:** Next.js apps, teams that deploy constantly, businesses that value preview environments and framework integration more than the lowest bill. **Who should leave:** high-bandwidth static sites, anyone on Pro paying per-seat for developers who rarely deploy.
+
+## Cloudflare Pages: the unlimited-bandwidth challenger
+
+Cloudflare Pages is the platform the other two are losing momentum to on price, and the value proposition is brutally simple: unlimited free bandwidth, free commercial use, 500 free builds a month, and enterprise-grade DDoS protection that the others charge for. Its free tier permits commercial use — Vercel's Hobby plan strictly prohibits it.
+
+The network behind it is the largest of the three (200+ edge locations, [per an October 2026 platform comparison](https://www.cloudpicked.com/cloudflare-pages-review-en.html)), and cold starts are effectively zero because compute runs on V8 isolates rather than containers. If your site is mostly static with some dynamic edge functions — a marketing site, a blog, a documentation portal, a landing-page-heavy SaaS — it's genuinely hard to justify paying anyone else.
+
+The constraints are real though, and they're the kind that bite at month three, not day one:
+
+- **Workers is not Node.js.** Some npm packages simply won't run. If your app depends on Node-specific APIs, you'll find out the hard way. Check compatibility before you migrate, not during.
+- **The data story is Cloudflare-flavoured.** D1 (SQL), KV, R2 and Vectorize are good, but they're a different ecosystem from the Postgres-Neon-Supabase world. Greenfield projects adapt fine; existing apps with a relational database face real migration work.
+- **Next.js support is good, not native.** Vercel will always ship Next.js features first. On Pages, the fancy new App Router features arrive later and occasionally with quirks.
+
+**Our studio's take:** for static and edge-heavy sites with real traffic, Cloudflare Pages is the best value in hosting right now. We recommend it for content sites and marketing sites without hesitation. For complex Next.js apps with heavy server components, we stay on Vercel.
+
+## Netlify: the quiet workhorse after the credit change
+
+Netlify invented this category and still does the fundamentals well: build hooks, forms handling without a backend, split testing, identity. It's the most framework-agnostic of the three — Vercel is visibly Next.js-first, while Netlify treats every framework the same.
+
+The big change is billing. Since April 2026, Netlify moved to credits: Pro is a flat $20/month with unlimited seats and 3,000 credits, Personal is $9/month for 1,000 credits, and the free plan caps at 300. The per-seat model is gone. For a team of five deploying a marketing site with forms, that's a meaningful saving versus Vercel's per-seat pricing.
+
+Netlify's honest weakness is momentum: it's losing on price to Cloudflare and on framework integration to Vercel. But for a marketing site with forms — the most common business website in existence — it's a genuinely low-fuss choice, and the flat pricing with unlimited seats makes it the cheapest of the three for small teams on paper.
+
+**Who Netlify is for:** small teams that want predictable billing, marketing sites, multi-framework shops. If your agency runs ten small client sites, Netlify's per-project pricing shape beats Vercel's per-seat model.
+
+## The budget tier: Railway, Render and the VPS
+
+Below the big three, the indie options cluster between $5 and $20 a month before traffic (these numbers track [a September 2026 hosting guide](https://newstack.dev/tools/hosting/) we checked this week):
+
+- **Railway** ($5/month Hobby): the friendliest container platform for people who don't want to think about infrastructure. Detects your project, provisions Postgres or Redis in two clicks, bills by actual usage. Excellent for staging environments and side projects. The catch: idle services still cost something, so shut down what you don't use.
+- **Render** (from $7/month): fixed-price web services with managed Postgres from about $6/month on the entry tier. Predictable and boring in the best way.
+- **Hetzner VPS** (€5.99/month, ~$7 or roughly PKR 2,000): the price champion. One small box, your app, your database, fixed cost. The catch is you — Nginx config, TLS certificates, CI/CD pipeline, on-call duty. Pair it with Coolify and you get git-push deploys that feel surprisingly close to a PaaS.
+
+That last row deserves attention if you're in Pakistan. At roughly PKR 2,000 a month fixed, a Hetzner box is cheaper than most freelancers' mobile data plans, and it hosts everything. We run client staging environments this way. The trade-off is operational: a VPS never pages anyone at 3am but you, and when it breaks, you're the on-call engineer. For a production business site, that trade is only worth it if you have someone who can own it.
+
+| Option | App cost | Database | Monthly total (approx.) |
+|---|---|---|---|
+| Cloudflare Workers + D1 | $0–5 | Included in free usage | $0–5 |
+| Netlify Free + serverless DB | $0 within 300 credits | Neon/Supabase free tier | $0, then $9+ |
+| Railway Hobby | $5 plan incl. $5 usage | Unmanaged Postgres, metered | ~$5–10 |
+| Render Starter | $7 fixed | Managed Postgres ~$6 | ~$13 |
+| Vercel Pro + serverless DB | $20 Pro (commercial) | Neon/Supabase free tier | $20+ |
+| Hetzner VPS + Coolify | Same box, git-push feel | Same-box Postgres | ~$7 fixed |
+
+![Conceptual illustration of a deployment pipeline spreading across edge data centers](/blog/where-to-host-your-website-2026/fig2.webp)
+
+## The costs nobody puts in the comparison table
+
+Comparison tables show you the headline prices. The money actually leaks somewhere else. These are the line items our studio checks on every hosting engagement, because we've been bitten by every one of them:
+
+**Data egress to your own database.** If your database sits in one region and your functions run in another, you pay for every query twice over — once in latency, once in cash. One recent analysis of Vercel invoices found that placing functions far from the database raised compute costs by as much as 44% while adding a round trip to every request. Put your functions next to your data. This is a five-minute fix in project settings that most teams never make.
+
+**Build minutes.** Nobody budgets for these because nobody watches them. Every agent-driven preview deployment burns build minutes (or Cloudflare build credits, or Netlify credits). A monorepo with a careless build config can run ten-minute builds fifty times a day. Cache your dependencies, split your projects, and stop building the entire app when only the blog changed.
+
+**TLS certificates.** Boring, invisible, and about to matter more. Let's Encrypt is moving to 64-day certificate lifetimes starting February 2027, which turns manual renewal from a chore into a liability. If you're hand-rolling a VPS, your certificate automation needs to be bulletproof before that deadline — managed platforms handle this for you, and it's one of the quietest reasons they're worth paying for.
+
+**Support tiers.** When your site is down on a Friday night, the difference between a platform's free community support and a paid tier with real humans is the difference between a weekend of panic and a twenty-minute fix. Price the support tier into your decision if the site earns you money.
+
+**The regional angle.** If you serve customers in Pakistan from a US-only deployment, every visitor pays a latency tax on every request — and latency is a ranking factor. Cloudflare's edge network is the most forgiving here because it has the widest footprint; on Vercel or Netlify, make sure your functions are deployed in the regions your customers actually live in. And if you bill clients in PKR, remember that every platform charges in dollars — at current rates $20/month is roughly PKR 5,600, and currency moves have quietly raised more Pakistani hosting bills than any platform price change.
+
+**Migration cost.** The most expensive hosting decision is the one you make twice. Moving a production site between platforms — re-testing edge functions, migrating environment variables and secrets, re-pointing DNS, watching for the redirect chains that tank SEO for a week — costs real engineering days. If there's a 60% chance you'll outgrow your pick within a year, pick the one you'd grow into.
+
+## The studio's decision framework
+
+Forget feature matrices. Ask these three questions in order:
+
+**1. What's your traffic shape?**
+High-traffic, mostly static → Cloudflare Pages. You're paying for bandwidth you get free there. A content site doing a million page views a month is the textbook case — and one of our [web development cost](/blog/web-development-cost-2026) readers' most common setups.
+
+**2. What's your framework?**
+Deep Next.js app with server components, middleware, preview environments per PR → Vercel. The DX dividend outweighs the premium when your team ships daily.
+
+**3. What's your team shape?**
+Small team, many small sites, marketing-heavy → Netlify. Flat $20/month with unlimited seats is built for exactly this. Side project or staging → Railway or a Hetzner box with Coolify.
+
+And one hard rule we'd print on a poster: never pick a platform on the free tier alone. Model your bill at 10x your current traffic, then at 10x that. The surprise invoice always arrives the month a post goes viral or an ad campaign works.
+
+## Your checklist before October 23
+
+If you're on a Vercel Pro team, do this before the retention deadline — it takes fifteen minutes:
+
+1. **Open team Settings → Deployment Retention Policy.** Set a longer retention period for *production* deployments if you need rollback targets older than 30 days. Set pre-production, canceled and errored deployments short — preview branches from agent workflows are the storage that Vercel's meter is aimed at.
+2. **Check the Usage page** for per-project Deployment Storage and Functions Storage. One large project usually accounts for most of a team's stored output; fix that one first.
+3. **Audit add-ons** under Settings → Billing → Add-Ons. Switch off Password Protection, Observability Plus and anything else nobody uses.
+4. **Trim image optimisation costs.** Consolidate `deviceSizes` and `imageSizes` to what you actually render, use a single quality value, raise `minimumCacheTTL` for images that never change, and lock down `remotePatterns` so nobody can use your optimiser to resize images from other sites.
+5. **Move large assets to Vercel Blob** (or R2, or any object storage) instead of shipping them inside deployments. Big binaries in the repo are the fastest way to feed the storage meter.
+6. **Set spend limits.** Day one. Especially if agents deploy on your behalf.
+
+If you do nothing, you'll lose every rollback target older than a month on October 23 and start paying the storage meter at whatever your bill cycle's start date is. For most teams that's fine — deleted history you never rolled back to was dead weight anyway. But make it a decision, not an accident. If you're weighing a bigger move, our [services](/services) page covers hosting and performance work directly, and we've written about [what a redesign really costs](/blog/website-redesign-cost-2026) if the October changes are pushing you toward a platform migration.
+
+## Frequently asked questions
+
+**What changed in Vercel billing in October 2026?**
+Vercel started charging Pro teams $0.10 per GB-month for Deployment Storage and Functions Storage, and changed the default deployment retention window to 30 days. Deployments older than 30 days began being deleted on October 23, 2026 unless a team opted out in its retention settings. Vercel attributed the change to coding agents, which have sharply increased deployment frequency and stored deployment history.
+
+**Is Cloudflare Pages really free for unlimited bandwidth?**
+Yes — Cloudflare Pages serves static assets with unlimited bandwidth on its free plan, along with 500 builds per month, which makes it the cheapest serious option for high-traffic static and Jamstack sites. Dynamic compute via Workers has its own limits (100,000 requests per day on the free plan), and Workers is not Node.js, so some npm packages will not run.
+
+**Which is cheaper for a business website, Vercel or Netlify?**
+For a typical small business site, both cost about $20/month on their paid tiers — Vercel Pro is $20 per deploying seat plus metered usage, while Netlify Pro is a flat $20/month with unlimited seats and 3,000 credits. Netlify is usually cheaper for teams because the per-seat model is gone; Vercel's strength is the best Next.js experience rather than the lowest price.
+
+**What is the cheapest way to host a Next.js app in 2026?**
+For a side project, the cheapest serious options are Railway at $5/month (Hobby plan) or a self-hosted setup on a Hetzner VPS at about €5.99/month (~$7) with a tool like Coolify for git-push deploys. Cloudflare Workers can host dynamic apps for $0–5/month but only if your app runs on the Workers runtime rather than full Node.js. Vercel is rarely the cheapest — you choose it for the developer experience.
+
+**Do I need to do anything before Vercel's October 23 deployment deletion?**
+If you want to keep rollback targets older than 30 days, yes: open your team's retention settings before October 23 and set a longer retention period for production deployments (and, separately, pre-production, canceled and errored ones). Also check the Usage page for per-project Deployment Storage and Functions Storage so you can see which project will draw the $0.10/GB-month meter. If you never roll back more than a month, letting the default apply is the cheapest option.
+
+**Does hosting choice affect SEO or site speed?**
+Hosting affects speed, which affects rankings — particularly Core Web Vitals like LCP and TTFB. Edge networks (Cloudflare, Vercel) generally serve pages faster globally than a single-region VPS, though a well-configured VPS with a CDN in front can match them. The bigger SEO risk is reliability: cheap shared hosting that goes down or slows under load costs you far more in lost traffic than the hosting saves. Our [Core Web Vitals guide](/blog/core-web-vitals-2026) walks through measuring what your host actually delivers.
+
+**Can a coding agent really inflate my Vercel storage bill?**
+It can inflate the storage meter even if the dollar amounts stay small for most teams. Vercel itself said coding agents have increased deployment frequency and the amount of stored deployment history — every branch an agent deploys produces a preview deployment that sits in storage. The fix is retention policy discipline: separate retention for pre-production vs production, and let preview deployments expire fast.
+
+## The bottom line
+
+Vercel's October billing change isn't a crisis — for most teams it will add a few dollars a month, and the 30-day retention default is sensible hygiene for the agent-deployment era. But it's a reminder that hosting is no longer a fixed utility. Every platform now prices for a world where agents deploy constantly and traffic arrives in spikes, which means the cheapest choice depends on *your* traffic shape, *your* framework and *your* deploy pattern — not on whichever free tier looked generous in a comparison table.
+
+If you're not sure where your site sits on those curves, that's exactly the kind of audit we do before quoting any hosting or performance work. Read more [about the studio](/about), or [talk to us](/contact) and we'll look at your actual numbers — not the marketing page — and tell you where to host.
