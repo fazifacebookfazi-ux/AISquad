@@ -1,0 +1,220 @@
+export const meta = {
+  title: "Figma Code Layers Open Beta: The Studio's 2026 Field Guide",
+  description:
+    "Figma's Code Layers open beta puts live code on the design canvas. Our field guide: how it works, the AI credit costs, and whether your team should adopt it.",
+  date: "2026-10-20",
+  category: "UI/UX Design",
+  categorySlug: "ui-ux-design",
+  keywords: [
+    "Figma Code Layers",
+    "Figma code layers open beta",
+    "design to code workflow",
+    "Figma MCP",
+    "code-backed prototypes",
+    "Figma Config India 2026",
+  ],
+  author: "AISquadX Studio",
+  image: "/blog/figma-code-layers-open-beta-2026/cover.webp",
+  faq: [
+    {
+      q: "What are Figma Code Layers?",
+      a: "Code Layers are running, code-backed prototypes that live directly on the Figma design canvas. Instead of static screens linked by prototype arrows, a Code Layer contains actual working code you can interact with, edit, and duplicate to explore design directions — all inside the same file as your visual designs.",
+    },
+    {
+      q: "When did Figma Code Layers enter open beta?",
+      a: "Figma moved Code Layers from private beta (running since June 2026) into open beta on 15 October 2026, announced at Config India in Bengaluru. Rollout is gradual, so not every account sees the feature immediately.",
+    },
+    {
+      q: "How much do Figma Code Layers cost?",
+      a: "Creating and editing Code Layers is free on paid plans through 4 November 2026 inclusive. After that, these tasks consume Figma's AI credits, and the cost scales with task complexity. Heavy users should budget for ongoing credit spend.",
+    },
+    {
+      q: "Can you turn an existing Figma design into a Code Layer?",
+      a: "Yes. You can prompt Figma's agent to convert a design frame into working code, import a GitHub repository, connect an external coding agent through the Figma MCP, start from a blank code layer, or capture a live webpage with Figma's Chrome extension. It also works in reverse: you can extract editable design layers from a running prototype.",
+    },
+    {
+      q: "Do Code Layers replace Figma's developer handoff?",
+      a: "No — they change it. Code Layers produce working prototypes and explorations, not production code wired to your backend. The handoff shifts from handing over static specs to handing over running behaviour, which means developers now review prototype code quality rather than interpreting screens.",
+    },
+    {
+      q: "Should a small studio adopt Figma Code Layers in 2026?",
+      a: "If you already run paid Figma plans and your team reviews interactive prototypes regularly, the free window through November 2026 is a low-risk trial. If your workflow is still screen-based with occasional prototyping, wait: let the pricing settle and the feature reach feature-complete before reorganising your process around it.",
+    },
+  ],
+};
+
+On 15 October 2026, Figma used its first Config event in India — in Bengaluru, with more than 30,000 registrations — to announce the biggest change to its canvas since multiplayer cursors. Code Layers left private beta and opened to everyone. Your design file can now hold running code, not just pictures of code's output.
+
+We've spent the last week working inside the open beta on client projects, and here's the honest read: this is the most consequential Figma release of 2026, and also the easiest one to misuse. It does not delete the design-to-development handoff. It relocates it, prices it in AI credits, and hands it to a team that is not ready to own it. This guide explains what Code Layers actually does, what the 15 October announcement really changed, what it will cost you after the free window closes, and our verdict on who should adopt it now.
+
+If you're a founder or product lead rather than a designer, the short version is this: your design file is about to start containing working software, and the question of who is responsible for that software's quality just got more complicated. Read on for the parts that affect your budget and your timelines.
+
+## What Code Layers actually is
+
+A Code Layer is a layer on the Figma canvas that contains running code. Not a screenshot. Not a prototype link pretending to be interactive. Actual code you can click, type into and edit, sitting next to your design frames in the same file.
+
+You can duplicate a Code Layer, ask Figma's agent to develop a different direction from it, and compare two working versions side by side — without leaving the file. You can also run the whole thing in reverse: pull a running prototype onto the canvas and extract editable design layers from it, capturing individual states of a flow as real design frames you can inspect and annotate.
+
+This is different from everything Figma already shipped in this space:
+
+- **Prototype mode** connects static screens with arrows. It can never show you what a component does when data is real, because the data isn't.
+- **Figma Make** (prompt-to-app) generates an app from a description. It's a generator; Code Layers is an environment. Make gives you a thing; Code Layers gives you a place to work.
+- **Dev Mode** hands developers specs, assets and code snippets from a design. It's a handoff surface; Code Layers moves the code upstream into the design file itself.
+
+The distinction matters because each of these assumed a boundary between designing and coding. Code Layers is Figma betting that the boundary is gone, and that the canvas should hold both sides. CEO Dylan Field [described the direction](https://globalbusinessline.com/figma-launches-code-layers-and-new-ai-powered-features-at-config-india-2026-deepens-india-expansion/) as a "full-stack creative canvas where teams and agents can build together, from idea to ship, in a visual-first way."
+
+## How it works: the five ways into a Code Layer
+
+There are five documented entry points, and they matter because each one implies a different team workflow.
+
+### 1. Prompt Figma's agent from an existing design
+
+Start with a design frame, prompt the agent, get a working prototype. This is the path most teams will try first — it's the fastest route from what you already have to something clickable. Figma [made its on-canvas agent generally available](https://www.webpronews.com/figma-draws-new-lines-for-ai-agents-with-specs-code-layers-and-shared-rules/) on 6 October 2026, a week before Config India, with faster performance and better context pulling across files. Its internal tests claim the agent now wins more than 60% of human-graded evaluations against professional designers — take that with the usual vendor-grade scepticism, but it tells you where Figma thinks this is heading.
+
+### 2. Import from a GitHub repository
+
+This is the one we find most interesting, and the least discussed. A team can pull an existing coded interface — real production code — onto the canvas and review it as a design. Designers who never open the repo can now comment on the actual built interface. For studios like ours, where [our design work](https://www.aisquadx.tech/services) already ships as code, this closes a loop that has been open for years: the review happens on the thing users touch, not on a picture of it.
+
+### 3. Connect a coding agent through the Figma MCP
+
+Figma's Model Context Protocol server got faster with more surfaces at Config India, and now supports generating Code Layers and reading or writing Specs from inside external AI tools. Twenty new MCP partners launched, including [OpenCode](https://www.webpronews.com/figma-draws-new-lines-for-ai-agents-with-specs-code-layers-and-shared-rules/) (which feeds design-system context to coding agents and sends prototypes back to Figma for review) and India's Sarvam AI. If your engineering team lives in Cursor or Claude Code, this is the route that keeps Code Layers in their existing flow rather than adding another tool.
+
+### 4. Start from a blank code layer
+
+For net-new explorations: spin up an empty layer, prompt your way to a working component. Useful for early-stage interaction ideas where designing frames first would slow you down.
+
+### 5. Capture a live webpage with the Chrome extension
+
+Point Figma's Chrome extension at a live website and capture it onto the canvas as a starting point. Competitive teardowns just got significantly faster — though you should think carefully about what "starting point" means for your own IP hygiene.
+
+![Abstract artwork showing a glowing interface wireframe dissolving into lines of code along a bright seam of light](/blog/figma-code-layers-open-beta-2026/fig1.webp)
+
+## What actually changed on 15 October
+
+Code Layers was the headline, but Config India shipped a bundle. The other pieces are what make Code Layers usable in a real team, so don't evaluate them separately:
+
+- **Figma Specs** (open beta, Professional/Organisation/Enterprise): a Markdown-based editor for documenting your design language so both humans and AI agents work from the same rulebook. We covered this in depth in our [Figma Specs guide](/blog/figma-specs-explained-2026) — Specs is the context layer that stops Code Layers from generating off-brand nonsense.
+- **Guidelines** (open beta, Professional/Organisation/Enterprise): published design-library rules that the agent reads on every prompt when the library is enabled. This is the enforcement mechanism; Specs is the documentation, Guidelines are the law.
+- **Code sources** (closed beta, selected participants): import from GitHub repositories or npm packages so the agent draws on your real production components. This is the piece that turns Code Layers from a prototyping toy into something a design system team can trust — and it's the piece you can't have yet.
+- **Centralised design systems** (preview): bundles libraries, code and guidelines together. Not generally released.
+- **Payload as a native backend for Figma Make**: CMS, database, APIs, authentication and file storage inside the same workflow.
+- **Figma MCP expansion**: the MCP server is faster, supports more surfaces, and can now generate Code Layers and read or write Specs from inside external AI tools. Twenty new partners joined, including OpenCode — which feeds design-system context to coding agents and sends prototypes back to Figma for review — plus Sarvam AI and Grok Bot. If your developers live in Cursor or Claude Code, the Figma context now travels with them instead of being locked in the design file.
+
+Read the bundle together and the strategy is obvious: Figma is racing to make sure AI-generated UI is constrained by your rules before it's generated at all. Context in, behaviour out. That's a smart bet, and it's also an admission — without the constraints, the generated output wanders.
+
+## The pricing reality: free now, metered from 5 November
+
+Here's the detail most coverage buried. Creating and editing Code Layers is **free on paid plans through 4 November 2026, inclusive**. After that, these tasks consume AI credits, and the amount scales with task complexity. Other agent actions may already consume credits.
+
+Figma hasn't published a per-task price list in the launch materials, so any article quoting you an exact per-prototype price is guessing. What we know from the announcement:
+
+1. The free window is a trial, not a pricing decision. It's 20 days, and it's designed to get you hooked before the meter starts.
+2. Pricing is usage-based and opaque until it isn't. "Depends on task complexity" means your bill depends on how your team prompts.
+3. This lands on top of paid plans. You need a Professional, Organisation or Enterprise seat to play at all.
+
+For context on what this means in real money: our studio's observed range for Figma spend in small Pakistani agencies is $15–45 USD per editor per month today (roughly PKR 4,200–12,600 at current rates). AI credit overages will stack on top of that. If your designers start treating the agent like a junior developer — generating and regenerating prototypes all day — your Figma bill stops behaving like software and starts behaving like cloud compute. Set a credit budget before your team discovers the feature, not after finance asks questions.
+
+A practical way to size it: during the free window, log every Code Layer generation and edit per project for two weeks. Count tasks, not hours. If a typical landing page prototype takes 15–25 agent actions across revisions, you have a baseline for what the meter will charge once it starts. Multiply by your monthly project volume and you have a budget number you can defend — or a reason to keep prototyping in a cheaper tool and reserve Code Layers for client-facing reviews only.
+
+## What it breaks: the new handoff problem
+
+The design-to-development handoff has been the industry's open wound for a decade. Our [Figma-to-code workflow guide](/blog/figma-to-code-workflow-2026) walks through how we currently bridge it. Code Layers doesn't heal the wound. It moves it.
+
+Figma's chief design officer Loredana Crisan [told TechCrunch](https://devops.com/figma-gives-ai-agents-a-spec-sheet-and-developers-a-shared-canvas) that teams now produce 17 times as many lines of code as before, but only 1.3 times as many releases. Most of that code exists to figure out what the product should be, not to ship. Code Layers is Figma's answer to where that exploration should happen: on the canvas, where everyone can see it, comment on it, and — critically — decide which of the 17x is worth keeping.
+
+That's a genuine improvement. But it creates three new problems that nobody is talking about yet.
+
+### Who owns the prototype code?
+
+When a designer prompts an agent into a working prototype, who reviews the code? In our studio, that question now has an uncomfortable answer: the developer has to review prototype code that was never meant for production but will absolutely be copy-pasted into it. Code Layers code is "real" enough to run and "temporary" enough to be sloppy. Teams need a rule — ours is that nothing leaves a Code Layer without a developer pass — or prototype shortcuts will fossilise into production debt.
+
+### The review burden moves, not shrinks
+
+A [Figma-run randomised trial](https://research.breon.ai/) (100 participants, arXiv, 22 September) found that product managers finished UI tasks 35% faster with Figma Make, while designers showed no significant aggregate time saving — their only real gain was building interaction prototypes 26% faster. The leverage is in widening who can produce UI, not in speeding up people who already could. Code Layers extends that pattern: your PMs and marketers can now generate working prototypes. That means designers spend more of their week reviewing other people's generated work. That's a real job, and it needs to be recognised as one — in job titles, in time allocation, in compensation. Only [28% of design leaders](https://research.breon.ai/) have updated evaluation or compensation to match the expanded scope.
+
+The practical consequence for studios: your design review meetings change shape. Instead of walking through static screens, you're clicking through behaviours — and behaviour review is slower, because you have to test the edge cases, not just look at the happy path. Budget review time accordingly. A prototype that took ten minutes to generate can take an hour to properly evaluate, and the evaluation is where the quality actually lives.
+
+### The 60% problem
+
+Figma's claim that its agent wins 60%+ of human-graded evaluations against professional designers sounds impressive until you ask what "wins" means in a graded evaluation. Nobody's production incident has ever been caused by a graded evaluation. Before you let agent-generated Code Layers near a client project, run your own test: have the agent rebuild one of your shipped components, then have a senior engineer review it blind. We did. The results were instructive enough that we wrote new rules about it.
+
+## Figma Code Layers vs the alternatives
+
+Code Layers doesn't launch into a vacuum. Here's how it stacks up against the tools teams actually use for interactive prototyping and design-to-code in late 2026.
+
+![Abstract artwork showing three glowing prototype windows connected by threads, representing side-by-side comparison of design variants](/blog/figma-code-layers-open-beta-2026/fig2.webp)
+
+| Tool | What it does | Strength | Weakness | Best for |
+|---|---|---|---|---|
+| **Figma Code Layers** | Running code on the design canvas, both directions | Review happens where design happens; GitHub/MCP imports | Metered AI credits from 5 Nov; open beta, gradual rollout | Teams already living in Figma on paid plans |
+| **Figma Make** | Prompt-to-app generation | Fastest zero-to-app; now with Payload backend | Generates apps, not components; less control | Early concepts, MVPs, internal tools |
+| **Framer** | High-fidelity interactive prototyping | Real streaming interactions, publishable sites | Separate tool, separate file, separate subscription | Marketing sites, motion-heavy prototypes |
+| **Vercel v0 / Lovable-style builders** | Prompt-to-UI with deployment | Ships to production URL in minutes | Design-system adherence is weak; no canvas review | Founders validating ideas fast |
+| **Penpot** | Open-source design tool | Self-hosted, no per-seat AI meter (your models, your cost) | Smaller ecosystem, fewer AI features | Cost-sensitive teams, open-source shops |
+
+Our position: if you're already on Figma paid plans, Code Layers is the right horse — the review-on-canvas loop is genuinely new, and the Guidelines/Specs constraint system is the only serious attempt anyone has made at taming generated UI. But it's a bet on Figma's roadmap, not a finished product. The closed-beta Code sources feature is the one that makes this trustworthy at scale, and you can't have it yet.
+
+## Our verdict: who should adopt now
+
+We don't do both-sides mush, so here are positions.
+
+**Adopt now if:** you're on Figma Professional or above, your team already reviews interactive prototypes weekly, and you have a senior engineer willing to own prototype-code review. The free window through 4 November is a genuine gift — run your hardest prototyping workflow through it and measure.
+
+**Wait if:** you're on the free plan, your workflow is still screen-based, or your team is small enough that one person does design and development. The meter starts in three weeks and the feature is still in open beta. Let the pricing settle.
+
+**Skip for now if:** your bottleneck is decision-making, not prototyping. Code Layers makes it cheaper to explore and more expensive to decide — 17x the code, remember. If your team already struggles to kill bad ideas, this tool will bury you in working prototypes of things nobody wanted.
+
+One more position, aimed at freelancers specifically: don't upgrade your Figma plan just for Code Layers. A solo freelancer on a Professional seat is the worst possible economics for a metered feature — you get all of the credit burn and none of the collaboration payoff that justifies it. Stay on your current plan, try the feature on one personal project during the free window, and let the agencies figure out the pricing before you commit a dollar.
+
+And the position that matters most for our market: **Pakistani studios should trial this aggressively.** Figma chose India for this launch because India is its second-largest market by daily active users. Pakistan's design and dev shops compete in the same talent pool and the same time zones. The studios that learn to run client reviews on live Code Layers before the credit meter starts will have a genuine differentiator in US client pitches by Q1 2027. We've already started — this is exactly the kind of [design-to-development workflow](https://www.aisquadx.tech/services) we run for clients, and Code Layers slots into it.
+
+## Setting up a Code Layers workflow that won't collapse
+
+If you're adopting, do it with rules. Here's the setup we'd recommend to any team, based on our first week in the beta:
+
+1. **Write a Specs doc before you generate anything.** Code Layers without constraints produces median output. Document your tokens, your component rules and your tone in Specs first — [our Specs guide](/blog/figma-specs-explained-2026) shows how. The 26% prototyping speedup the trial found only materialises when the agent isn't guessing your design system.
+2. **Publish Guidelines for every library the agent touches.** Guidelines are read on every prompt when the library is enabled. This is your cheapest quality control.
+3. **Assign a code owner for every Code Layer.** Name the engineer who reviews it. No owner, no merge into anything real. Prototype code rots fast and gets copied faster.
+4. **Set an AI credit budget per project.** Decide now what a prototype is worth to you in credits, before the 4 November meter starts. Track it for two weeks during the free window so the meter doesn't surprise you.
+5. **Run the blind review test.** Agent-rebuild one shipped component, senior engineer reviews it blind, compare against your human-built version. Do this before client work, not during it.
+6. **Keep the extraction habit.** The reverse direction — pulling a running prototype back into editable design layers — is the sleeper feature. Use it to capture the states your user testing actually validated, so the reasoning survives even if the code doesn't.
+7. **Version your prompts, not just your designs.** When the agent produces a direction worth keeping, save the prompt and the Specs state alongside the layer. Regeneration is only reproducible if you know what you asked for.
+8. **Decide the exit path per prototype.** Before generating, agree what happens to this layer: throwaway exploration, client review artefact, or candidate for production rebuild. Most Code Layers should be throwaway. The ones that aren't need the code owner's sign-off in writing.
+
+## The Pakistan angle: why this launch matters locally
+
+Figma didn't pick Bengaluru by accident. India is now its second-largest market by daily active users, and the whole Config India programme — including Sarvam AI joining the MCP ecosystem — is a bet on South Asian product teams. Pakistani studios sit in the same talent pool, the same time zones, and increasingly the same client markets. What applies to a Bengaluru agency applies to one in Lahore or Karachi, with one extra wrinkle: currency.
+
+Every AI-credit price Figma eventually publishes will be in dollars. A US studio absorbs metered prototyping as a rounding error. A Pakistani freelancer billing a client PKR 150,000 for a landing page cannot. The free window through 4 November is therefore worth more to local teams than to anyone — it's the only period where the cost of learning is zero. Use it to build the muscle memory, the Specs docs and the Guidelines libraries now, while experimentation is free. When the meter starts, you'll know exactly which prototypes are worth paying for and which were always throwaway.
+
+There's a second local angle: client perception. US clients hiring Pakistani studios often worry — fairly or not — about process maturity. Running a design review where the client clicks through a live Code Layer instead of squinting at annotated screenshots is a credibility signal that's hard to fake. Pakistani coverage of the launch [has already flagged](https://originpakistan.com/article/figma-code-layers-open-beta-ai-design-guidelines-2026) the gradual rollout and the free-credit window; the studios that move first will be pitching with a workflow their competitors haven't touched yet.
+
+The honest caveat: don't reorganise your pricing around a feature that's still in open beta with unpublished credit pricing. Trial it, learn it, but quote your clients on the workflow you can deliver today — not the one Figma might let you deliver in January.
+
+## Frequently asked questions
+
+**What are Figma Code Layers?**
+Code Layers are running, code-backed prototypes that live directly on the Figma design canvas. Instead of static screens linked by prototype arrows, a Code Layer contains actual working code you can interact with, edit, and duplicate to explore design directions — all inside the same file as your visual designs.
+
+**When did Figma Code Layers enter open beta?**
+Figma moved Code Layers from private beta (running since June 2026) into open beta on 15 October 2026, announced at Config India in Bengaluru. Rollout is gradual, so not every account sees the feature immediately.
+
+**How much do Figma Code Layers cost?**
+Creating and editing Code Layers is free on paid plans through 4 November 2026 inclusive. After that, these tasks consume Figma's AI credits, with costs scaling by task complexity. Heavy users should budget for ongoing credit spend.
+
+**Can you turn an existing Figma design into a Code Layer?**
+Yes. Prompt Figma's agent to convert a design frame, import a GitHub repository, connect an external coding agent through the Figma MCP, start from a blank code layer, or capture a live webpage with Figma's Chrome extension. It also works in reverse — extract editable design layers from a running prototype.
+
+**Do Code Layers replace the developer handoff?**
+No. They produce working prototypes, not production code wired to your backend. The handoff shifts from static specs to running behaviour, which means developers now review prototype code quality rather than interpreting screens.
+
+**Should a small studio adopt Figma Code Layers in 2026?**
+If you run paid Figma plans and review interactive prototypes regularly, the free window through November 2026 is a low-risk trial. If your workflow is still screen-based, wait for pricing and the feature to mature before reorganising around it.
+
+## The canvas is the product now
+
+Figma's bet is simple: the exploration code your team already produces 17x of should live where the whole team can see it, argue about it, and kill it. Code Layers is the first serious implementation of that bet, and the constraint system around it — Specs, Guidelines, Code sources — is the only honest answer anyone has offered to the problem of AI-generated UI that looks fine and means nothing.
+
+Our studio's take after a week in the beta: adopt it with rules, budget the credits, and never let prototype code reach production without a human pass. The teams that learn this discipline before the meter starts on 5 November will be the ones still smiling in Q1. And if Figma extends the free window or publishes friendlier credit pricing — both plausible, given how aggressively they're courting the South Asian market — the early learners benefit twice.
+
+If you want a team that already runs this workflow on client work — design, working prototypes and production code in one loop — [talk to us](https://www.aisquadx.tech/contact). We'll show you what Code Layers looks like on a real project, not a demo.
