@@ -1,0 +1,253 @@
+export const meta = {
+  title: "Claude Haiku 5.5: The Small AI Model That Cut Costs 75%",
+  description:
+    "Claude Haiku 5.5 is Anthropic's cheapest model: 75% cheaper at $0.10/$0.50 per 1M tokens. Our 2026 guide to pricing tiers, effort levels and the Luna showdown.",
+  date: "2026-10-21",
+  category: "Tech News",
+  categorySlug: "tech-news",
+  keywords: [
+    "Claude Haiku 5.5",
+    "Claude Haiku 5.5 pricing",
+    "cheapest AI model 2026",
+    "small AI models for business",
+    "Claude Haiku 5.5 vs GPT-6 Luna",
+    "AI subagent model",
+  ],
+  author: "AISquadX Studio",
+  image: "/blog/claude-haiku-5-5-small-model-guide-2026/cover.webp",
+  faq: [
+    {
+      q: "How much does Claude Haiku 5.5 cost?",
+      a: "Claude Haiku 5.5 costs $0.10 per million input tokens and $0.50 per million output tokens for prompts up to 100,000 tokens. Above 100,000 tokens the whole request jumps to $0.50 input and $2.50 output — a 5x cliff. Anthropic says it costs around 75% less to run on average than Haiku 4.5, and roughly 90% less for requests under the 100K line.",
+    },
+    {
+      q: "When was Claude Haiku 5.5 released?",
+      a: "Anthropic released Claude Haiku 5.5 on 7 October 2026. It is the third model in the Claude 5.5 family, following Opus 5.5 (22 September) and Sonnet 5.5 (28 September). It went live the same day on the Claude API, Claude.ai plans, Amazon Bedrock, Google Cloud and Microsoft Foundry.",
+    },
+    {
+      q: "What is Claude Haiku 5.5 best for?",
+      a: "High-volume, cost-sensitive work: classification, extraction, routing, summarisation, database queries, live customer support, browser tasks and subagent work. It is the model to route repetitive jobs to while a larger model handles planning. It is not the right pick for hard agentic coding — Anthropic points that work at Sonnet 5.5 or Opus 5.5.",
+    },
+    {
+      q: "What are the effort levels in Claude Haiku 5.5?",
+      a: "Five levels — low, medium, high, xhigh and max — that control how much the model thinks before answering. Medium is the default. Use low for chat and bulk high-volume requests, high for knowledge work and longer agent tasks, and xhigh/max only where your own evaluations show a gain. This is the first Haiku model to offer the setting.",
+    },
+    {
+      q: "Is Claude Haiku 5.5 better than GPT-6 Luna?",
+      a: "At the same $0.10/$0.50 list price, yes on Anthropic's own benchmark table: Haiku 5.5 scores higher than GPT-6 Luna on every shared benchmark, including 72.4% vs 48.9% on OSWorld 2.1 and 1620 vs 1437 on GDPval-AA v2.1. Independent Artificial Analysis testing also ranks Haiku 5.5 at max effort above Luna. Treat vendor benchmarks as directional and run your own evals before switching.",
+    },
+    {
+      q: "How do I switch from Claude Haiku 4.5 to 5.5?",
+      a: "It is not a drop-in swap. Haiku 5.5 replaces the manual thinking budget with effort levels, thinking is now on by default, the 100K-token pricing tier changes your cost model, and the newer tokenizer spends slightly more tokens per task than Haiku 4.5's. Anthropic's prompting guide says to test your workloads against 2–3 effort levels on your own evaluations before migrating. Plan a short migration, not a model-name change.",
+    },
+    {
+      q: "Does Claude Haiku 5.5 work in Claude Code?",
+      a: "Yes. It is positioned as the subagent model for Claude Code: orchestrator models like Opus 5.5 or Sonnet 5.5 handle planning while Haiku 5.5 runs underneath as the fast worker for exploration, reads, and bounded sub-tasks. Anthropic also ships it with computer and browser use in beta through the SDKs.",
+    },
+    {
+      q: "Is Claude Haiku 5.5 open source?",
+      a: "No. Claude Haiku 5.5 is a proprietary Anthropic model available through the Claude API, Claude.ai subscriptions, and cloud platforms (AWS, Google Cloud, Microsoft). If you need open weights for local deployment, look at the open-weight class of models instead.",
+    },
+  ],
+};
+
+Anthropic just did the most boring-sounding and most consequential thing in AI pricing this year: it made its small model 75% cheaper. Claude Haiku 5.5 launched on 7 October 2026 at $0.10 per million input tokens and $0.50 per million output tokens — one-tenth the price of its predecessor for the requests that matter most, and exactly the list price OpenAI charges for GPT-6 Luna.
+
+Why should you care? Because the small model is where your business actually spends money. Nobody runs a support chatbot, a document classifier, or a data-extraction pipeline on a flagship model — not twice, anyway, not after the first invoice. High-volume AI work lives or dies on fractions of a cent per request. Haiku 5.5 redraws that math, and its adjustable "effort" dial gives you something the previous generation never had: a knob to trade cost for quality per request.
+
+We build AI automation for clients, and we have opinions about this launch. Here is what changed, what it actually costs in practice, where the traps are, and when you should switch.
+
+## What Claude Haiku 5.5 actually is
+
+Haiku is Anthropic's small-model tier — the fast, cheap one — sitting underneath Sonnet 5.5 and Opus 5.5. It is the third and final member of the Claude 5.5 family: Opus 5.5 arrived 22 September, Sonnet 5.5 on 28 September, and Haiku 5.5 closed out the set on 7 October, weeks ahead of Anthropic's anticipated public listing, [as Reuters reported](https://www.reuters.com/business/anthropic-launches-third-claude-55-model-expanding-ai-lineup-before-planned-ipo-2026-10-07/).
+
+Anthropic's own pitch: "the cheapest, fastest, and most capable small model we've ever released," built for the jobs you run thousands of times a day — summaries, compactions, database queries, classification, routing. It is available now (no staged rollout) on the Claude API as `claude-haiku-5-5`, in the model picker on Claude.ai from Free through Enterprise, and on Amazon Bedrock, Google Cloud and Microsoft Foundry.
+
+The headline specs:
+
+| Spec | Claude Haiku 5.5 | Haiku 4.5 |
+| --- | --- | --- |
+| Context window | 1M tokens | 200K tokens |
+| Max output | 128K tokens | 64K tokens |
+| Thinking | Adaptive, on by default | Manual budget, off by default |
+| Effort setting | Low to max, medium default | None |
+| Smallest cacheable prompt | 512 tokens | 4,096 tokens |
+| Input price (up to 100K tokens) | $0.10/1M | ~$1.00/1M |
+| Output price (up to 100K tokens) | $0.50/1M | ~$5.00/1M |
+
+Two details in that table deserve your attention more than the price cut. First, the context window jumped from 200K to a million tokens, which changes what the small model can chew through in one request. Second, the smallest cacheable prompt dropped from 4,096 to 512 tokens — cache reads cost a mere $0.01 per million tokens, so repeated calls with shared system prompts get much cheaper. If your agent architecture reuses prompts across turns (most do), that cache floor matters as much as the token price.
+
+It also reads text and images, and it is the first Haiku with built-in safeguards for a narrow set of high-risk cybersecurity requests. Its reliable knowledge runs to June 2026 — anything newer has to come from your prompt or a search tool.
+
+## The pricing, honestly: where the 75% comes from and the cliff it hides
+
+Here is the part every news piece glosses over. The 75% cheaper figure is an average. The actual structure is a two-tier system with a cliff edge:
+
+| Request size | Input / 1M tokens | Output / 1M tokens |
+| --- | --- | --- |
+| Up to 100,000 tokens | $0.10 | $0.50 |
+| Above 100,000 tokens | $0.50 | $2.50 |
+
+Cross the 100K line and the entire request costs five times more. Anthropic's framing: requests up to 100K tokens are 90% cheaper than Haiku 4.5; requests above it are 50% cheaper; averaged across traffic, about 75% less to run — because Anthropic says roughly 90% of Haiku requests fall under the 100K line.
+
+That 90% figure is Anthropic's fleet-wide average, not your workload's. If your use case is summarising 300-page PDFs, your requests live above the line and the saving shrinks to 50%. The honest move: measure your own prompt-size distribution before you quote the 75% to anyone. We have seen plenty of automation builds where the median request sits well above what the founder assumed.
+
+A few more pricing facts that change the maths:
+
+- **Cache reads are nearly free.** $0.01 per million tokens for prompts under 100K. Design your prompts so the system instructions and few-shot examples are cacheable, and per-turn costs collapse. The 512-token cache floor means even modest shared prompts qualify now.
+- **The newer tokenizer is thirstier.** Haiku 5.5's tokenizer spends slightly more tokens per task than Haiku 4.5's. Never compare list prices across generations without measuring on your own traffic — your actual bill is tokens × price, and both factors changed.
+- **Thinking counts as output.** Thinking tokens are billed as output tokens at $0.50/1M. That effort dial you are about to read about is not free — higher effort means more thinking tokens at output rates.
+
+For context on what this means in dollars: independent estimates put classification-style work at about $350 per million calls of 2K input and 300 output tokens on Haiku 5.5 versus roughly $14,000 on Opus 5.5 at list prices. That is the gap between "AI feature we can afford to ship" and "AI feature that needs a finance committee."
+
+![Claude Haiku 5.5 pricing tiers illustrated as a dial gauge pointing to low cost](/blog/claude-haiku-5-5-small-model-guide-2026/fig1.webp)
+
+## Run the numbers: what Haiku 5.5 costs for a real business
+
+Token prices are abstract until you multiply them by your traffic. Here are three builds we would actually price, with the arithmetic shown so you can adapt it.
+
+**Example 1: support triage bot, 50,000 chats a month.** Each chat averages 1,500 input tokens (system prompt, conversation history, retrieved help articles) and 250 output tokens. On Haiku 5.5 at `medium` effort: input costs 50,000 × 1,500 / 1M × $0.10 = $7.50; output costs 50,000 × 250 / 1M × $0.50 = $6.25. Total: roughly **$14 a month** — about PKR 4,000 at prevailing bank rates. On Haiku 4.5 list prices that same workload was around $140. And with prompt caching on the system prompt and help articles (cache reads at $0.01/1M), the input line drops further — in our experience caching halves input spend on retrieval-heavy bots.
+
+**Example 2: invoice extraction pipeline, 2 million documents a month.** Each document: 2,000 input tokens, 300 output tokens, `low` effort because the output is machine-validated against an accounting schema. Input: 2M × 2,000 / 1M × $0.10 = $400. Output: 2M × 300 / 1M × $0.50 = $300. Total: **$700 a month**, against roughly $7,000 on Haiku 4.5. This is the build that did not clear the ROI bar six months ago and does now. Watch the 100K line: these requests sit far below it, so the full 90% saving applies.
+
+**Example 3: long-document research summaries, 20,000 a month.** Each request: 150,000 input tokens — deliberately over the 100K cliff, because the documents are long. Price per request: 150,000 / 1M × $0.50 input = $0.075, plus 800 output tokens × $2.50/1M = $0.002. Total: about **$1,540 a month**. Here Haiku 5.5 is only 50% cheaper than its predecessor, and this is exactly the workload where GPT-6 Luna's 272K-token tier starts looking attractive. Our call: chunk the documents so requests stay under 100K and the cost falls to roughly $330 a month, or benchmark Luna. Never pay the cliff rate out of habit.
+
+The pattern across all three: measure your own prompt-size distribution first. The 75% headline is real, but your saving is a function of where your requests land relative to 100K tokens, how much of your prompt is cacheable, and which effort level you actually need. We price every client build with these three levers before we pick a model.
+
+## The effort dial: first time a Haiku gets a brain knob
+
+This is the genuinely new feature, and it is the one most coverage undersells. Haiku 5.5 is the first Haiku-class model with an adjustable effort setting — five levels, `low` to `max`, medium by default. It replaces the old thinking-budget mechanism entirely: there is no `budget_tokens` to port over from Haiku 4.5.
+
+What each level is for, straight from Anthropic's [prompting guide](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-haiku-5-5):
+
+- **`low`** — cheapest and fastest. Chat, short tool calls, simple high-volume requests. The documented warning: in long agent prompts at `low`, the model is more likely to skip a search, stop early, or skip a check. Independent testing suggests moving from low to medium roughly halves early stopping — at the cost of more than doubling output tokens per attempt. You pay about twice as much to have it give up half as often.
+- **`medium`** — the default. Start here for most work, including agentic coding.
+- **`high`** — knowledge work, longer agent tasks, strict instruction following.
+- **`xhigh` / `max`** — only where your own evaluations show a gain. Thinking and replies get much longer here, and Anthropic explicitly tells you to compare against Sonnet 5.5 on performance, cost and speed at this point. You cannot even disable thinking at `xhigh` and `max` — the request returns a 400 error.
+
+Our studio's judgment call: **default every pipeline to `medium`, drop to `low` only where output is machine-checkable, and never run `xhigh` or `max` on Haiku without a side-by-side against Sonnet 5.5.** The curve flattens fast — independent Artificial Analysis testing puts the Intelligence Index at 29 at low effort and 43 at max, while cost per task goes from about $0.02 to $0.21. Roughly 10x the cost for about 48% more measured intelligence. Most workloads should not live at the right-hand end.
+
+### Effort levels in practice: a routing cheat sheet
+
+In client builds we route by workload, not by vibes. Here is the cheat sheet we actually use:
+
+| Workload | Effort | Why |
+| --- | --- | --- |
+| Support chat replies, template-driven | `low` | Latency matters most; every reply is human- or rule-reviewed |
+| Classification, tagging, routing at volume | `low` | Output is machine-checkable; cheapest correct answer wins |
+| Extraction from invoices, forms, contracts | `low` to `medium` | `low` if a schema validates the output, `medium` if it does not |
+| Summaries and document Q&A | `medium` | The default; long-context reading is this model's strength |
+| Subagent exploration in Claude Code | `medium` | Anthropic's documented home for subagents |
+| Browser-use tasks with multi-step tools | `high` | Strict instruction following over long tool chains |
+| Hard reasoning, evaluation-grade coding | compare Sonnet 5.5 | If you are reaching for `xhigh`/`max`, you are buying the wrong model |
+
+Two footnotes from practice. First, `low` has a documented failure mode in long agent prompts — skipping searches, stopping early, skipping checks. If your agent's success rate drops at `low`, the fix is usually `medium`, not a bigger model. Second, thinking tokens are billed as output, so the cost of `max` is not just slower — it is materially more expensive per task. One client pipeline we audited was running everything at `high` by default; dropping the bulk path to `medium` cut the monthly bill by a third with no measurable quality change. Set the dial per workload, not per account.
+
+The cleanest cost architecture in the 5.5 family, and the one Anthropic itself keeps pointing at: run your orchestrator at `high` or `xhigh` and your workers at `low`. The leader plans, the workers execute cheap. Which brings us to where Haiku 5.5 actually belongs.
+
+## Where it belongs: the subagent economy
+
+Anthropic's product positioning for Haiku 5.5 is unusually explicit. It pitches the model as the junior half of a two-model workflow: Opus 5.5 or Sonnet 5.5 handles planning and hard reasoning; Haiku 5.5 runs underneath as the subagent for speed-sensitive chores — live customer support, browser use, codebase exploration, bounded extraction.
+
+This is not marketing fluff; it is how the modern agentic stack is actually built. One orchestrator fans out dozens of worker calls. The workers are where volume lives, so the workers are where cost lives. A model that is fast, cheap, decent at following instructions, and — crucially — good at operating a computer (72.4% on OSWorld 2.1 against 15.7% for Haiku 4.5) is purpose-built for exactly this slot.
+
+Evidence it is working in the wild: Asana reported more than a 30% reduction in latency for task completions and up to 2.5x faster inference per agent turn compared with its previous model, [per Moneycontrol's coverage](https://www.moneycontrol.com/technology/anthropic-launches-claude-haiku-5-5-its-most-affordable-and-fastest-model-yet-article-14047297.html).
+
+But know the boundary. Anthropic's own announcement points complex agentic coding to Sonnet 5.5 and Opus 5.5 instead of Haiku. Independent comparisons back the caution: Haiku 5.5 at max effort lands below Opus 5.5 at its lowest effort on automation benchmarks, and when Haiku ran at max effort to match Opus at low, Opus cost only 2.6x as much while finishing each task 4.9x faster. Our rule of thumb for client builds:
+
+| Workload | Run it on | Why |
+| --- | --- | --- |
+| Classification, extraction, routing, tagging at volume | Haiku 5.5 at `low` or `medium` | Output is easy to validate; the cost gap is enormous |
+| Summaries, document Q&A over text you supply | Haiku 5.5 at `medium` or `high` | Long-context reading holds up; watch the 100K price line |
+| Codebase search, Explore-style subagents | Haiku 5.5 | Read-only work where Anthropic positions it; fast and cheap |
+| Multi-step automation, long agentic coding | Sonnet 5.5 / Opus 5.5 | Haiku's automation scores sit below the bigger models at their lowest effort |
+| Answers from the model's own knowledge | Sonnet 5.5 / Opus 5.5 | Haiku's knowledge-reliability scores are materially weaker |
+| Live support with latency pressure | Haiku 5.5 at `low` or `medium` | 2.5x faster inference per agent turn is a UX win, not just a cost win |
+
+![A central AI orchestrator hub directing a swarm of smaller worker agents](/blog/claude-haiku-5-5-small-model-guide-2026/fig2.webp)
+
+## Haiku 5.5 vs GPT-6 Luna: the small-model title fight
+
+Haiku 5.5 launched at exactly GPT-6 Luna's list price — $0.10 in, $0.50 out. That is not a coincidence; it is a declaration. Here is how the two stack up.
+
+**On Anthropic's own table**, Haiku 5.5 beats Luna on every shared benchmark:
+
+| Benchmark | Claude Haiku 5.5 | GPT-6 Luna |
+| --- | --- | --- |
+| OSWorld 2.1 (desktop operation) | 72.4% | 48.9% |
+| Terminal-Bench 4.0 (command-line tasks) | 39.2% | 16.4% |
+| FrontierCode 1.1 Main (coding) | 46.4% | 42.4% |
+| GDPval-AA v2.1 (office work) | 1620 | 1437 |
+
+The widest gaps are where the model operates a computer or a terminal; the smallest is pure coding. Note the caveat: these are Anthropic's numbers, and the company does not say whether it ran Luna itself or used OpenAI's figures.
+
+**Independent testing** (Artificial Analysis, as summarised by [Token Harbor's comparison](https://tokenharbor.ai/blog/claude-haiku-5-5-vs-gpt-6-luna-and-china-s-flash-models)) puts Haiku 5.5 at max effort ahead of Luna on the Intelligence Index (43 vs 38) — but the broader field is crowded. DeepSeek V4.1 Flash leads on agent automation benchmarks, GLM 5.3 Flash stays competitive across independent tests, and GPT-6 Luna uses fewer tokens on the same suite. There is no universal winner.
+
+**The pricing footnote that favours Luna**: Luna holds its $0.10/$0.50 rate up to 272K-token prompts; Haiku's price quintuples past 100K. If your workload is long-context-heavy, Luna's effective price can be lower despite identical headline rates. Read the tier boundaries, not the headlines.
+
+Our take: for US and Pakistan-based teams building high-volume pipelines — support bots, extraction, routing — Haiku 5.5 is now the default model to evaluate first. The 1M context window, the sub-512-token cache floor, and the effort dial are a combination Luna does not match at this price. But evaluate is the operative word. Both vendors' tables are marketing documents with error bars.
+
+## The traps we would watch for
+
+Every launch has fine print. After reading the announcement, the system card notes and the independent write-ups, here are the five traps we are telling clients about:
+
+1. **The 100K cliff is retroactive to the whole request.** It is not "first 100K at $0.10, the rest at $0.50" — cross the line and the entire request reprices at 5x. One long document in a batch can silently multiply that batch's cost. Instrument prompt sizes before and after migration.
+
+2. **Vendor benchmarks are not your benchmarks.** Anthropic's table does not say whether it ran GPT-6 Luna itself or used OpenAI's figures. Independent Artificial Analysis results are closer to neutral ground, and even those are on a task mix that is not yours. The only benchmark that matters is a 200-sample eval of your own workload.
+
+3. **The tokenizer change breaks price comparisons.** Haiku 5.5 spends slightly more tokens per task than Haiku 4.5. Comparing list prices across generations without measuring your token counts will overstate the saving. Measure twice.
+
+4. **Knowledge stops at June 2026.** For anything time-sensitive — this month's prices, this week's regulations — the model needs retrieval. A small model with search tools beats a big model guessing from memory, and Haiku 5.5's long context makes it a good retrieval reader. Build the search in; do not rely on the weights.
+
+5. **High effort can lose to a bigger model on low.** Independent comparisons found that when Haiku 5.5 ran at `max` effort to reach Opus 5.5's low-effort score, Opus cost only 2.6x as much and finished 4.9x faster. If you find yourself cranking the dial to the top, stop — you have the wrong model for that job.
+
+## Migrating from Haiku 4.5: it is a project, not a rename
+
+Do not `s/4-5/5-5/` in your config and call it a day. Four things break or change:
+
+1. **Thinking budgets are gone.** Effort levels replace `budget_tokens`. Test your workloads at 2–3 levels; start at `medium`.
+2. **Thinking is on by default.** It counts toward `max_tokens`, and a value sized for Haiku 4.5's non-thinking calls can cut replies off. Leave room — or explicitly disable thinking, which only works at `low`, `medium` and `high`.
+3. **The 100K pricing line is new.** Audit your prompt-size distribution. Anything habitually above 100K tokens costs 5x the headline rate.
+4. **Token counts shift.** The newer tokenizer spends slightly more tokens per task. Measure cost on your own traffic, not the price sheet.
+
+Anthropic's retirement commitment for Haiku 5.5 on its own platform runs to at least 7 October 2027, so there is no rush — but there is also no reason to keep paying 10x for the requests that fit the new tier.
+
+## What this means for your 2026 AI budget
+
+Zoom out. Haiku 5.5 is the third move in a price war that has been running all year: we covered [how to keep AI agent spend under control](/blog/ai-agent-cost-control-2026) last week, and the pattern is the same — model prices keep falling, but bills keep rising because usage grows faster. The launch does not change that dynamic; it changes where the savings sit.
+
+Our honest read for business owners:
+
+- **If you buy AI features from vendors**, ask which models they run and whether small-model price cuts are flowing through to your per-seat or per-usage fees. A vendor charging you per conversation on flagship-model economics in October 2026 is either uninformed or overcharging.
+- **If you build in-house**, the orchestrator-plus-Haiku-workers pattern is now the cost-optimal default architecture for anything with volume. Budget per completed task, not per month.
+- **If you are in Pakistan or the US evaluating [AI automation for a small business](/blog/ai-automation-cost-small-business-2026)**, this launch meaningfully lowers the floor. Tasks that did not clear the ROI bar at Haiku 4.5 prices — bulk ticket triage, contract clause extraction, catalogue enrichment — are worth re-running the numbers on at one-tenth the token cost.
+
+The broader lesson of the Claude 5.5 family: the frontier is no longer "which model is smartest." It is "which model is smart enough at which price, for which slot in the pipeline." Haiku 5.5 wins its slot decisively. Run your own evals, watch the 100K line, and route the boring work down — that is where the money was always hiding.
+
+## FAQ
+
+**How much does Claude Haiku 5.5 cost?**
+$0.10 per million input tokens and $0.50 per million output tokens for prompts up to 100,000 tokens; above that, the whole request costs $0.50 input and $2.50 output. Anthropic says it runs about 75% cheaper on average than Haiku 4.5.
+
+**When was Claude Haiku 5.5 released?**
+7 October 2026, the third model in the Claude 5.5 family after Opus 5.5 (22 September) and Sonnet 5.5 (28 September). It launched simultaneously on the Claude API, Claude.ai, Amazon Bedrock, Google Cloud and Microsoft Foundry.
+
+**What is Claude Haiku 5.5 best for?**
+High-volume, cost-sensitive work: classification, extraction, routing, summarisation, database queries, live support, browser tasks and subagent work. Not hard agentic coding — Anthropic points that at Sonnet 5.5 and Opus 5.5.
+
+**What are the effort levels?**
+Five levels — low, medium, high, xhigh, max — controlling how much the model thinks per request. Medium is the default; low is for cheap bulk work; xhigh and max only where your own evaluations justify the cost. This is the first Haiku with the setting.
+
+**Is it better than GPT-6 Luna?**
+At the same $0.10/$0.50 list price, Haiku 5.5 leads Luna on Anthropic's shared benchmarks (notably 72.4% vs 48.9% on OSWorld 2.1) and on independent Artificial Analysis testing at max effort. Luna keeps its headline rate up to 272K tokens while Haiku's price quintuples past 100K, so long-context workloads may favour Luna.
+
+**How do I migrate from Haiku 4.5?**
+Plan a short project: effort levels replace thinking budgets, thinking is on by default (counting toward max_tokens), the 100K pricing tier changes your cost model, and the new tokenizer spends more tokens per task. Test 2–3 effort levels on your own evaluations before switching traffic.
+
+**Does it work in Claude Code?**
+Yes — it is positioned as the subagent model: Opus 5.5 or Sonnet 5.5 plan, Haiku 5.5 executes underneath as the fast worker for exploration and bounded sub-tasks. Computer and browser use ship in beta through the SDKs.
+
+**Is Claude Haiku 5.5 open source?**
+No — it is proprietary, available via the Claude API, Claude.ai plans and cloud platforms. For open weights and local deployment, the open-weight model class is the alternative.
+
+If you are planning AI automation and want help picking the right model for each slot in your pipeline — or just want an honest number for what it will cost per month — [talk to us](/contact). We run these evaluations for clients every week, and the cheapest architecture is usually not the one the vendor's pricing page suggests. You can also read more about [our AI integration services](/services) or [who we are](/about).
