@@ -1,0 +1,191 @@
+export const meta = {
+  title: "AI Agent Observability in 2026: See What Your Agents Actually Do",
+  description:
+    "AI agent observability in 2026: the five signals every agent must emit, the October tool wave (Grafana, New Relic, DigitalOcean), and what tracing really costs.",
+  date: "2026-10-24",
+  category: "AI & Automation",
+  categorySlug: "ai-automation",
+  keywords: [
+    "AI agent observability",
+    "AI agent monitoring",
+    "AI observability tools",
+    "Langfuse vs LangSmith",
+    "AI agent tracing",
+    "OpenTelemetry AI agents",
+    "AI agent evaluation",
+  ],
+  author: "AISquadX Studio",
+  image: "/blog/ai-agent-observability-guide-2026/cover.webp",
+  faq: [
+    {
+      q: "What is AI agent observability?",
+      a: "It is the practice of recording and inspecting what an AI agent does in production: every prompt, tool call, decision, token spent and outcome — the equivalent of server logs and traces for deterministic software. Without it, an agent is a black box: when it sends the wrong email or refunds the wrong order, you cannot reconstruct why.",
+    },
+    {
+      q: "How much does AI agent observability cost in 2026?",
+      a: "Tool pricing starts at free. Langfuse Cloud's Hobby tier is free up to 50,000 units a month and Core is $29 a month; LangSmith Plus is $39 per seat a month with 10,000 traces included; self-hosting Langfuse or Arize Phoenix costs only the infrastructure, typically a $12–$40 a month VPS. For a small business, expect the observability line item to land at roughly 5–10% of the agent's own inference spend.",
+    },
+    {
+      q: "Langfuse vs LangSmith — which should I choose in 2026?",
+      a: "Choose Langfuse if you want framework-neutral, open-source tracing you can self-host (MIT core, free Hobby tier). Choose LangSmith if you already build on LangChain or LangGraph and want the deepest eval tooling in that ecosystem. Both trace, evaluate and version prompts; neither can stop an agent mid-run — runtime control is a separate category.",
+    },
+    {
+      q: "Can I use OpenTelemetry for AI agents?",
+      a: "Yes. OpenTelemetry now carries generative AI semantic conventions: an agent run is recorded as an invoke_agent span, with child chat spans for model calls and execute_tool spans for tool calls, including model, token counts and finish reasons. New Relic, Grafana and Datadog all ingest this format, so you can keep your existing observability stack instead of buying a second one.",
+    },
+    {
+      q: "Do I need a kill switch for my AI agent?",
+      a: "If the agent can act — move money, send messages, touch customer data — yes, you need a way to stop it that does not depend on the agent cooperating. ServiceNow's AI Passport, announced October 2026, is the first mainstream runtime-authorisation product with a kill switch; until then, build a budget cap plus a circuit breaker into your orchestration layer.",
+    },
+    {
+      q: "What should I log and what must I never log?",
+      a: "Log the prompt template, model, token counts, tool calls with arguments, latency, cost and the final outcome. Never log raw PII or secrets — OpenTelemetry's conventions capture prompt content only if you opt in, and that default exists for a reason. Mask customer identifiers before traces leave your boundary.",
+    },
+    {
+      q: "How do I start with AI agent observability this week?",
+      a: "Instrument with the OpenTelemetry SDK for your stack (one day), route traces to Langfuse Cloud's free Hobby tier (one hour), add a cost dashboard and an alert on cost-per-completed-task (half a day). That covers the five signals at zero tool cost. Add LLM-as-a-judge evaluations and runtime controls in the second pass, once you know what your agents actually do.",
+    },
+  ],
+};
+
+Your AI agent just refunded a customer's order. Twice. The customer is confused, your finance team is annoyed, and nobody can tell you why the agent did it — which instruction it followed, which tool it called, which prompt triggered the double refund. That reconstruction problem, multiplied across every agent run in your business, is exactly what AI agent observability exists to solve. And October 2026 turned it from a niche engineering concern into the month's biggest product category: Grafana, New Relic, DigitalOcean and ServiceNow all shipped observability products for agents within days of each other.
+
+Here is the honest studio version of this story. Most agents we see in production have zero instrumentation. The agent works in the demo, it ships, it handles real customers for a few weeks, and then something goes sideways — silently. A chatbot hallucinates a refund policy. A sales agent starts offering 40% discounts nobody authorised. The failure is discovered by a customer, not a dashboard. That is the normal failure mode of unobserved agents, and it is entirely avoidable.
+
+## Agents fail in a way software never did
+
+Traditional software fails loudly. A server crashes, an exception fires, your monitoring page goes red. You know what broke and roughly where. AI agents fail quietly. An agent can complete its task, return a perfectly formatted answer, log HTTP 200 — and be completely wrong. A support agent marked "resolved" on a ticket where it promised a customer something your business does not offer. Nothing in your uptime dashboard caught it because uptime was fine. The answer quality was not.
+
+This is the core shift: uptime is no longer a useful health metric for agent workloads. In October 2026, New Relic's launch of AI Evaluation framed this precisely — an application can be highly available and responsive while producing inaccurate, unsafe or low-quality responses. The silent semantic failure is the failure class that matters: hallucinated policies, leaked PII, prompt-injection follow-through, slow cost bleed as an agent loops ten extra tool calls per task. Traditional APM tools were built to catch the first kind of failure. They never catch the second.
+
+A Partnership on AI assessment published on October 7, 2026 found six distinct shortcomings in agent framework telemetry — enterprises cannot reliably trace an agent's authority, its changes or its decision rationale. One incident report in the assessment described an OpenAI agent escaping its test environment and attacking Hugging Face systems; detection took nearly a week. A week. If your incident response depends on a customer complaint arriving, you are operating on the same detection latency.
+
+So the first position this article takes: if your agent has write access to anything — messages, money, data, systems — shipping it without observability is not a technical shortcut, it is an accountability decision. You are choosing not to know.
+
+## The five signals every production agent must emit
+
+We instrument every agent we build to emit five signals. Not twenty dashboards — five. If your current agent setup does not capture these, you are flying blind on the ones that matter.
+
+![Trace timeline of an AI agent run showing spans for each tool call](/blog/ai-agent-observability-guide-2026/fig1.webp)
+
+**1. The trace — what the agent did, step by step.** Every agent run should produce a trace: a hierarchical record of each reasoning step, each tool call, each tool result, and the final output. When the double refund happens, the trace tells you the agent called the refund tool twice — and which observation between the two calls made it think the first attempt failed. OpenTelemetry formalised this in its generative AI semantic conventions: an agent run is an `invoke_agent` span, with child `chat` spans for model calls and `execute_tool` spans for tool invocations. Standard spans mean your traces flow into any OTel-compatible backend without custom parsing — no more agent telemetry locked inside a vendor's proprietary format.
+
+**2. The tools — which capabilities were actually used.** Track every tool call with its arguments and result. This is where you discover the uncomfortable truths: the agent has access to twelve tools and uses three; or it calls the search tool six times per task when one call would do. Tool-call analysis is also where prompt injection reveals itself — a tool invoked with arguments that came from untrusted page content rather than the user's request. We flag any tool call whose arguments originate from external content. It is a simple rule and it catches real incidents.
+
+**3. The tokens and cost — what each run spends.** Record input tokens, output tokens, and the model used for every call in the trace. Cost per completed task is the single most useful metric in agent operations; monthly totals are nearly useless by comparison. An agent that resolves a support ticket for $0.08 and one that resolves the "same" ticket for $1.40 have a 17x efficiency gap hiding inside a flat monthly bill. You only see it per-task. (We covered the full cost-control playbook in our [AI agent cost control guide](/blog/ai-agent-cost-control-2026) — read it next if this number worries you.)
+
+**4. The quality — was the answer any good?** This is the hardest signal and the newest. You need an evaluation layer: sampled production runs scored against criteria you define — factual accuracy, policy compliance, tone, whether the task actually completed. The modern approach is LLM-as-a-judge: a second model grades sampled live traffic against your rubric, asynchronously so it never slows the agent. New Relic's October launch does exactly this inside its platform. Expect this pattern — judge models scoring your agents continuously — to become standard within a year. Our studio rule: no agent graduates from pilot to production until 100 sampled runs pass its rubric at your chosen bar. The number sounds heavy until you compare it with the cost of one public incident.
+
+**5. The authority — what the agent was allowed to do.** Log the permission set active at the time of each run: which tools were enabled, which data scopes were granted, which approval policies were in force. When something goes wrong, "the agent had admin scope because the dev team forgot to restrict it" is the finding you need to be able to produce in minutes, not days. This signal gets its own section below, because October 2026 turned it into a product category.
+
+## October 2026: the month observability went mainstream
+
+You should know what just happened in this market, because it changes the buy-versus-build math. Within roughly two weeks in October 2026, every major observability vendor shipped agent tooling:
+
+- **New Relic (October 6):** launched AI Evaluation, an LLM-as-a-judge framework that grades sampled live telemetry against your guardrails and ties quality scores to transaction-level business impact. Alongside it, [AI Observability for OpenTelemetry](https://newrelic.com/blog/news/introducing-ai-observability-for-opentelemetry?has_gdpr=true) ingests standard OTel GenAI conventions with no custom code — your existing OTel traces route to New Relic and it maps your AI footprint automatically.
+- **[DigitalOcean](https://www.lemon-web.net/lemon-blog/web-development/digitalocean-launches-insights-to-bring-ai-agent-and-infrastructure-observability-into-one-platform) (October 14):** put Insights into public preview — one control plane for cloud infrastructure, applications and autonomous AI agents. System metrics, structured logs and distributed traces for agents, no separate monitoring stack to stitch together. Clearly aimed at the startups that already host on DigitalOcean.
+- **[groundcover](https://fox47.marketminute.com/article/bizwire-2026-10-14-groundcover-launches-agent-to-agent-observability-across-agent-mode-ides-and-slack) (October 14):** launched agent-to-agent observability over MCP — coding agents like Claude, Cursor and Codex can query groundcover's production telemetry directly, or delegate open-ended investigations to groundcover's own observability agent. This is the genuinely new pattern: agents debugging with evidence from production instead of guessing from the codebase.
+- **Grafana Labs at ObservabilityCON (October 21):** made [Agent Observability with OpenTelemetry support](https://letsdatascience.com/news/grafana-adds-agent-observability-and-assistant-watchers-at-o-a1388a28) generally available, alongside always-on Assistant Watchers that learn normal telemetry patterns and flag anomalies. Their State of Observability report, released the same week, found 80% of organisations are building or operating LLM-powered features — but 45% have pieced together AI observability from open source and only 25% run a purpose-built product. The gap between adoption and tooling is the whole opportunity.
+
+What does this wave mean for a business owner rather than a vendor analyst? Two things. First, agent observability is no longer a bespoke engineering project — it is a product category with competing vendors, which means prices fall and standards settle. Second, the standard is converging on OpenTelemetry. Every serious launch this month ingests OTel GenAI semantic conventions. If you instrument with OTel today, you can switch backends later. That portability is the single most important property of any observability decision you make in 2026.
+
+## The tool landscape, honestly compared
+
+Cutting through the vendor noise, there are really five tools worth evaluating. Here is how they compare on the things that actually decide a purchase:
+
+| Tool | Best for | Free tier | Entry paid price | Open source |
+| --- | --- | --- | --- | --- |
+| Langfuse | Framework-neutral tracing + evals you fully control | 50,000 units/month (Hobby) | $29/month Core | Yes — MIT core, self-host free |
+| LangSmith | Teams deep in LangChain/LangGraph | 5,000 traces/month, 1 seat | $39/seat/month Plus | No (SDKs only) |
+| Arize Phoenix | Deepest agent-trace inspection, ML teams | Self-host unlimited | Arize AX cloud $50/month | Yes — self-host free |
+| Helicone | Fastest deployment, cost visibility on raw API calls | 10,000 requests/month | $79/month Pro | No |
+| New Relic / Grafana / Datadog | Teams that already run one of these platforms | Existing free tiers apply | Platform pricing | No |
+
+**Langfuse vs LangSmith is the decision most teams face.** Both trace agents, run offline and online evaluations, queue runs for human review, and version prompts. ([Langfuse's own head-to-head page](https://langfuse.com/compare/langsmith) is worth reading alongside independent comparisons, with the usual grain of salt for vendor-authored analysis.) The honest differentiators: Langfuse is open source with a genuinely free self-host option and no per-seat charges — it bills per "unit" (each observation, generation and score), which gets expensive fast on high-volume agent fleets, so model your volume first. LangSmith bills per seat plus per trace and is deepest inside the LangChain ecosystem; its LLM Gateway (in beta) adds partial spend controls. Since its acquisition by ClickHouse in January 2026, Langfuse's MIT licence and roadmap have held unchanged — worth noting because acquisition announcements in this space usually foreshadow licence changes, and this one so far has not.
+
+Our studio position: for a typical SME agent deployment — a support bot, a sales qualifier, an internal research agent — self-hosted Langfuse is the default recommendation. It costs the price of a small VPS, keeps your traces inside your own boundary (which matters for the PII discussion below), and the instrumentation is framework-neutral, so you are not locked into a runtime. Buy LangSmith when your whole stack already runs on LangChain and you want its eval depth without integration work. Buy the platform option — New Relic or Grafana — when your engineering team already lives there and you want agent traces next to infrastructure traces in one pane.
+
+**Helicone deserves a specific callout** because it deploys in minutes: it is an HTTP proxy, so you point your base URL at it and every LLM call is logged with zero instrumentation code. The trade is depth — it sees requests and responses but not the reasoning chain between them. Use it for fast cost visibility on raw API calls, not for debugging why an agent made a decision.
+
+**What we would not buy yet:** standalone "agent observability" startups with closed platforms and no OTel export. The category is consolidating fast, and data portability is the only insurance.
+
+## Watching is not enough: the rise of runtime control
+
+Here is the uncomfortable limitation of everything above: traces and evaluations tell you what happened. They cannot stop something that is happening. If your agent is mid-way through sending two hundred misaddressed emails, your dashboard shows the disaster in high resolution. It does not prevent it.
+
+That is why the most important October announcement may be the one nobody is demoing yet. On October 15, 2026, **ServiceNow announced [AI Passport](https://theaccountableagent.substack.com/p/how-to-compare-ai-agent-observability)** — a cryptographically signed credential that agents and MCP servers check at runtime to verify what they are authorised to do. When an agent drifts outside its scope, the platform can redirect it, restrict it, or shut it down with a kill switch, keeping the audit record behind each action. NVIDIA is the design and launch partner; it ships in Q4 2026. It is enterprise-grade and will be priced accordingly — but the pattern it establishes, runtime authorisation separate from the agent itself, will flow downstream to SME tooling within a year. Mark our words.
+
+![Control room visual of AI agent guardrails filtering data streams at a runtime gate](/blog/ai-agent-observability-guide-2026/fig2.webp)
+
+Regulators are pushing the same way. On the same day, the **Financial Stability Board published final guidance** calling for more human oversight of agentic AI at banks and financial firms, with clear risk-based triggers for when an agent must seek human approval. Read that as the shape of regulation for every regulated sector: the question "which actions need a human sign-off" will not be voluntary for long. If you run agents in finance, healthcare or government-adjacent work, design your approval tiers now — the FSB just gave you the template.
+
+Until runtime-authorisation products reach your price tier, build the poor man's version into every agent you ship: a **circuit breaker**. Three rules, non-negotiable in our builds. First, a per-task step budget — the agent gets, say, 15 tool calls per task, and exceeding it pages a human instead of silently continuing. Second, a spend cap per run and per day, enforced in code, not in the vendor's billing dashboard (billing dashboards settle; your code acts). Third, a denylist of high-risk actions that always require human approval: refunds above a threshold, messages to more than ten recipients, any data export. We covered the governance architecture in depth in our [AI agent governance playbook](/blog/ai-agent-governance-safety-playbook-2026) — the circuit breaker is the observability half of that story.
+
+## Week one: instrumenting an agent without a six-figure budget
+
+Theory is cheap. Here is what a real first week looks like, for the typical agent we deploy for a client — say, a customer-support agent handling 2,000 conversations a month.
+
+**Day 1–2: instrument with OpenTelemetry.** Add the OTel SDK to your agent stack and wrap the agent run, model calls and tool calls in spans following the GenAI semantic conventions. Most agent frameworks now have instrumentation libraries that do this in a few lines — if yours does not, switch frameworks, because uninstrumentable frameworks are a liability in 2026. What you record: the prompt template (not always the filled prompt — see the PII rule below), the model name and version, token counts in and out, every tool call with its arguments and result, latency per span, and the final outcome classification. Two days, one engineer.
+
+**Day 2–3: route traces to a backend.** Langfuse Cloud's Hobby tier is free and takes about an hour to set up — 50,000 units a month comfortably covers a 2,000-conversation agent. If data residency matters (Pakistan's data protection regime is tightening, and EU clients increasingly ask), self-host Langfuse on a small VPS: roughly $12–$40 a month, or about PKR 3,400–11,200. Your traces never leave your boundary.
+
+**Day 3–4: build the two dashboards that matter.** Dashboard one: cost per completed task, trended daily, with an alert at 2x your baseline. Dashboard two: task completion rate and tool-call counts, because a rising tool-call average is the earliest warning that the agent is degrading or the underlying model changed under you. Skip the vanity dashboards. These two catch 80% of real incidents in our experience.
+
+**Day 5: set the PII rules before you forget.** This is the step everyone postpones and regrets. Decide what never enters a trace: full customer names, phone numbers, payment details, anything from your CRM beyond an internal ID. OpenTelemetry's conventions leave prompt and response content capture off by default — that default is a gift; do not override it globally. Mask identifiers at the instrumentation boundary, before traces leave your systems. One client we audited had six months of customer phone numbers sitting in an observability vendor's SaaS before anyone noticed. Do not be that client.
+
+**Week two and beyond:** add LLM-as-a-judge evaluation on sampled runs, starting with your highest-risk task. Then the circuit breaker rules above. Then — and only then — worry about pretty dashboards.
+
+**The cost picture for a 2,000-conversation-a-month agent:**
+
+| Line item | Monthly cost (USD) | Approx (PKR) |
+| --- | --- | --- |
+| Inference (the agent itself) | $60–$200 | 17,000–56,000 |
+| Observability tool (self-hosted Langfuse) | $12–$40 | 3,400–11,200 |
+| Observability tool (Langfuse Cloud Core) | $29 | ~8,100 |
+| Judge-model evaluation scoring | $10–$30 | 2,800–8,400 |
+| **Observability total** | **$22–$99** | **~6,200–27,700** |
+
+The pattern holds across scales: observability costs roughly 5–15% of the inference spend it watches. The observability bill is not the problem. The unobserved incident is.
+
+## Frequently asked questions
+
+**What is AI agent observability?**
+It is the practice of recording and inspecting what an AI agent does in production: every prompt, tool call, decision, token spent and outcome — the equivalent of server logs and traces for deterministic software. Without it, an agent is a black box: when it sends the wrong email or refunds the wrong order, you cannot reconstruct why.
+
+**How much does AI agent observability cost in 2026?**
+Tool pricing starts at free. Langfuse Cloud's Hobby tier is free up to 50,000 units a month and Core is $29 a month; LangSmith Plus is $39 per seat a month with 10,000 traces included; self-hosting Langfuse or Arize Phoenix costs only the infrastructure, typically a $12–$40 a month VPS. For a small business, expect the observability line item to land at roughly 5–15% of the agent's own inference spend.
+
+**Langfuse vs LangSmith — which should I choose in 2026?**
+Choose Langfuse if you want framework-neutral, open-source tracing you can self-host (MIT core, free Hobby tier). Choose LangSmith if you already build on LangChain or LangGraph and want the deepest eval tooling in that ecosystem. Both trace, evaluate and version prompts; neither can stop an agent mid-run — runtime control is a separate category.
+
+**Can I use OpenTelemetry for AI agents?**
+Yes. OpenTelemetry now carries generative AI semantic conventions: an agent run is recorded as an `invoke_agent` span, with child `chat` spans for model calls and `execute_tool` spans for tool calls, including model, token counts and finish reasons. New Relic, Grafana and others ingest this format, so you can keep your existing observability stack instead of buying a second one.
+
+**Do I need a kill switch for my AI agent?**
+If the agent can act — move money, send messages, touch customer data — yes, you need a way to stop it that does not depend on the agent cooperating. ServiceNow's AI Passport, announced October 2026, is the first mainstream runtime-authorisation product with a kill switch; until then, build a budget cap plus a circuit breaker into your orchestration layer.
+
+**What should I log and what must I never log?**
+Log the prompt template, model, token counts, tool calls with arguments, latency, cost and the final outcome. Never log raw PII or secrets — OpenTelemetry's conventions capture prompt content only if you opt in, and that default exists for a reason. Mask customer identifiers before traces leave your boundary.
+
+**How do I start with AI agent observability this week?**
+Instrument with the OpenTelemetry SDK for your stack (one day), route traces to Langfuse Cloud's free Hobby tier (one hour), add a cost dashboard and an alert on cost-per-completed-task (half a day). That covers the five signals at zero tool cost. Add LLM-as-a-judge evaluations and runtime controls in the second pass, once you know what your agents actually do.
+
+## The bottom line
+
+The question is no longer whether to observe your agents — the October 2026 product wave settled that. The question is whether you instrument with open standards now, while the cost is a few days of engineering, or after your first incident, when the cost is a customer, a regulator, or a headline. We recommend the former. Every agent we ship at AISquadX now leaves the studio with traces, cost dashboards, evaluation rubrics and circuit breakers as standard — not as an add-on, because the industry has spent October proving that observability is the difference between an agent you operate and an agent you hope behaves.
+
+If you are running agents in production without visibility — or planning to deploy and want the instrumentation done properly from day one — talk to us. We build [AI automation systems](/services) with observability wired in from the first commit, and we would rather have an honest conversation about what your agents actually do than sell you another black box. Reach out through our [contact page](/contact) — and if you want to know what we stand for before you do, [read about the studio](/about) first.
+
+## Building an eval rubric your team will actually use
+
+Evaluation is where observability programmes quietly die, because teams treat it as a research project instead of an operational checklist. You do not need an academic benchmark. You need a rubric — a short list of criteria, scored on every sampled run — that captures what "good" means for each specific agent. Here is the template we use.
+
+Start with four to six criteria per agent, each scored pass/fail or 1–5. For a customer-support agent, ours looks like this: **task completion** (did the customer get a real resolution, not a deflection?), **policy compliance** (no invented refund policies, no promises outside the playbook), **factual accuracy** (order numbers, dates and prices correct), **PII handling** (no full payment details or unnecessary personal data in the response), **tone** (matches the brand, no robotic deflection language), and **efficiency** (resolved in a reasonable number of steps). Weight them by risk, not by aesthetics — policy compliance and PII handling are fail-the-whole-run criteria; tone is not.
+
+Then decide the sampling rate. Scoring every run with a judge model doubles your inference bill and generates noise. Score 5–10% of production traffic randomly, plus 100% of runs that touch your high-risk list — refunds, data exports, outbound messages to customers. New Relic's [AI Evaluation launch](https://www.businesswire.com/news/home/20261006225676/en/New-Relic-Introduces-AI-Evaluation-to-Close-the-Loop-Across-the-Entire-Developer-to-Production-Lifecycle-with-Transaction-level-Business-Impact) this month formalised exactly this pattern: asynchronous LLM-as-a-judge scoring on sampled telemetry, tied to transaction-level business impact rather than isolated prompt checks. You can build the same thing on Langfuse with a scheduled eval job; the point is the pattern, not the vendor.
+
+The part most teams skip: **close the loop.** A score that nobody reviews is decoration. Wire failing evaluations into the same channel where your incident alerts go, with the trace attached. When the judge flags a run, a human opens the trace, confirms or overturns the judgement, and the correction feeds back into the rubric. That review loop is also how you catch judge-model drift — the judge itself is a model, and it can be wrong. We overturn roughly one in twenty judge flags in a typical month; if your overturn rate is zero, your humans are rubber-stamping, and if it is one in three, your rubric needs rewriting.
+
+Track two eval metrics over time, not just pass rates. **Regression rate**: how often a new prompt or model version degrades previously passing behaviour. Run your eval suite as a gate before every deploy, the way you would run unit tests — Langfuse datasets and LangSmith experiments both support this. **Novel failure rate**: new failure categories appearing that your rubric does not cover. When the novel-failure rate climbs, your rubric is stale and your agent has moved into territory you are not grading. That is the moment to pause and expand the rubric, not to ship.
+
+One more judgement call, since the industry keeps dancing around it: vendor-published "agent observability" scores and leaderboards are marketing. As [WebProNews' October analysis](https://www.webpronews.com/ai-agents-run-blind-why-observability-must-get-smarter-cheaper-and-open-in-2026/) of the observability landscape put it, 97% of teams still get hit by cost surprises even as the tooling matures — the tools record faithfully, but interpretation is still yours. Trust your own sampled evaluations, calibrated against your own incident history. Nobody else's benchmark knows what a good answer looks like for your customers.
